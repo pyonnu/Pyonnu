@@ -21,7 +21,7 @@
 #include<Box2D/Box2D.h>
 
 using namespace std;
-
+#include "cameraManager.h"
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
 #include "keyManager.h"
@@ -56,7 +56,7 @@ using namespace SEVENTEEN_UTIL;
 #define SOUNDMANAGER soundManager::getSingleton()
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
-
+#define CAMERAMANAGER cameraManager::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}

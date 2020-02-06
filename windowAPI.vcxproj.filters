@@ -55,6 +55,9 @@
     <Filter Include="playGround\Lobby">
       <UniqueIdentifier>{3d599663-100c-4332-ae38-3311d3cccbf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Item">
+      <UniqueIdentifier>{3026493a-7308-4581-a997-cd70b48469c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -135,6 +138,12 @@
     <ClInclude Include="Lobby.h">
       <Filter>playGround\Lobby</Filter>
     </ClInclude>
+    <ClInclude Include="cameraManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>playGround\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -199,6 +208,12 @@
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
       <Filter>playGround\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="cameraManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>playGround\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

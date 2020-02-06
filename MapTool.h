@@ -1,7 +1,9 @@
 #pragma once
 #include"gameNode.h"
-#include<map>
 #include<vector>
+
+#define tileSize 16
+
 enum class TileType
 {
 	PLAYER,ENEMY,WALL,BLOCK
