@@ -8,7 +8,11 @@ private:
 	HBITMAP _hbit;			//bit맵
 	HBITMAP _oldHbit;		//oldBit맵
 
-	int _Width, _Height;
+	HDC _testDC;
+	HBITMAP _testBit;
+	HBITMAP _oldTestBit;
+
+	POINT _cameraSize;
 	//카메라의 위치를 조정할 xy변수
 	float _x, _y;
 public:
@@ -24,5 +28,6 @@ public:
 	inline float getCameraX() { return _x; }
 	inline float getCameraY() { return _y; }
 	
+	inline POINT setCameraSize(POINT cameraSize) { _cameraSize = cameraSize; }
 };
 

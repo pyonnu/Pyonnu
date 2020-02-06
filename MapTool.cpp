@@ -9,6 +9,7 @@ HRESULT MapTool::init()
 	_winsize.y = 900;
 	setWindowsSize(WINSTARTX, WINSTARTY, _winsize.x, _winsize.y);
 	_backBuffer->init(_winsize.x, _winsize.y);
+	CAMERAMANAGER->init();
 	return S_OK;
 }
 
@@ -22,4 +23,5 @@ void MapTool::update()
 
 void MapTool::render()
 {
+	CAMERAMANAGER->render();
 }
