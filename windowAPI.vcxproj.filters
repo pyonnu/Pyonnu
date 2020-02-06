@@ -135,9 +135,6 @@
     <ClInclude Include="Lobby.h">
       <Filter>playGround\Lobby</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>playGround\MapTool</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

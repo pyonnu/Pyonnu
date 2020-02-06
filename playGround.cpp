@@ -20,7 +20,6 @@ HRESULT playGround::init()
 	_scene = new Scene;
 	_scene->init();
 
-
 	return S_OK;
 }
 
@@ -29,7 +28,6 @@ void playGround::release()
 {
 	gameNode::release();
 
-	
 }
 
 //연산은 여기다 해라!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -48,6 +46,9 @@ void playGround::render()
 	//==================================================
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
+	
+	
+	
 	//===================================================
 	//딱 말했다
 	_backBuffer->render(getHDC(), 0, 0);
