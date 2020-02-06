@@ -1,5 +1,11 @@
 ﻿#pragma once
 
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
@@ -13,8 +19,9 @@
 #include <tchar.h>
 #include <iostream>
 #include<Box2D/Box2D.h>
-using namespace std;
 
+using namespace std;
+#include "cameraManager.h"
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
 #include "keyManager.h"
@@ -34,8 +41,8 @@ using namespace SEVENTEEN_UTIL;
 //=========================================
 
 #define WINNAME (LPCTSTR)(TEXT("SevenTeen Class"))
-#define WINSTARTX 50
-#define WINSTARTY 50
+#define WINSTARTX 0
+#define WINSTARTY 0
 #define WINSIZEX 1280
 #define WINSIZEY 720
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
@@ -49,7 +56,7 @@ using namespace SEVENTEEN_UTIL;
 #define SOUNDMANAGER soundManager::getSingleton()
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
-
+#define CAMERAMANAGER cameraManager::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
