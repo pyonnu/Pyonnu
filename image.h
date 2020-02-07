@@ -89,6 +89,8 @@ public:
 	//렌더함수 뿌려질DC, 뿌릴좌표X(left),뿌릴좌표Y(top), 잘라올곳X(left), 잘라올곳Y(top), 잘라올 가로크기, 잘라올 세로크기
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
+	void rotateRender(HDC hdc);
+
 	//이미지 프레임 렌더(뿌려질DC, 뿌려질left,  뿌려질top)
 	void frameRender(HDC hdc, int destX, int destY);
 	//이미지 프레임 렌더(뿌려질DC, 뿌려질left, 뿌려질top, 프레임X번호, 프레임Y번호

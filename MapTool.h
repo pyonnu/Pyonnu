@@ -1,8 +1,11 @@
 #pragma once
 #include"gameNode.h"
 #include<vector>
-
+#include<map>
 #define tileSize 16
+//총 900,000타일
+#define MaxTile_X 2000		//최대 x크기
+#define MaxTile_Y 450		//최대 y크기
 
 enum class TileType
 {

@@ -383,6 +383,11 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 
 }
 
+void image::rotateRender(HDC hdc)
+{
+
+}
+
 void image::frameRender(HDC hdc, int destX, int destY)
 {
 	//트랜스 컬러 처리를 해야하냐

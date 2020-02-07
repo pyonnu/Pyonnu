@@ -10,6 +10,13 @@ HRESULT MapTool::init()
 	setWindowsSize(WINSTARTX, WINSTARTY, _winsize.x, _winsize.y);
 	_backBuffer->init(_winsize.x, _winsize.y);
 	CAMERAMANAGER->init();
+	for (int x = 0;x < MaxTile_X;x++)
+	{
+		for (int y = 0;y < MaxTile_Y;y++)
+		{
+			
+		}
+	}
 	return S_OK;
 }
 
