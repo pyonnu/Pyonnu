@@ -3,7 +3,7 @@
 
 HRESULT Lobby::init()
 {
-	_lobbyImage = IMAGEMANAGER->addImage("LobbyImage", "Resources/Lobby/Lobby.bmp", 1280, 720, false, RGB(255, 0, 255));
+	addImage();
 	for (int i = 0;i < 4;i++)
 	{
 		_button[i] = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 - 100 + i * 100, 200, 50);
@@ -51,4 +51,9 @@ void Lobby::render()
 	{
 		Rectangle(getMemDC(), _button[i]);
 	}
+}
+
+void Lobby::addImage()
+{
+	_lobbyImage = IMAGEMANAGER->addImage("LobbyImage", "Resources/Lobby/Lobby.bmp", 1280, 720, false, RGB(255, 0, 255));
 }

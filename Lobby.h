@@ -15,4 +15,5 @@ public:
 	void update();
 	void render();
 
+	void addImage();
 };
