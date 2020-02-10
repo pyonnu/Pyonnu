@@ -26,7 +26,7 @@ void txtData::txtSave(const char * saveFileName, vector<string> vStr)
 	HANDLE file;
 	DWORD write;
 
-	char str[128];
+	char str[100000];
 
 	strncpy_s(str, 128, vectorArrayCombine(vStr), 126);
 

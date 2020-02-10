@@ -40,6 +40,7 @@ public:
 
 	inline POINT getCameraSize() { return _cameraSize; }
 	inline POINT getCameraPos() { return _pos; }
-	inline POINT setCameraSize(POINT cameraSize) { _cameraSize = cameraSize; }
+
+	inline void setCameraSize(POINT cameraSize) { _cameraSize = cameraSize; }
 };
 

@@ -58,6 +58,9 @@
     <Filter Include="playGround\Item">
       <UniqueIdentifier>{3026493a-7308-4581-a997-cd70b48469c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Enemy">
+      <UniqueIdentifier>{ad96cc60-a967-48d4-8db5-fd2b9818c422}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="Item.h">
       <Filter>playGround\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>playGround\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>playGround\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

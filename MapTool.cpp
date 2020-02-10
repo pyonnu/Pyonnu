@@ -5,6 +5,11 @@ void setWindowsSize(int x, int y, int width, int height);
 
 HRESULT MapTool::init()
 {
+	POINT size;
+	size.x = MaxTile_X * TILESIZE;
+	size.y = MaxTile_Y * TILESIZE;
+	CAMERAMANAGER->setCameraSize(size);
+
 	_winsize.x = 1600;
 	_winsize.y = 900;
 	setWindowsSize(WINSTARTX, WINSTARTY, _winsize.x, _winsize.y);
@@ -26,6 +31,18 @@ HRESULT MapTool::init()
 			_vTile.push_back(&_Tile[x][y]);
 		}
 	}
+	Load();
+	for (int x = 0;x < MaxBlockTile_X;x++)
+	{
+		for (int y = 0;y < MaxBlockTile_Y;y++)
+		{
+			_blockTile[x][y].rc = RectMake(1280 + x * 40, y * 40, 40, 40);
+			_blockTile[x][y].FrameX = x;
+			_blockTile[x][y].FrameY = y;
+		}
+			
+	}
+
 	_TileUI = RectMake(1280, 0, 320, 576);
 
 	_button[0] = RectMakeCenter(1440, 640, 40, 40);		//UP
@@ -89,24 +106,24 @@ void MapTool::update()
 
 void MapTool::render()
 {
-	RECT temp;
 	CAMERAMANAGER->render();
-	/*for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
-	{
-		if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
-		{
-			HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
-			HBRUSH oldbrush = (HBRUSH)SelectObject(CAMERAMANAGER->getCameraDC(), brush);
-			Rectangle(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc);
-			SelectObject(CAMERAMANAGER->getCameraDC(), oldbrush);
-			DeleteObject(brush);
-		}
-		else
-		{
-			continue;
-		}
-	}*/
-
+	RECT temp;
+	//타일 출력
+	//for (_viTile = _vTile.begin();_viTile != _vTile.end();_viTile++)
+	//{
+	//	if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
+	//	{
+	//		//HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+	//		//HBRUSH oldbrush = (HBRUSH)SelectObject(CAMERAMANAGER->getCameraDC(), brush);
+	//		Rectangle(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc);
+	//		//SelectObject(CAMERAMANAGER->getCameraDC(), oldbrush);
+	//		//DeleteObject(brush);
+	//	}
+	//	else
+	//	{
+	//		continue;
+	//	}
+	//}
 	for (int x = 0;x < MaxTile_X;x++)
 	{
 		for (int y = 0;y < MaxTile_Y;y++)
@@ -121,6 +138,8 @@ void MapTool::render()
 			}
 		}
 	}
+	
+	//버튼 출력-------------------------------------------------------------------------------------------------------------------------------------------
 	for (int i = 0;i < 10;i++)
 	{
 		Rectangle(CAMERAMANAGER->getbackDC(), _button[i]);
@@ -130,10 +149,22 @@ void MapTool::render()
 	TextOut(CAMERAMANAGER->getbackDC(), (_button[2].left + _button[2].right) / 2 - 8, (_button[2].top + _button[2].bottom) / 2 - 8, "◀", strlen("◀"));
 	TextOut(CAMERAMANAGER->getbackDC(), (_button[3].left + _button[3].right) / 2 - 8, (_button[3].top + _button[3].bottom) / 2 - 8, "▶", strlen("▶"));
 	Rectangle(CAMERAMANAGER->getbackDC(), _TileUI);
-	//RECT rc = RectMake(0, 0, 16, 16);
-	//HBRUSH brush = CreateSolidBrush(RGB(0,255,0));
-	//HBRUSH oldbrush = (HBRUSH)SelectObject(CAMERAMANAGER->getCameraDC(), brush);
-	//Rectangle(CAMERAMANAGER->getCameraDC(), rc);
-	//SelectObject(CAMERAMANAGER->getCameraDC(), oldbrush);
-	//DeleteObject(brush);
+	//----------------------------------------------------------------------------------------------------------------------------------------------------
+	for (int x = 0;x < MaxBlockTile_X;x++)
+	{
+		for (int y = 0; y < MaxBlockTile_Y; y++)
+		{
+			Rectangle(CAMERAMANAGER->getbackDC(), _blockTile[x][y].rc);
+		}
+	}
+}
+
+void MapTool::Save()
+{
+
+}
+
+void MapTool::Load()
+{
+
 }

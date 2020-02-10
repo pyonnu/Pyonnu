@@ -55,5 +55,5 @@ void Lobby::render()
 
 void Lobby::addImage()
 {
-	_lobbyImage = IMAGEMANAGER->addImage("LobbyImage", "Resources/Lobby/Lobby.bmp", 1280, 720, false, RGB(255, 0, 255));
+	_lobbyImage = IMAGEMANAGER->findImage("LobbyImage");
 }

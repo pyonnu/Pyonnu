@@ -12,8 +12,6 @@ cameraManager::~cameraManager()
 
 HRESULT cameraManager::init()
 {
-	_cameraSize.x = 6400;
-	_cameraSize.y = 14400;
 	_pos.x = 0;
 	_pos.y = 0;
 	HDC hdc2 = GetDC(_hWnd);
@@ -64,22 +62,18 @@ void cameraManager::setCameraPos(float x, float y)
 	if (_pos.x <= 0)
 	{
 		_pos.x = 0;
-
 	}
 	if (_pos.y <= 0)
 	{
 		_pos.y = 0;
-
 	}
 	if (_pos.x + WINSIZEX >= _cameraSize.x)
 	{ 
 		_pos.x = _cameraSize.x - WINSIZEX;
-
 	}	
 	if (_pos.y + WINSIZEY >= _cameraSize.y)
 	{
 		_pos.y = _cameraSize.y - WINSIZEY;
-
 	}
 	_cameraSizeRect=RectMake(_pos.x, _pos.y, 1280, 720);
 }
