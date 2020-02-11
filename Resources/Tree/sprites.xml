@@ -1,0 +1,14 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Tiles_5.png" x="240" y="246" width="170" height="258"/>
+	<SubTexture name="Tree_Branches_0.png" x="404" y="116" width="68" height="124"/>
+	<SubTexture name="Tree_Branches_10.png" x="244" y="82" width="82" height="124"/>
+	<SubTexture name="Tree_Branches_15.png" x="404" y="116" width="68" height="124"/>
+	<SubTexture name="Tree_Branches_6.png" x="0" y="406" width="78" height="104"/>
+	<SubTexture name="Tree_Branches_7.png" x="328" y="116" width="74" height="114"/>
+	<SubTexture name="Tree_Branches_8.png" x="328" y="0" width="78" height="114"/>
+	<SubTexture name="Tree_Tops_10.png" x="0" y="0" width="244" height="80"/>
+	<SubTexture name="Tree_Tops_6.png" x="0" y="164" width="242" height="80"/>
+	<SubTexture name="Tree_Tops_7.png" x="0" y="82" width="242" height="80"/>
+	<SubTexture name="Tree_Tops_8.png" x="0" y="326" width="236" height="78"/>
+	<SubTexture name="Tree_Tops_9.png" x="0" y="246" width="238" height="78"/>
+</TextureAtlas>

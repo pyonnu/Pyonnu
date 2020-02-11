@@ -3,11 +3,15 @@
 
 enum class BlockType
 {
-	NONE, TERRA, WOOD, STONE, COPPER, IRON, SILVER, GOLD, PLATFORM, DOOR, BOX,
+	NONE, DIRT, WOOD, STONE, COPPER, IRON, GOLD, PLATINUM, PLATFORM, DOOR, BOX,CHIR,DESK,WORKBENCH,ANVIL,
 };
 enum class WallType
 {
-	NONE, TERRA, WOOD, STONE,
+	NONE, DIRT, WOOD, STONE,
+};
+enum class MeterialType
+{
+	WOOD,COPPER,COPPERBAR,IRON,IRONBAR,GOLD,GOLDBAR,PLATINUM,PLATINUMBAR,DEMONITE,LENS,GEL
 };
 //소모품 아이템 ex)물약
 enum class consumbleItem
@@ -19,6 +23,7 @@ enum class WeaponItem
 {
 	SWORD, SPEAR,
 };
+//도구용 아이템
 enum class ToolsItem
 {
 	PICKAXE, AXE, HAMMER

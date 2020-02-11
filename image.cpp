@@ -382,7 +382,6 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 	}
 
 }
-
 void image::rotateRender(HDC hdc)
 {
 

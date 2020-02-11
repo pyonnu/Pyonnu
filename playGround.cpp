@@ -63,5 +63,6 @@ void playGround::imageAdd()
 	//타 일 이 미 지
 	IMAGEMANAGER->addFrameImage("Tiles_0", "Resources/Tiles/Tiles_0.bmp", 96, 64,3,2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Tiles_1", "Resources/Tiles/Tiles_1.bmp", 96, 64, 3, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 448, 96, 14, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 256, 192, 8, 6, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("WallTiles", "Resources/Tiles/WallTiles/bmp", 96, 48, 6, 3, true, RGB(255, 0, 255));
 }
