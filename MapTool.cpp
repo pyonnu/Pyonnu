@@ -70,10 +70,9 @@ void MapTool::release()
 void MapTool::update()
 {
 	CameraControl();
+	blockTileInit();
 
 	selectTile();
-
-
 	drawTile();
 
 	changeTileList();
@@ -215,11 +214,18 @@ void MapTool::blockTileInit()
 
 		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
-			for (int y = 2;y < 7;y++)
+			for (int y = 2;y < 8;y++)
 			{
 				_UITile[x][y].SetTileType = TileType::OBJECT;
 			}
 		}
+		_UITile[6][4].SetObjectType = ObjectType::NONE;
+		_UITile[6][5].SetObjectType = ObjectType::NONE;
+		_UITile[3][6].SetObjectType = ObjectType::NONE;
+		_UITile[4][6].SetObjectType = ObjectType::NONE;
+		_UITile[5][6].SetObjectType = ObjectType::NONE;
+		_UITile[6][6].SetObjectType = ObjectType::NONE;
+
 		_UITile[0][2].SetObjectType = ObjectType::DESK;
 		_UITile[1][2].SetObjectType = ObjectType::DESK;
 		_UITile[2][2].SetObjectType = ObjectType::DESK;
@@ -272,6 +278,8 @@ void MapTool::blockTileInit()
 		_UITile[3][7].SetObjectType = ObjectType::DEMONATLER;
 		_UITile[4][7].SetObjectType = ObjectType::DEMONATLER;
 		_UITile[5][7].SetObjectType = ObjectType::DEMONATLER;
+
+
 		break;
 	case TileType::TREE:
 		for (int x = 0;x < 5;x++)
@@ -279,8 +287,14 @@ void MapTool::blockTileInit()
 			for (int y = 0;y < 10;y++)
 			{
 				_UITile[x][y].SetObjectType = ObjectType::TREE;
+				for (int x = 5;x < 8;x++)
+				{
+					_UITile[x][y].SetObjectType = ObjectType::NONE;
+				}
 			}
+			
 		}
+		
 		break;
 	default:
 		break;
@@ -402,6 +416,7 @@ void MapTool::selectTile()
 						objectFrameSet(x, y-2);
 						break;
 					case TileType::TREE:
+						treeFrameSet(x, y);
 						break;
 					default:
 						break;
@@ -415,6 +430,7 @@ void MapTool::selectTile()
 
 void MapTool::blockFrameSet(int x, int y)
 {
+	_selectTile.SelectTileType = TileType::BLOCK;
 	switch (_UITile[x][y].SetBlockType)
 	{
 	case BlockType::NONE:
@@ -458,11 +474,11 @@ void MapTool::blockFrameSet(int x, int y)
 		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
 		break;
 	}
-	_selectTile.SelectTileType = TileType::BLOCK;
 }
 
 void MapTool::wallFrameSet(int x, int y)
 {
+	_selectTile.SelectTileType = TileType::WALL;
 	switch (_UITile[x][y].SetWallType)
 	{
 	case WallType::NONE:
@@ -486,25 +502,132 @@ void MapTool::wallFrameSet(int x, int y)
 		_selectTile.SelectWallType = _UITile[x][y].SetWallType;
 		break;
 	}
-	
-	_selectTile.SelectTileType = TileType::WALL;
 }
 
 void MapTool::objectFrameSet(int x, int y)
 {
+	_selectTile.SelectTileType = TileType::OBJECT;
+	switch (_UITile[x][y].SetObjectType)
+	{
+	case ObjectType::NONE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::DEMONATLER:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::HEARTCRYSTAL:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::OPENDOOR:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::CLOSEDOOR:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::FURNACE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::BOX:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::WORKBENCH:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::CHIR:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::DESK:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	case ObjectType::ANVIL:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
+		break;
+	}
 }
 
 void MapTool::treeFrameSet(int x, int y)
 {
+	_selectTile.SelectTileType = TileType::TREE;
+	_selectTile.FrameX = x;
+	_selectTile.FrameY = y;
+	_selectTile.SelectObjectType = _UITile[x][y].SetObjectType;
 }
 
 void MapTool::drawTile()
 {
 	RECT rc;
+	RECT temp;
 	POINT start;
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)&&_ptMouse.x<WINSIZEX&&_ptMouse.y<WINSIZEY)
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
 		start = _ptMouse;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
+		//start = _ptMouse;
+		rc = RectMake(start.x, start.y, _ptMouse.x, _ptMouse.y);
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		for (int x = 0;x < MaxTile_X;x++)
+		{
+			for (int y = 0;y < MaxTile_Y;y++)
+			{
+				if (IntersectRect(&temp,&_Tile[x][y].rc,&rc))
+				{
+					switch (_selectTile.SelectTileType)
+					{
+					case TileType::PLAYER:
+						break;
+					case TileType::ENEMY:
+						break;
+					case TileType::WALL:
+						_Tile[x][y].wallType = _selectTile.SelectWallType;
+						_Tile[x][y].FrameX2 = _selectTile.FrameX;
+						_Tile[x][y].FrameY2 = _selectTile.FrameY;
+						break;
+					case TileType::BLOCK:
+						_Tile[x][y].blockType = _selectTile.SelectBlockType;
+						_Tile[x][y].FrameX = _selectTile.FrameX;
+						_Tile[x][y].FrameY = _selectTile.FrameY;
+						break;
+					case TileType::OBJECT:
+						_Tile[x][y].objectType = _selectTile.SelectObjectType;
+						_Tile[x][y].FrameX3 = _selectTile.FrameX;
+						_Tile[x][y].FrameY3 = _selectTile.FrameY;
+						break;
+					case TileType::TREE:
+						_Tile[x][y].objectType = _selectTile.SelectObjectType;
+						_Tile[x][y].FrameX3 = _selectTile.FrameX;
+						_Tile[x][y].FrameY3 = _selectTile.FrameY;
+						break;
+					}
+
+				}
+			}
+		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
@@ -531,8 +654,14 @@ void MapTool::drawTile()
 						_Tile[x][y].FrameY = _selectTile.FrameY;
 						break;
 					case TileType::OBJECT:
+						_Tile[x][y].objectType = _selectTile.SelectObjectType;
+						_Tile[x][y].FrameX3 = _selectTile.FrameX;
+						_Tile[x][y].FrameY3 = _selectTile.FrameY;
 						break;
 					case TileType::TREE:
+						_Tile[x][y].objectType = _selectTile.SelectObjectType;
+						_Tile[x][y].FrameX3 = _selectTile.FrameX;
+						_Tile[x][y].FrameY3 = _selectTile.FrameY;
 						break;
 					}
 					

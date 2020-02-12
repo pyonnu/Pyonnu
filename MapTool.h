@@ -21,6 +21,7 @@ struct tagTile
 	int x, y;				//실질적인 x,y좌표
 	int FrameX, FrameY;
 	int FrameX2, FrameY2;
+	int FrameX3, FrameY3;
 	RECT rc;				//타일의 몸뚱아리
 	TileType tileType;		//타일의 종류
 	BlockType blockType;	//블럭의 종류
