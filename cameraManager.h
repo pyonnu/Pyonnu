@@ -31,6 +31,7 @@ public:
 	void render();
 
 	void setCameraPos(float x, float y);
+
 	inline HDC getCameraDC() { return _cameraDC; }
 	inline HDC getbackDC() { return _backDC; }
 	//inline float getCameraX() { return _x; }

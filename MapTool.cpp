@@ -25,6 +25,10 @@ HRESULT MapTool::init()
 			_Tile[x][y].idy = y;
 			_Tile[x][y].x = x * TILESIZE;
 			_Tile[x][y].y = y * TILESIZE;
+			_Tile[x][y].FrameX = 0;
+			_Tile[x][y].FrameY = 0;
+			_Tile[x][y].FrameX2 = 0;
+			_Tile[x][y].FrameY2 = 0;
 			_Tile[x][y].rc = RectMake(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
 			_Tile[x][y].blockType = BlockType::NONE;
 			_Tile[x][y].wallType = WallType::NONE;
@@ -37,11 +41,14 @@ HRESULT MapTool::init()
 	{
 		for (int y = 0;y < MaxBlockTile_Y;y++)
 		{
-			_blockTile[x][y].rc = RectMake(1280 + x * 40, y * 40, 40, 40);
-			_blockTile[x][y].FrameX = x;
-			_blockTile[x][y].FrameY = y;
+			_UITile[x][y].rc = RectMake(1280 + x * 40, y * 40, 40, 40);
+			_UITile[x][y].FrameX = x;
+			_UITile[x][y].FrameY = y;
 		}
 	}
+	
+	
+
 
 	_selectTile.FrameX = 0;
 	_selectTile.FrameY = 0;
@@ -50,6 +57,7 @@ HRESULT MapTool::init()
 
 	_TileUI = RectMake(1280, 0, 320, 32 * MaxBlockTile_Y);
 
+	blockTileInit();
 	ButtonInit();
 
 	return S_OK;
@@ -69,7 +77,14 @@ void MapTool::update()
 	drawTile();
 
 	changeTileList();
-
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		Save();
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F2))
+	{
+		Load();
+	}
 }
 
 void MapTool::render()
@@ -81,17 +96,16 @@ void MapTool::draw()
 {
 	CAMERAMANAGER->render();
 	RECT temp;
+
 	for (int x = 0;x < MaxTile_X;x++)
 	{
 		for (int y = 0;y < MaxTile_Y;y++)
 		{
 			if (IntersectRect(&temp, &_Tile[x][y].rc, &CAMERAMANAGER->getCameraRect()))
 			{
-				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
-				HBRUSH oldbrush = (HBRUSH)SelectObject(CAMERAMANAGER->getCameraDC(), brush);
-				Rectangle(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc);
-				SelectObject(CAMERAMANAGER->getCameraDC(), oldbrush);
-				DeleteObject(brush);
+				//Rectangle(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc);
+				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX2, _Tile[x][y].FrameY2);
+				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX, _Tile[x][y].FrameY);
 			}
 		}
 	}
@@ -111,11 +125,167 @@ void MapTool::draw()
 	{
 		for (int y = 0; y < MaxBlockTile_Y; y++)
 		{
-			Rectangle(CAMERAMANAGER->getbackDC(), _blockTile[x][y].rc);
-			IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getbackDC(), _blockTile[x][y].rc.left, _blockTile[x][y].rc.top, _blockTile[x][y].FrameX, _blockTile[x][y].FrameY);
-
+			Rectangle(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc);
 		}
 	}
+	switch (_selectTile.SelectTileType)
+	{
+	case TileType::PLAYER:
+		break;
+	case TileType::ENEMY:
+		break;
+	case TileType::WALL:
+	case TileType::BLOCK:
+	case TileType::OBJECT:
+		for (int x = 0;x < MaxBlockTile_X;x++)
+		{
+			for (int y = 0;y < MaxBlockTile_Y;y++)
+			{
+				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y);
+			}
+		}
+		for (int x = 0;x < MaxBlockTile_X;x++)
+		{
+			for (int y = 1;y < MaxBlockTile_Y;y++)
+			{
+				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y - 1);
+			}
+		}
+		for (int x = 0;x < MaxBlockTile_X;x++)
+		{
+			for (int y = 2; y < MaxBlockTile_Y;y++)
+			{
+				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y - 2);
+			}
+		}
+		break;
+	case TileType::TREE:
+		for (int x = 0;x < MaxBlockTile_X;x++)
+		{
+			for (int y = 0;y < MaxBlockTile_Y;y++)
+			{
+				IMAGEMANAGER->findImage("Tree")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y);
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+}
+
+void MapTool::blockTileInit()
+{
+	switch (_selectTile.SelectTileType)
+	{
+	case TileType::PLAYER:
+		break;
+	case TileType::ENEMY:
+		break;
+	case TileType::WALL:
+	case TileType::BLOCK:
+	case TileType::OBJECT:
+		_UITile[0][0].SetTileType = TileType::BLOCK;
+		_UITile[1][0].SetTileType = TileType::BLOCK;
+		_UITile[2][0].SetTileType = TileType::BLOCK;
+		_UITile[3][0].SetTileType = TileType::BLOCK;
+		_UITile[4][0].SetTileType = TileType::BLOCK;
+		_UITile[5][0].SetTileType = TileType::BLOCK;
+		_UITile[6][0].SetTileType = TileType::BLOCK;
+		_UITile[7][0].SetTileType = TileType::BLOCK;
+
+		_UITile[0][0].SetBlockType = BlockType::NONE;
+		_UITile[1][0].SetBlockType = BlockType::DIRT;
+		_UITile[2][0].SetBlockType = BlockType::STONE;
+		_UITile[3][0].SetBlockType = BlockType::COPPER;
+		_UITile[4][0].SetBlockType = BlockType::IRON;
+		_UITile[5][0].SetBlockType = BlockType::GOLD;
+		_UITile[6][0].SetBlockType = BlockType::PLATINUM;
+		_UITile[7][0].SetBlockType = BlockType::WOOD;
+
+		_UITile[0][1].SetTileType = TileType::WALL;
+		_UITile[1][1].SetTileType = TileType::WALL;
+		_UITile[2][1].SetTileType = TileType::WALL;
+		_UITile[3][1].SetTileType = TileType::WALL;
+
+		_UITile[0][1].SetWallType = WallType::NONE;
+		_UITile[1][1].SetWallType = WallType::DIRT;
+		_UITile[2][1].SetWallType = WallType::STONE;
+		_UITile[3][1].SetWallType = WallType::WOOD;
+
+		for (int x = 0;x < MaxBlockTile_X;x++)
+		{
+			for (int y = 2;y < 7;y++)
+			{
+				_UITile[x][y].SetTileType = TileType::OBJECT;
+			}
+		}
+		_UITile[0][2].SetObjectType = ObjectType::DESK;
+		_UITile[1][2].SetObjectType = ObjectType::DESK;
+		_UITile[2][2].SetObjectType = ObjectType::DESK;
+		_UITile[0][3].SetObjectType = ObjectType::DESK;
+		_UITile[1][3].SetObjectType = ObjectType::DESK;
+		_UITile[2][3].SetObjectType = ObjectType::DESK;
+
+		_UITile[3][2].SetObjectType = ObjectType::HEARTCRYSTAL;
+		_UITile[4][2].SetObjectType = ObjectType::HEARTCRYSTAL;
+		_UITile[3][3].SetObjectType = ObjectType::HEARTCRYSTAL;
+		_UITile[4][3].SetObjectType = ObjectType::HEARTCRYSTAL;
+
+		_UITile[5][2].SetObjectType = ObjectType::CHIR;
+		_UITile[6][2].SetObjectType = ObjectType::CHIR;
+		_UITile[5][3].SetObjectType = ObjectType::CHIR;
+		_UITile[6][3].SetObjectType = ObjectType::CHIR;
+
+		_UITile[0][4].SetObjectType = ObjectType::FURNACE;
+		_UITile[1][4].SetObjectType = ObjectType::FURNACE;
+		_UITile[2][4].SetObjectType = ObjectType::FURNACE;
+		_UITile[0][5].SetObjectType = ObjectType::FURNACE;
+		_UITile[1][5].SetObjectType = ObjectType::FURNACE;
+		_UITile[2][5].SetObjectType = ObjectType::FURNACE;
+
+		_UITile[3][4].SetObjectType = ObjectType::BOX;
+		_UITile[4][4].SetObjectType = ObjectType::BOX;
+		_UITile[3][5].SetObjectType = ObjectType::BOX;
+		_UITile[4][5].SetObjectType = ObjectType::BOX;
+
+		_UITile[5][4].SetObjectType = ObjectType::WORKBENCH;
+		_UITile[6][4].SetObjectType = ObjectType::WORKBENCH;
+
+		_UITile[5][5].SetObjectType = ObjectType::ANVIL;
+		_UITile[6][5].SetObjectType = ObjectType::ANVIL;
+
+		_UITile[0][6].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[1][6].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[0][7].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[1][7].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[0][8].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[1][8].SetObjectType = ObjectType::OPENDOOR;
+
+		_UITile[2][6].SetObjectType = ObjectType::CLOSEDOOR;
+		_UITile[2][7].SetObjectType = ObjectType::CLOSEDOOR;
+		_UITile[2][8].SetObjectType = ObjectType::CLOSEDOOR;
+
+		_UITile[3][6].SetObjectType = ObjectType::DEMONATLER;
+		_UITile[4][6].SetObjectType = ObjectType::DEMONATLER;
+		_UITile[5][6].SetObjectType = ObjectType::DEMONATLER;
+		_UITile[3][7].SetObjectType = ObjectType::DEMONATLER;
+		_UITile[4][7].SetObjectType = ObjectType::DEMONATLER;
+		_UITile[5][7].SetObjectType = ObjectType::DEMONATLER;
+		break;
+	case TileType::TREE:
+		for (int x = 0;x < 5;x++)
+		{
+			for (int y = 0;y < 10;y++)
+			{
+				_UITile[x][y].SetObjectType = ObjectType::TREE;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void MapTool::ButtonInit()
@@ -130,6 +300,7 @@ void MapTool::ButtonInit()
 	//_button[7] = RectMakeCenter();						//Block	 select
 	//_button[8] = RectMakeCenter();						//Obejct select
 }
+
 
 void MapTool::CameraControl()
 {
@@ -172,24 +343,30 @@ void MapTool::CameraControl()
 			_CameraPositon.x += 5;
 		}
 	}
+
+	if (_CameraPositon.x <= 0)
+	{
+		_CameraPositon.x = 0;
+	}
+	if (_CameraPositon.y <= 0)
+	{
+		_CameraPositon.y = 0;
+	}
+	if (_CameraPositon.x + WINSIZEX >= CAMERAMANAGER->getCameraSize().x)
+	{
+		_CameraPositon.x = CAMERAMANAGER->getCameraSize().x - WINSIZEX;
+	}
+	if (_CameraPositon.y + WINSIZEY >= CAMERAMANAGER->getCameraSize().y)
+	{
+		_CameraPositon.y = CAMERAMANAGER->getCameraSize().y - WINSIZEY;
+	}
+
 	CAMERAMANAGER->setCameraPos(_CameraPositon.x, _CameraPositon.y);
 }
 
 void MapTool::changeTileList()
 {
-	switch (_selectTile.SelectTileType)
-	{
-	case TileType::PLAYER:
-		break;
-	case TileType::ENEMY:
-		break;
-	case TileType::WALL:
-		break;
-	case TileType::BLOCK:
-		break;
-	case TileType::OBJECT:
-		break;
-	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		//if (PtInRect(&_button[], _ptMouse))
@@ -207,40 +384,187 @@ void MapTool::selectTile()
 		{
 			for (int y = 0;y < MaxBlockTile_Y;y++)
 			{
-				if (PtInRect(&_blockTile[x][y].rc, _ptMouse))
+				if (PtInRect(&_UITile[x][y].rc, _ptMouse))
 				{
-					_selectTile.Select = true;
-					_selectTile.FrameX = x;
-					_selectTile.FrameY = y;
+					switch (_UITile[x][y].SetTileType)
+					{
+					case TileType::PLAYER:
+						break;
+					case TileType::ENEMY:
+						break;
+					case TileType::WALL:
+						wallFrameSet(x, y-1);
+						break;
+					case TileType::BLOCK:
+						blockFrameSet(x, y);
+						break;
+					case TileType::OBJECT:
+						objectFrameSet(x, y-2);
+						break;
+					case TileType::TREE:
+						break;
+					default:
+						break;
+					}
+					
 				}
 			}
 		}
 	}
 }
 
+void MapTool::blockFrameSet(int x, int y)
+{
+	switch (_UITile[x][y].SetBlockType)
+	{
+	case BlockType::NONE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::DIRT:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::WOOD:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::STONE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::COPPER:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::IRON:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::GOLD:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	case BlockType::PLATINUM:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+		break;
+	}
+	_selectTile.SelectTileType = TileType::BLOCK;
+}
+
+void MapTool::wallFrameSet(int x, int y)
+{
+	switch (_UITile[x][y].SetWallType)
+	{
+	case WallType::NONE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectWallType = _UITile[x][y].SetWallType;
+		break;
+	case WallType::DIRT:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectWallType = _UITile[x][y].SetWallType;
+		break;
+	case WallType::WOOD:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectWallType = _UITile[x][y].SetWallType;
+		break;
+	case WallType::STONE:
+		_selectTile.FrameX = x;
+		_selectTile.FrameY = y;
+		_selectTile.SelectWallType = _UITile[x][y].SetWallType;
+		break;
+	}
+	
+	_selectTile.SelectTileType = TileType::WALL;
+}
+
+void MapTool::objectFrameSet(int x, int y)
+{
+}
+
+void MapTool::treeFrameSet(int x, int y)
+{
+}
+
 void MapTool::drawTile()
 {
+	RECT rc;
+	POINT start;
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)&&_ptMouse.x<WINSIZEX&&_ptMouse.y<WINSIZEY)
+	{
+		start = _ptMouse;
+	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		for (int x = 0;x < MaxTile_X;x++)
 		{
 			for (int y = 0;y < MaxTile_Y;y++)
 			{
-				if (PtInRect(&_Tile[x][y].rc, _ptMouse))
+				if (PtInRect(&_Tile[x][y].rc, PointMake(_CameraPositon.x+_ptMouse.x,_CameraPositon.y+_ptMouse.y)))
 				{
-					_Tile[x][y].blockType;
+					switch (_selectTile.SelectTileType)
+					{
+					case TileType::PLAYER:
+						break;
+					case TileType::ENEMY:
+						break;
+					case TileType::WALL:
+						_Tile[x][y].wallType = _selectTile.SelectWallType;
+						_Tile[x][y].FrameX2 = _selectTile.FrameX;
+						_Tile[x][y].FrameY2 = _selectTile.FrameY;
+						break;
+					case TileType::BLOCK:
+						_Tile[x][y].blockType = _selectTile.SelectBlockType;
+						_Tile[x][y].FrameX = _selectTile.FrameX;
+						_Tile[x][y].FrameY = _selectTile.FrameY;
+						break;
+					case TileType::OBJECT:
+						break;
+					case TileType::TREE:
+						break;
+					}
+					
 				}
 			}
 		}
 	}
+	
 }
 
 void MapTool::Save()
 {
+	HANDLE file;
+	DWORD write;
 
+	file = CreateFile("SaveFile.map", GENERIC_WRITE, 0, NULL,
+		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	WriteFile(file, _Tile, sizeof(tagTile) * MaxTile_X * MaxTile_Y, &write, NULL);
+
+	CloseHandle(file);
 }
 
 void MapTool::Load()
 {
+	HANDLE file;
+	DWORD read;
 
+	file = CreateFile("SaveFile.map", GENERIC_READ, 0, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	//맵을 불로온 직후 타일의 속성을 매겨준다
+	ReadFile(file, _Tile, sizeof(tagTile) * MaxTile_X * MaxTile_X, &read, NULL);
+
+	CloseHandle(file);
 }

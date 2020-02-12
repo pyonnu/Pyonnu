@@ -61,8 +61,14 @@ void playGround::imageAdd()
 	//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 	//타 일 이 미 지
-	IMAGEMANAGER->addFrameImage("Tiles_0", "Resources/Tiles/Tiles_0.bmp", 96, 64,3,2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("Tiles_1", "Resources/Tiles/Tiles_1.bmp", 96, 64, 3, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 256, 192, 8, 6, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("WallTiles", "Resources/Tiles/WallTiles/bmp", 96, 48, 6, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 256, 32, 8,1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("WallTiles", "Resources/Tiles/WallTiles.bmp", 128, 32, 4,1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ObjectTiles", "Resources/Tiles/ObjectTiles.bmp", 224, 224, 7, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Tree", "Resources/Tiles/Tree.bmp", 160, 320, 5, 10, true, RGB(255, 0, 255));
+	//백그라운드 이미지
+	IMAGEMANAGER->addImage("Background_1", "Resources/BackGrounds/Background_1.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_2", "Resources/BackGrounds/Background_2.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_3", "Resources/BackGrounds/Background_3.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_4", "Resources/BackGrounds/Background_4.bmp", 3840, 2240, true, RGB(255, 0, 255));
+
 }
