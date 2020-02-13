@@ -1,13 +1,5 @@
 #pragma once
-#include"gameNode.h"
-#include"Item.h"
-class Crafting :public gameNode
+class Crafting
 {
-private:
-public:
-	HRESULT init();
-	void release();
-	void update();
-	void render();
 };
 
