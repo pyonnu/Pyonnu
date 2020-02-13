@@ -3,7 +3,8 @@
 #include"EnemyManager.h"
 HRESULT Player::init()
 {
-
+	_enemyManager = new EnemyManager;
+	
 	return S_OK;
 }
 

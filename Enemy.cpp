@@ -12,8 +12,13 @@ void Enemy::release()
 
 void Enemy::update()
 {
+	Move();
 }
 
 void Enemy::render()
+{
+}
+
+void Enemy::Move()
 {
 }
