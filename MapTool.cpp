@@ -29,6 +29,10 @@ HRESULT MapTool::init()
 			_Tile[x][y].FrameY = 0;
 			_Tile[x][y].FrameX2 = 0;
 			_Tile[x][y].FrameY2 = 0;
+			_Tile[x][y].FrameX3 = 6;
+			_Tile[x][y].FrameY3 = 6;
+			_Tile[x][y].FrameX4 = 0;
+			_Tile[x][y].FrameY4 = 5;
 			_Tile[x][y].rc = RectMake(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
 			_Tile[x][y].blockType = BlockType::NONE;
 			_Tile[x][y].wallType = WallType::NONE;
@@ -48,7 +52,7 @@ HRESULT MapTool::init()
 	}
 	
 	
-
+	_start = { 0,0 };
 
 	_selectTile.FrameX = 0;
 	_selectTile.FrameY = 0;
@@ -70,12 +74,12 @@ void MapTool::release()
 void MapTool::update()
 {
 	CameraControl();
-	blockTileInit();
-
+	//ButtonControl();
+	//blockTileInit();
 	selectTile();
 	drawTile();
 
-	changeTileList();
+	//changeTileList();
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		Save();
@@ -93,7 +97,12 @@ void MapTool::render()
 
 void MapTool::draw()
 {
+	PatBlt(CAMERAMANAGER->getbackDC(), 0,0, WINSIZEX, WINSIZEY, BLACKNESS);
 	CAMERAMANAGER->render();
+
+	
+	IMAGEMANAGER->findImage("Background_1")->render(CAMERAMANAGER->getCameraDC(),_CameraPositon.x,_CameraPositon.y,_CameraPositon.x,_CameraPositon.y,WINSIZEX,WINSIZEY);
+
 	RECT temp;
 
 	for (int x = 0;x < MaxTile_X;x++)
@@ -105,9 +114,12 @@ void MapTool::draw()
 				//Rectangle(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc);
 				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX2, _Tile[x][y].FrameY2);
 				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX, _Tile[x][y].FrameY);
+				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX3, _Tile[x][y].FrameY3);
+				IMAGEMANAGER->findImage("Tree")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX4, _Tile[x][y].FrameY4);
 			}
 		}
 	}
+
 	//버튼 출력-------------------------------------------------------------------------------------------------------------------------------------------
 	for (int i = 0;i < 10;i++)
 	{
@@ -136,6 +148,7 @@ void MapTool::draw()
 	case TileType::WALL:
 	case TileType::BLOCK:
 	case TileType::OBJECT:
+	case TileType::TREE:
 		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
 			for (int y = 0;y < MaxBlockTile_Y;y++)
@@ -157,13 +170,11 @@ void MapTool::draw()
 				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y - 2);
 			}
 		}
-		break;
-	case TileType::TREE:
 		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
-			for (int y = 0;y < MaxBlockTile_Y;y++)
+			for (int y = 9;y < MaxBlockTile_Y;y++)
 			{
-				IMAGEMANAGER->findImage("Tree")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y);
+				IMAGEMANAGER->findImage("Tree")->frameRender(CAMERAMANAGER->getbackDC(), _UITile[x][y].rc.left + 4, _UITile[x][y].rc.top + 4, x, y-9);
 			}
 		}
 		break;
@@ -184,6 +195,7 @@ void MapTool::blockTileInit()
 	case TileType::WALL:
 	case TileType::BLOCK:
 	case TileType::OBJECT:
+	case TileType::TREE:
 		_UITile[0][0].SetTileType = TileType::BLOCK;
 		_UITile[1][0].SetTileType = TileType::BLOCK;
 		_UITile[2][0].SetTileType = TileType::BLOCK;
@@ -214,7 +226,7 @@ void MapTool::blockTileInit()
 
 		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
-			for (int y = 2;y < 8;y++)
+			for (int y = 2;y < 9;y++)
 			{
 				_UITile[x][y].SetTileType = TileType::OBJECT;
 			}
@@ -279,22 +291,19 @@ void MapTool::blockTileInit()
 		_UITile[4][7].SetObjectType = ObjectType::DEMONATLER;
 		_UITile[5][7].SetObjectType = ObjectType::DEMONATLER;
 
-
-		break;
-	case TileType::TREE:
-		for (int x = 0;x < 5;x++)
+		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
-			for (int y = 0;y < 10;y++)
+			for (int y = 9;y < MaxBlockTile_Y;y++)
 			{
+				_UITile[x][y].SetTileType = TileType::TREE;
 				_UITile[x][y].SetObjectType = ObjectType::TREE;
-				for (int x = 5;x < 8;x++)
+				for (int x = 5;x < MaxBlockTile_X;x++)
 				{
-					_UITile[x][y].SetObjectType = ObjectType::NONE;
+					_UITile[x][y].SetTileType = TileType::TREE;
+					_UITile[x][y].SetObjectType = ObjectType::TREE;
 				}
 			}
-			
 		}
-		
 		break;
 	default:
 		break;
@@ -304,15 +313,27 @@ void MapTool::blockTileInit()
 
 void MapTool::ButtonInit()
 {
-	_button[0] = RectMakeCenter(1440, 640, 40, 40);		//UP
-	_button[1] = RectMakeCenter(1440, 690, 40, 40);		//DOWN
-	_button[2] = RectMakeCenter(1390, 690, 40, 40);		//LEFT
-	_button[3] = RectMakeCenter(1490, 690, 40, 40);		//RIGHT
-	_button[4] = RectMakeCenter(1280, 800, 90, 40);		//Player select
-	_button[5] = RectMakeCenter(1296, 600, 48, 20);		//Enemy  select
-	//_button[6] = RectMakeCenter();						//Wall   select
+	_button[0] = RectMakeCenter(1440, 800, 40, 40);		//UP
+	_button[1] = RectMakeCenter(1440, 850, 40, 40);		//DOWN
+	_button[2] = RectMakeCenter(1390, 850, 40, 40);		//LEFT
+	_button[3] = RectMakeCenter(1490, 850, 40, 40);		//RIGHT
+	//_button[4] = RectMakeCenter(1280, 800, 90, 40);		//Player select
+	//_button[5] = RectMakeCenter(1296, 600, 48, 20);		//Enemy  select
+	//_button[6] = RectMakeCenter(1440,570,50,50);		
 	//_button[7] = RectMakeCenter();						//Block	 select
 	//_button[8] = RectMakeCenter();						//Obejct select
+}
+
+void MapTool::ButtonControl()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		if (PtInRect(&_button[6], _ptMouse))
+		{
+			_selectTile.SelectTileType = TileType::TREE;
+			
+		}
+	}
 }
 
 
@@ -416,7 +437,7 @@ void MapTool::selectTile()
 						objectFrameSet(x, y-2);
 						break;
 					case TileType::TREE:
-						treeFrameSet(x, y);
+						treeFrameSet(x, y-9);
 						break;
 					default:
 						break;
@@ -579,57 +600,58 @@ void MapTool::drawTile()
 {
 	RECT rc;
 	RECT temp;
-	POINT start;
+	
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		start = _ptMouse;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
-	{
-		//start = _ptMouse;
-		rc = RectMake(start.x, start.y, _ptMouse.x, _ptMouse.y);
+		_start.x = _ptMouse.x +_CameraPositon.x;
+		_start.y = _ptMouse.y + _CameraPositon.y;
+		//rc = RectMakeLTRB(_start.x, _start.y, 0, 0);
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
 	{
-		for (int x = 0;x < MaxTile_X;x++)
-		{
-			for (int y = 0;y < MaxTile_Y;y++)
-			{
-				if (IntersectRect(&temp,&_Tile[x][y].rc,&rc))
-				{
-					switch (_selectTile.SelectTileType)
-					{
-					case TileType::PLAYER:
-						break;
-					case TileType::ENEMY:
-						break;
-					case TileType::WALL:
-						_Tile[x][y].wallType = _selectTile.SelectWallType;
-						_Tile[x][y].FrameX2 = _selectTile.FrameX;
-						_Tile[x][y].FrameY2 = _selectTile.FrameY;
-						break;
-					case TileType::BLOCK:
-						_Tile[x][y].blockType = _selectTile.SelectBlockType;
-						_Tile[x][y].FrameX = _selectTile.FrameX;
-						_Tile[x][y].FrameY = _selectTile.FrameY;
-						break;
-					case TileType::OBJECT:
-						_Tile[x][y].objectType = _selectTile.SelectObjectType;
-						_Tile[x][y].FrameX3 = _selectTile.FrameX;
-						_Tile[x][y].FrameY3 = _selectTile.FrameY;
-						break;
-					case TileType::TREE:
-						_Tile[x][y].objectType = _selectTile.SelectObjectType;
-						_Tile[x][y].FrameX3 = _selectTile.FrameX;
-						_Tile[x][y].FrameY3 = _selectTile.FrameY;
-						break;
-					}
+		rc = RectMakeLTRB(_start.x, _start.y, _ptMouse.x+_CameraPositon.x, _ptMouse.y+_CameraPositon.y);
 
+			for (int x = 0;x < MaxTile_X;x++)
+			{
+				for (int y = 0;y < MaxTile_Y;y++)
+				{
+					if (IntersectRect(&temp,&_Tile[x][y].rc,&rc))
+					{
+						switch (_selectTile.SelectTileType)
+						{
+						case TileType::PLAYER:
+							break;
+						case TileType::ENEMY:
+							break;
+						case TileType::WALL:
+							_Tile[x][y].wallType = _selectTile.SelectWallType;
+							_Tile[x][y].FrameX2 = _selectTile.FrameX;
+							_Tile[x][y].FrameY2 = _selectTile.FrameY;
+							break;
+						case TileType::BLOCK:
+							_Tile[x][y].blockType = _selectTile.SelectBlockType;
+							_Tile[x][y].FrameX = _selectTile.FrameX;
+							_Tile[x][y].FrameY = _selectTile.FrameY;
+							break;
+						case TileType::OBJECT:
+							_Tile[x][y].objectType = _selectTile.SelectObjectType;
+							_Tile[x][y].FrameX3 = _selectTile.FrameX;
+							_Tile[x][y].FrameY3 = _selectTile.FrameY;
+							break;
+						case TileType::TREE:
+							_Tile[x][y].objectType = _selectTile.SelectObjectType;
+							_Tile[x][y].FrameX4 = _selectTile.FrameX;
+							_Tile[x][y].FrameY4 = _selectTile.FrameY;
+							break;
+						}
+
+					}
 				}
 			}
-		}
+		
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)&&_ptMouse.x<WINSIZEX&&_ptMouse.y<WINSIZEY)
 	{
 		for (int x = 0;x < MaxTile_X;x++)
 		{
@@ -660,8 +682,8 @@ void MapTool::drawTile()
 						break;
 					case TileType::TREE:
 						_Tile[x][y].objectType = _selectTile.SelectObjectType;
-						_Tile[x][y].FrameX3 = _selectTile.FrameX;
-						_Tile[x][y].FrameY3 = _selectTile.FrameY;
+						_Tile[x][y].FrameX4 = _selectTile.FrameX;
+						_Tile[x][y].FrameY4 = _selectTile.FrameY;
 						break;
 					}
 					
@@ -682,6 +704,7 @@ void MapTool::Save()
 
 	WriteFile(file, _Tile, sizeof(tagTile) * MaxTile_X * MaxTile_Y, &write, NULL);
 
+
 	CloseHandle(file);
 }
 
@@ -693,7 +716,7 @@ void MapTool::Load()
 	file = CreateFile("SaveFile.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	//맵을 불로온 직후 타일의 속성을 매겨준다
-	ReadFile(file, _Tile, sizeof(tagTile) * MaxTile_X * MaxTile_X, &read, NULL);
+	ReadFile(file, _Tile, sizeof(tagTile) * MaxTile_X*MaxTile_Y, &read, NULL);
 
 	CloseHandle(file);
 }

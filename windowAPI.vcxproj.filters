@@ -61,6 +61,21 @@
     <Filter Include="playGround\Enemy">
       <UniqueIdentifier>{ad96cc60-a967-48d4-8db5-fd2b9818c422}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\World">
+      <UniqueIdentifier>{2a6674c3-dc31-42f9-9568-a5450f68306a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Player">
+      <UniqueIdentifier>{8086d9a1-45fc-4523-b89d-d217b16f5c99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Inventory">
+      <UniqueIdentifier>{c8eecc65-3e45-4a77-a9f2-d7812df4a25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Crafting">
+      <UniqueIdentifier>{95e03f42-2a93-4686-903b-5eefd1442493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\UI">
+      <UniqueIdentifier>{93b7ef4d-4d92-4a34-bea1-597780b5e7c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +165,39 @@
     <ClInclude Include="Enemy.h">
       <Filter>playGround\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>playGround\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Demon.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DemonEye.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeOfCthulhu.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Crafting.h">
+      <Filter>playGround\Crafting</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>playGround\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>playGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -223,6 +271,39 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>playGround\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="DemonEye.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Demon.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeOfCthulhu.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>playGround\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Crafting.cpp">
+      <Filter>playGround\Crafting</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>playGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

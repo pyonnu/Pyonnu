@@ -8,8 +8,8 @@
 #define MaxTile_X 120	//최대 x크기
 #define MaxTile_Y 70	//최대 y크기
 
-#define MaxBlockTile_X 8
-#define MaxBlockTile_Y 10
+#define MaxBlockTile_X 9
+#define MaxBlockTile_Y 19
 enum class TileType
 {
 	PLAYER,ENEMY,WALL,BLOCK,OBJECT,TREE
@@ -22,6 +22,7 @@ struct tagTile
 	int FrameX, FrameY;
 	int FrameX2, FrameY2;
 	int FrameX3, FrameY3;
+	int FrameX4, FrameY4;
 	RECT rc;				//타일의 몸뚱아리
 	TileType tileType;		//타일의 종류
 	BlockType blockType;	//블럭의 종류
@@ -62,6 +63,7 @@ private:
 	tagSetTile _UITile[MaxBlockTile_X][MaxBlockTile_Y];
 	SelectTile _selectTile;
 	RECT _button[12];
+	POINT _start;
 public:
 
 	MapTool() {};
@@ -75,7 +77,7 @@ public:
 	void draw();
 	void blockTileInit();
 	void ButtonInit();
-	
+	void ButtonControl();
 	void CameraControl();				//카메라를 조종할 함수
 	void changeTileList();				//타일 목록을 바꿔줄 함수
 	void selectTile();					//클릭시 현재 선택한 타일을 바꾸어줄 함수

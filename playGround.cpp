@@ -46,9 +46,9 @@ void playGround::render()
 	//==================================================
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
-	
-	
-	
+
+
+
 	//===================================================
 	//딱 말했다
 	_backBuffer->render(getHDC(), 0, 0);
@@ -61,8 +61,8 @@ void playGround::imageAdd()
 	//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 	//타 일 이 미 지
-	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 256, 32, 8,1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("WallTiles", "Resources/Tiles/WallTiles.bmp", 128, 32, 4,1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BlockTiles", "Resources/Tiles/BlockTiles.bmp", 256, 32, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("WallTiles", "Resources/Tiles/WallTiles.bmp", 128, 32, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ObjectTiles", "Resources/Tiles/ObjectTiles.bmp", 224, 224, 7, 7, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Tree", "Resources/Tiles/Tree.bmp", 160, 320, 5, 10, true, RGB(255, 0, 255));
 	//백그라운드 이미지
@@ -70,5 +70,14 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Background_2", "Resources/BackGrounds/Background_2.bmp", 3840, 2240, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background_3", "Resources/BackGrounds/Background_3.bmp", 3840, 2240, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background_4", "Resources/BackGrounds/Background_4.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_5", "Resources/BackGrounds/Backgorund_5.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_6", "Resources/BackGrounds/Backgorund_6.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_7", "Resources/BackGrounds/Backgorund_7.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_8", "Resources/BackGrounds/Backgorund_8.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_9", "Resources/BackGrounds/Backgorund_9.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background_10", "Resources/BackGrounds/Backgorund_10.bmp", 3840, 2240, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Background1", "Resources/BackGrounds/Background1.bmp", 1280, 2987, 1, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Background2", "Resources/BackGrounds/Background2.bmp", 1280, 2987, 1, 4, true, RGB(255, 0, 255));
+
 
 }

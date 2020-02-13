@@ -19,6 +19,11 @@ inline void LineMake(HDC hdc, int startX, int startY, int endX, int endY)
 }
 
 //================= 렉트 관련 함쑤 ===================
+inline RECT RectMakeLTRB(int left, int top, int right, int bottom)
+{
+	RECT rc = { left,top,right,bottom };
+	return rc;
+}
 inline RECT RectMake(int x, int y, int width, int height)
 {
 	RECT rc = { x, y, x + width, y + height };
