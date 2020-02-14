@@ -10,12 +10,18 @@ struct PlayerInfo
 	float speed;
 	float damage;
 	float Defense;
-
+	image* Head;
+	image* Body;
+	image* Legs;
+	image* HeadArmor;
+	image* BodyArmor;
+	image* LegsArmor;
 };
 class Player :public gameNode
 {
 private:
 	EnemyManager* _enemyManager;
+	PlayerInfo _playerInfo;
 public:
 	HRESULT init();
 	void release();

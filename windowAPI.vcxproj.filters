@@ -76,6 +76,12 @@
     <Filter Include="playGround\UI">
       <UniqueIdentifier>{93b7ef4d-4d92-4a34-bea1-597780b5e7c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Map">
+      <UniqueIdentifier>{2bfbca78-37a1-4f2a-b07b-81a06bf906a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Tile">
+      <UniqueIdentifier>{6924ccc6-e552-483f-9c05-f3e2ded2149c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -198,6 +204,12 @@
     <ClInclude Include="UI.h">
       <Filter>playGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>playGround\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>playGround\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -304,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>playGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>playGround\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

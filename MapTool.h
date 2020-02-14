@@ -1,34 +1,11 @@
 #pragma once
 #include"gameNode.h"
 #include"Item.h"
+#include"Tile.h"
 #include<vector>
 
-#define TILESIZE 32			//타일 한개 사이즈
-//총 8,400타일
-#define MaxTile_X 120	//최대 x크기
-#define MaxTile_Y 70	//최대 y크기
-
-#define MaxBlockTile_X 9
+#define MaxBlockTile_X 8
 #define MaxBlockTile_Y 19
-enum class TileType
-{
-	PLAYER,ENEMY,WALL,BLOCK,OBJECT,TREE
-};
-//화면에 보일 타일종류
-struct tagTile
-{
-	int idx, idy;			//index번호
-	int x, y;				//실질적인 x,y좌표
-	int FrameX, FrameY;
-	int FrameX2, FrameY2;
-	int FrameX3, FrameY3;
-	int FrameX4, FrameY4;
-	RECT rc;				//타일의 몸뚱아리
-	TileType tileType;		//타일의 종류
-	BlockType blockType;	//블럭의 종류
-	WallType wallType;		//벽의 종류
-	ObjectType objectType;	//오브젝트의 종류
-};
 
 struct tagSetTile
 {

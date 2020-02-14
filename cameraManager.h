@@ -2,12 +2,14 @@
 #include "singletonBase.h"
 enum class cameraType
 {
-	MAPTOOL,PLAY,OPTION
+	MAPTOOL,WORLD,OPTION
 };
 class cameraManager:public singletonBase<cameraManager>
 {
 private:
 	cameraType _cameraType;
+	HDC _hdc1;
+	HDC _hdc2;
 
 	HDC _cameraDC;			//±×·ÁÁÙ dc
 	HBITMAP _hbit;			//bit¸Ê
@@ -29,7 +31,7 @@ public:
 	HRESULT init();
 	void release();
 	void render();
-
+	void changeCameraType();
 	void setCameraPos(float x, float y);
 
 	inline HDC getCameraDC() { return _cameraDC; }
@@ -43,5 +45,7 @@ public:
 	inline POINT getCameraPos() { return _pos; }
 
 	inline void setCameraSize(POINT cameraSize) { _cameraSize = cameraSize; }
+
+	inline void setCameraType(cameraType Type) { _cameraType = Type; }
 };
 

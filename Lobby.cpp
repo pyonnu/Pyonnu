@@ -22,11 +22,13 @@ void Lobby::update()
 			//게임시작 버튼
 			if (PtInRect(&_button[0], _ptMouse))
 			{
-
+				CAMERAMANAGER->setCameraType(cameraType::WORLD);
+				SCENEMANAGER->changeScene("World");
 			}
 			//맵툴 버튼
 			else if (PtInRect(&_button[1], _ptMouse))
 			{
+				CAMERAMANAGER->setCameraType(cameraType::MAPTOOL);
 				SCENEMANAGER->changeScene("MapToolScene");
 			}
 			//환경설정 버튼
