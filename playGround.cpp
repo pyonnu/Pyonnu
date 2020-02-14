@@ -76,9 +76,10 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addFrameImage("Background1", "Resources/BackGrounds/Background1.bmp", 1280, 2987, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Background2", "Resources/BackGrounds/Background2.bmp", 1280, 2987, 1, 4, true, RGB(255, 0, 255));
 	//플레이어 이미지
-	IMAGEMANAGER->addFrameImage("Player_Head", "Resources/Player/Player_Head.bmp", 40, 1200, 1, 20, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("Player_Body", "Resources/Player/Player_Body.bmp", 40, 1200, 1, 20, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("Player_Legs", "Resources/Player/Player_Legs.bmp", 40, 1200, 1, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Player_Head", "Resources/Player/Player_Head.bmp", 80, 1120, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Player_Body", "Resources/Player/Player_Body.bmp", 80, 1120, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Player_Legs", "Resources/Player/Player_Legs.bmp", 80, 1120, 2, 20, true, RGB(255, 0, 255));
+	//갑옷 이미지
 
 
 }

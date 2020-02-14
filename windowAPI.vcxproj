@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
+    <ClInclude Include="Attack.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Crafting.h" />
@@ -167,11 +168,13 @@
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Jump.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="Lobby.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapTool.h" />
+    <ClInclude Include="Move.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="randomFunction.h" />
@@ -196,6 +199,7 @@
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="Demon.cpp" />
@@ -210,11 +214,13 @@
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Jump.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="Scene.cpp" />

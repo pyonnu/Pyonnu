@@ -75,7 +75,7 @@ void MapTool::update()
 	//blockTileInit();
 	selectTile();
 	drawTile();
-
+	cout << (_ptMouse.x + _CameraPositon.x)/TILESIZE << endl;
 	//changeTileList();
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
@@ -96,7 +96,6 @@ void MapTool::draw()
 {
 	PatBlt(CAMERAMANAGER->getbackDC(), 0, 0, WINSIZEX, WINSIZEY, BLACKNESS);
 	CAMERAMANAGER->render();
-
 
 	IMAGEMANAGER->findImage("ÀÓ½ÃBackground_1")->render(CAMERAMANAGER->getCameraDC(), _CameraPositon.x, _CameraPositon.y, _CameraPositon.x, _CameraPositon.y, WINSIZEX, WINSIZEY);
 
@@ -275,8 +274,8 @@ void MapTool::blockTileInit()
 		_UITile[6][5].SetObjectType = ObjectType::ANVIL;
 		_UITile[7][5].SetObjectType = ObjectType::NONE;
 
-		_UITile[0][6].SetObjectType = ObjectType::OPENDOOR;
-		_UITile[1][6].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[0][6].SetObjectType = ObjectType::RIGHTOPENDOOR;
+		_UITile[1][6].SetObjectType = ObjectType::RIGHTOPENDOOR;
 		_UITile[2][6].SetObjectType = ObjectType::CLOSEDOOR;
 		_UITile[3][6].SetObjectType = ObjectType::DEMONATLER;
 		_UITile[4][6].SetObjectType = ObjectType::DEMONATLER;
@@ -284,8 +283,8 @@ void MapTool::blockTileInit()
 		_UITile[6][6].SetObjectType = ObjectType::NONE;
 		_UITile[7][6].SetObjectType = ObjectType::NONE;
 
-		_UITile[0][7].SetObjectType = ObjectType::OPENDOOR;
-		_UITile[1][7].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[0][7].SetObjectType = ObjectType::RIGHTOPENDOOR;
+		_UITile[1][7].SetObjectType = ObjectType::RIGHTOPENDOOR;
 		_UITile[2][7].SetObjectType = ObjectType::CLOSEDOOR;
 		_UITile[3][7].SetObjectType = ObjectType::DEMONATLER;
 		_UITile[4][7].SetObjectType = ObjectType::DEMONATLER;
@@ -293,8 +292,8 @@ void MapTool::blockTileInit()
 		_UITile[6][7].SetObjectType = ObjectType::NONE;
 		_UITile[7][7].SetObjectType = ObjectType::NONE;
 
-		_UITile[0][8].SetObjectType = ObjectType::OPENDOOR;
-		_UITile[1][8].SetObjectType = ObjectType::OPENDOOR;
+		_UITile[0][8].SetObjectType = ObjectType::RIGHTOPENDOOR;
+		_UITile[1][8].SetObjectType = ObjectType::RIGHTOPENDOOR;
 		_UITile[2][8].SetObjectType = ObjectType::CLOSEDOOR;
 		_UITile[3][8].SetObjectType = ObjectType::NONE;
 		_UITile[4][8].SetObjectType = ObjectType::NONE;
@@ -307,8 +306,8 @@ void MapTool::blockTileInit()
 		_UITile[2][9].SetObjectType = ObjectType::TREE;
 		_UITile[3][9].SetObjectType = ObjectType::TREE;
 		_UITile[4][9].SetObjectType = ObjectType::TREE;
-		_UITile[5][9].SetObjectType = ObjectType::NONE;
-		_UITile[6][9].SetObjectType = ObjectType::NONE;
+		_UITile[5][9].SetObjectType = ObjectType::LEFTOPENDOOR;
+		_UITile[6][9].SetObjectType = ObjectType::LEFTOPENDOOR;
 		_UITile[7][9].SetObjectType = ObjectType::NONE;
 
 		_UITile[0][10].SetObjectType = ObjectType::TREE;
@@ -316,8 +315,8 @@ void MapTool::blockTileInit()
 		_UITile[2][10].SetObjectType = ObjectType::TREE;
 		_UITile[3][10].SetObjectType = ObjectType::TREE;
 		_UITile[4][10].SetObjectType = ObjectType::TREE;
-		_UITile[5][10].SetObjectType = ObjectType::NONE;
-		_UITile[6][10].SetObjectType = ObjectType::NONE;
+		_UITile[5][10].SetObjectType = ObjectType::LEFTOPENDOOR;
+		_UITile[6][10].SetObjectType = ObjectType::LEFTOPENDOOR;
 		_UITile[7][10].SetObjectType = ObjectType::NONE;
 
 		_UITile[0][11].SetObjectType = ObjectType::TREE;
@@ -325,8 +324,8 @@ void MapTool::blockTileInit()
 		_UITile[2][11].SetObjectType = ObjectType::TREE;
 		_UITile[3][11].SetObjectType = ObjectType::TREE;
 		_UITile[4][11].SetObjectType = ObjectType::TREE;
-		_UITile[5][11].SetObjectType = ObjectType::NONE;
-		_UITile[6][11].SetObjectType = ObjectType::NONE;
+		_UITile[5][11].SetObjectType = ObjectType::LEFTOPENDOOR;
+		_UITile[6][11].SetObjectType = ObjectType::LEFTOPENDOOR;
 		_UITile[7][11].SetObjectType = ObjectType::NONE;
 
 		_UITile[0][12].SetObjectType = ObjectType::TREE;

@@ -82,6 +82,9 @@
     <Filter Include="playGround\Tile">
       <UniqueIdentifier>{6924ccc6-e552-483f-9c05-f3e2ded2149c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Action">
+      <UniqueIdentifier>{c8a43668-17b7-4835-b775-aeaf93a9a73d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -210,6 +213,15 @@
     <ClInclude Include="Tile.h">
       <Filter>playGround\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>playGround\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Jump.h">
+      <Filter>playGround\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>playGround\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -319,6 +331,15 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>playGround\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>playGround\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump.cpp">
+      <Filter>playGround\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>playGround\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

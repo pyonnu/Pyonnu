@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-class jump : public gameNode
+class Jump:public gameNode
 {
 private:
 	float _jumpPower;
@@ -15,13 +15,12 @@ private:
 	bool _isJumping;
 
 public:
-	jump();
-	~jump();
+	Jump();
+	~Jump();
 
 	HRESULT init();
 	void release();
 	void update();
-	void render();
 
 	void jumping(float* x, float* y, float jumpPower, float gravity);
 };

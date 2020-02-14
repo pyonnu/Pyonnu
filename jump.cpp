@@ -1,28 +1,26 @@
 #include "stdafx.h"
-#include "jump.h"
+#include "Jump.h"
 
-
-jump::jump()
+Jump::Jump()
 {
 }
 
-
-jump::~jump()
+Jump::~Jump()
 {
 }
 
-HRESULT jump::init()
+HRESULT Jump::init()
 {
 	_isJumping = _jumpPower = _gravity = 0;
 
 	return S_OK;
 }
 
-void jump::release()
+void Jump::release()
 {
 }
 
-void jump::update()
+void Jump::update()
 {
 	if (!_isJumping) return;
 
@@ -36,11 +34,7 @@ void jump::update()
 	}
 }
 
-void jump::render()
-{
-}
-
-void jump::jumping(float* x, float* y, float jumpPower, float gravity)
+void Jump::jumping(float* x, float* y, float jumpPower, float gravity)
 {
 	//점프중이면 리턴 이말은 점프중이면 실행하지마렁
 	if (_isJumping) return;
@@ -58,5 +52,4 @@ void jump::jumping(float* x, float* y, float jumpPower, float gravity)
 
 	_gravity = gravity;
 	_jumpPower = jumpPower;
-
 }
