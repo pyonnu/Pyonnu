@@ -23,7 +23,7 @@ public:
 	void render();
 
 
-	void setPlayerLink(Player* Link) { _player = Link; }
+	void PlayerLink(Player* Link) { _player = Link; }
 	vector<Enemy*> getVEnemy() { return _vEnemy; }
 	vector<Enemy*>::iterator getViEnemy() { return _viEnemy; }
 };

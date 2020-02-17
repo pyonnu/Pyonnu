@@ -18,6 +18,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <iostream>
+#include <unordered_map>
 
 using namespace std;
 #include "cameraManager.h"

@@ -3,18 +3,13 @@
 class Move:public gameNode
 {
 private:
-	float _Acceleration;
-	float _MaxSpeed;
-	float _Speed;
-	float _Deceleration;
-	float _Angle;
-	bool _Accelerating;
+	float* _x;
+	float* _y;
+
 public:
 	HRESULT init();
 	void release();
 	void update();
 
-	void Acceleration(float speed,float maxSpeed,float angle);
-	void Deceleration(float speed,float maxSpeed,float angle);
 };
 

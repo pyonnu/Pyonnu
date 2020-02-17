@@ -21,8 +21,8 @@ HRESULT MapTool::init()
 	{
 		for (int y = 0;y < MaxTile_Y;y++)
 		{
-			_Tile[x][y].idx = x;
-			_Tile[x][y].idy = y;
+			_Tile[x][y].index.x = x;
+			_Tile[x][y].index.y = y;
 			_Tile[x][y].x = x * TILESIZE;
 			_Tile[x][y].y = y * TILESIZE;
 			_Tile[x][y].FrameX = 0;
@@ -75,7 +75,6 @@ void MapTool::update()
 	//blockTileInit();
 	selectTile();
 	drawTile();
-	cout << (_ptMouse.x + _CameraPositon.x)/TILESIZE << endl;
 	//changeTileList();
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
@@ -97,8 +96,8 @@ void MapTool::draw()
 	PatBlt(CAMERAMANAGER->getbackDC(), 0, 0, WINSIZEX, WINSIZEY, BLACKNESS);
 	CAMERAMANAGER->render();
 
-	IMAGEMANAGER->findImage("ÀÓ½ÃBackground_1")->render(CAMERAMANAGER->getCameraDC(), _CameraPositon.x, _CameraPositon.y, _CameraPositon.x, _CameraPositon.y, WINSIZEX, WINSIZEY);
-
+	//IMAGEMANAGER->findImage("Background1")->render(CAMERAMANAGER->getCameraDC(), _CameraPositon.x, _CameraPositon.y, _CameraPositon.x, _CameraPositon.y, WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->findImage("Background6")->render(CAMERAMANAGER->getCameraDC(), _CameraPositon.x, _CameraPositon.y);
 	RECT temp;
 
 	for (int x = 0;x < MaxTile_X;x++)

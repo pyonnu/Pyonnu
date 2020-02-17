@@ -24,7 +24,8 @@ enum class ObjectType
 
 struct tagTile
 {
-	int idx, idy;			//index번호
+	POINT index;
+	//int idx, idy;			//index번호
 	int x, y;				//실질적인 x,y좌표
 	int FrameX, FrameY;
 	int FrameX2, FrameY2;
@@ -34,4 +35,14 @@ struct tagTile
 	BlockType blockType;	//블럭의 종류
 	WallType wallType;		//벽의 종류
 	ObjectType objectType;	//오브젝트의 종류
+
+	// 만약에 struct 나 class에서 비교 연산이 필요할때 선언해야한다.
+	//bool operator=( tagTile &other ) {
+	//	bool a;
+	//	a& index.x == other.index.x;
+	//	a& index.y == other.index.y;
+	//	a& x == other.x;
+	//	a& y == other.y;
+	//}
 };
+
