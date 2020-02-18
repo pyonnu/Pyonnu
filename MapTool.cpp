@@ -84,6 +84,11 @@ void MapTool::update()
 	{
 		Load();
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F3))
+	{
+		SCENEMANAGER->changeScene("LobbyScene");
+
+	}
 }
 
 void MapTool::render()

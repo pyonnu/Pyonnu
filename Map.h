@@ -6,7 +6,7 @@
 class Map :public gameNode
 {
 private:
-	tagTile* _Tile[MaxTile_X][MaxTile_Y];
+	tagTile _Tile[MaxTile_X][MaxTile_Y];
 	vector<tagTile*> _vTile;
 	vector<tagTile*>::iterator _viTile;
 
@@ -24,6 +24,5 @@ public:
 
 	map<POINT*, tagTile*> getMTile() { return _mTile; }
 
-	tagTile* getTile() { return &_Tile; }
 };
 

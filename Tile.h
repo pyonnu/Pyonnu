@@ -7,7 +7,7 @@
 #define MaxTile_Y 90	//최대 y크기
 enum class TileType
 {
-	PLAYER, ENEMY, WALL, BLOCK, OBJECT,
+	PLAYER, ENEMY, WALL, BLOCK, OBJECT,NONE
 };
 enum class BlockType
 {

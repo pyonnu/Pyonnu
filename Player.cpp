@@ -24,9 +24,9 @@ HRESULT Player::init()
 	_playerInfo.LegsFrameY = 0;
 
 	_playerInfo.x = WINSIZEX / 2;
-	_playerInfo.y = 1650;
+	_playerInfo.y = 1400;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
-	
+
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
 	_playerInfo.Body = IMAGEMANAGER->findImage("Player_Body");
 	_playerInfo.Legs = IMAGEMANAGER->findImage("Player_Legs");
@@ -44,18 +44,17 @@ void Player::release()
 
 void Player::update()
 {
-	
-	
+	PlayerIndexUpdate();
 	//cout << _mTile.find(&_playerInfo.D1Index)->second->rc.left << endl;
-	
+	//cout << _playerInfo.index.x << endl;
+	//cout << _vTile[_playerInfo.index.x * MaxTile_Y + _playerInfo.index.y]->index.y << endl;
 	Action();
 	Frame();
 
 	BlockCollision();
 	_jump->update();
-	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, _playerInfo.Head->getFrameWidth(), _playerInfo.Head->getFrameHeight() - 18);
-	_playerInfo.dRect = RectMake(_playerInfo.x, _playerInfo.rect.bottom, _playerInfo.Head->getFrameWidth(), 10);
-	
+	_playerInfo.rect = RectMakeCenter(_playerInfo.x, _playerInfo.y, _playerInfo.Head->getFrameWidth(), _playerInfo.Head->getFrameHeight() - 18);
+	//_playerInfo.dRect = RectMake(_playerInfo.x, _playerInfo.rect.bottom, _playerInfo.Head->getFrameWidth(), 10);
 
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 }
@@ -63,7 +62,7 @@ void Player::update()
 void Player::render()
 {
 	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.rect);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.dRect);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.dRect);
 	_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.HeadFrameY);
 	_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.BodyFrameY);
 	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.LegsFrameY);
@@ -71,8 +70,8 @@ void Player::render()
 
 void Player::PlayerIndexUpdate()
 {
-	_playerInfo.index.x = _playerInfo.x / TILESIZE;
-	_playerInfo.index.y = _playerInfo.y / TILESIZE;
+	_playerInfo.index.x = _playerInfo.rect.left / TILESIZE;
+	_playerInfo.index.y = _playerInfo.rect.top / TILESIZE;
 
 	_playerInfo.L1Index.x = _playerInfo.index.x - 1;
 	_playerInfo.L1Index.y = _playerInfo.index.y;
@@ -139,6 +138,14 @@ void Player::Action()
 		_playerInfo.HeadState = PlayerHeadState::IDLE;
 		_playerInfo.BodyState = PlayerBodyState::IDLE;
 		_playerInfo.LegsState = PlayerLegsState::IDLE;
+	}
+	if (KEYMANAGER->isStayKeyDown('W'))
+	{
+		_playerInfo.y -= 5;
+	}
+	if (KEYMANAGER->isStayKeyDown('S'))
+	{
+		_playerInfo.y += 5;
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -211,37 +218,107 @@ void Player::BlockCollision()
 {
 	//LeftBlockCollision();
 	//RightBlockCollision();
-	//UpBlockCollision();
+	UpBlockCollision();
 	DownBlockCollision();
 }
 
 void Player::LeftBlockCollision()
 {
-	/*if (_mTile.find(&_playerInfo.L1Index)->second->tileType == TileType::BLOCK)
+	RECT temp;
+	BlockType	LeftBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
+	BlockType	LeftBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->blockType;
+	BlockType	LeftBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->blockType;
+	TileType	LeftTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
+	TileType	LeftTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->tileType;
+	TileType	LeftTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->tileType;
+	RECT		LeftTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
+	RECT		LeftTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->rc;
+	RECT		LeftTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->rc;
+	if (LeftTileType1 == TileType::BLOCK && LeftBlockType1 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect1, &_playerInfo.rect))
 	{
-		_mTile.find(&_playerInfo.L1Index)->second->rc;
+		_playerInfo.x = LeftTileRect1.right + _playerInfo.Head->getFrameWidth() / 2;
 	}
-	if (_mTile.find(&_playerInfo.L2Index)->second->tileType == TileType::BLOCK)
+	if (LeftTileType2 == TileType::BLOCK && LeftBlockType2 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect2, &_playerInfo.rect))
 	{
-		_mTile.find(&_playerInfo.L2Index)->second->rc;
+		_playerInfo.x = LeftTileRect2.right + _playerInfo.Head->getFrameWidth() / 2;
 	}
-	if (_mTile.find(&_playerInfo.L3Index)->second->tileType == TileType::BLOCK)
+	if (LeftTileType3 == TileType::BLOCK && LeftBlockType3 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect3, &_playerInfo.rect))
 	{
-		_mTile.find(&_playerInfo.L3Index)->second->rc;
-	}*/
+		_playerInfo.x = LeftTileRect3.right + _playerInfo.Head->getFrameWidth() / 2;
+	}
 }
 
 void Player::RightBlockCollision()
 {
-
+	RECT temp;
+	BlockType	RightBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->blockType;
+	BlockType	RightBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->blockType;
+	BlockType	RightBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->blockType;
+	TileType	RightTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->tileType;
+	TileType	RightTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->tileType;
+	TileType	RightTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->tileType;
+	RECT		RightTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->rc;
+	RECT		RightTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->rc;
+	RECT	    RightTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->rc;
+	if (RightTileType1 == TileType::BLOCK && RightBlockType1 != BlockType::NONE && IntersectRect(&temp, &RightTileRect1, &_playerInfo.rect))
+	{
+		_playerInfo.x = RightTileRect1.left - _playerInfo.Head->getFrameWidth() / 2;
+	}
+	if (RightTileType2 == TileType::BLOCK && RightBlockType2 != BlockType::NONE && IntersectRect(&temp, &RightTileRect2, &_playerInfo.rect))
+	{
+		_playerInfo.x = RightTileRect2.left - _playerInfo.Head->getFrameWidth() / 2;
+	}
+	if (RightTileType3 == TileType::BLOCK && RightBlockType3 != BlockType::NONE && IntersectRect(&temp, &RightTileRect3, &_playerInfo.rect))
+	{
+		_playerInfo.x = RightTileRect3.left - _playerInfo.Head->getFrameWidth() / 2;
+	}
 }
 
 void Player::UpBlockCollision()
 {
+	RECT temp;
+	BlockType	upBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
+	BlockType	upBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->blockType;
+	TileType	upTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
+	TileType	upTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->tileType;
+	RECT		upTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
+	RECT		upTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->rc;
+	if (upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.rect))
+	{
+		_playerInfo.y = upTileRect1.bottom + (_playerInfo.Head->getFrameHeight() - 18) / 2;
+
+	}
+	if (upTileType2 == TileType::BLOCK && upBlockType2 != BlockType::NONE && IntersectRect(&temp, &upTileRect2, &_playerInfo.dRect))
+	{
+		_playerInfo.y = upTileRect2.bottom + (_playerInfo.Head->getFrameHeight() - 18) / 2;
+
+	}
 }
 
 void Player::DownBlockCollision()
 {
 	RECT temp;
+	BlockType downBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->blockType;
+	BlockType downBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->blockType;
+	TileType downTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->tileType;
+	TileType downTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->tileType;
+	RECT	 downTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->rc;
+	RECT	 downTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->rc;
+	if (downTileType1 == TileType::BLOCK && downBlockType1 != BlockType::NONE && IntersectRect(&temp, &downTileRect1, &_playerInfo.rect))
+	{
+		_playerInfo.y = downTileRect1.top - (_playerInfo.Head->getFrameHeight() - 18) / 2;
+		cout << "블록" << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->rc.left << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->index.x << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->index.y << endl;
+	}
+	if (downTileType2 == TileType::BLOCK && downBlockType2 != BlockType::NONE && IntersectRect(&temp, &downTileRect2, &_playerInfo.dRect))
+	{
+		_playerInfo.y = downTileRect2.top - (_playerInfo.Head->getFrameHeight() - 18) / 2;
+		cout << "블록" << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->rc.left << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->index.x << endl;
+		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->index.y << endl;
+	}
 
 }

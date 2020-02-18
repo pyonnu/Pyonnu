@@ -83,6 +83,8 @@ private:
 	vector<tagTile*> _vTile;
 	vector<tagTile*>::iterator _viTile;
 
+	map<POINT*, tagTile*> _mTile;
+
 public:
 	HRESULT init();
 	void release();
@@ -98,11 +100,12 @@ public:
 	void UpBlockCollision();
 	void DownBlockCollision();
 	void EnemyManagerLink(EnemyManager* Link) { _enemyManager = Link; }
-	void setTile(tagTile* tile) { _Tile = tile; }
+
+	//void setTile(tagTile* tile) { _Tile = tile; }
 	void setVTile(vector<tagTile*> vtile) { _vTile = vtile; }
 	void setViTile(vector<tagTile*>::iterator viTile) { _viTile = viTile; }
 
-
+	//void setTile(tagTile tile) { _Tile[MaxTile_X][MaxTile_Y] = tile; }
 
 	PlayerInfo getPlayerInfo() { return _playerInfo; }
 };

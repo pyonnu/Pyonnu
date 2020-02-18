@@ -19,7 +19,7 @@ HRESULT World::init()
 	_player->setVTile(_map->getVTile());
 	_player->setViTile(_map->getViTile());
 
-
+	//_player->setTile(_map->getTile());
 
 	return S_OK;
 }
