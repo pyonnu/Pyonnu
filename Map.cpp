@@ -46,7 +46,7 @@ void Map::render()
 
 void Map::render(float x, float y)
 {
-	IMAGEMANAGER->findImage("Background6")->render(CAMERAMANAGER->getCameraDC(), x, y);
+	IMAGEMANAGER->findImage("Background7")->render(CAMERAMANAGER->getCameraDC(),x,y);
 	RECT temp;
 	
 	for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
@@ -54,7 +54,6 @@ void Map::render(float x, float y)
 		
 		if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
 		{
-			Rectangle(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc);
 			if (((*_viTile)->wallType != WallType::NONE && (*_viTile)->blockType == BlockType::NONE) || ((*_viTile)->wallType != WallType::NONE && (*_viTile)->objectType == ObjectType::NONE))
 			{
 				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX2, (*_viTile)->FrameY2);
@@ -85,7 +84,6 @@ void Map::setMap()
 		for (int y = 0;y < MaxTile_Y;y++)
 		{
 			_vTile.push_back(&_Tile[x][y]);
-			_mTile.insert(make_pair(&_Tile[x][y].index, &_Tile[x][y]));
 		}
 	}
 	CloseHandle(file);

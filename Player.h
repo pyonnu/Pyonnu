@@ -25,23 +25,12 @@ enum class PlayerLegsState
 struct PlayerInfo
 {
 	POINT index;
-	POINT L1Index;
-	POINT L2Index;
-	POINT L3Index;
-	POINT U1Index;
-	POINT U2Index;
-	POINT R1Index;
-	POINT R2Index;
-	POINT R3Index;
-	POINT D1Index;
-	POINT D2Index;
 	float x, y;
 	RECT rect;
-	RECT lRect;
-	RECT rRect;
-	RECT uRect;
-	RECT dRect;
-
+	RECT Lrect;
+	RECT Trect;
+	RECT Rrect;
+	RECT Brect;
 	RECT attackRect;
 	float speed;
 	float damage;
@@ -67,6 +56,7 @@ struct PlayerInfo
 	bool Right;
 	bool Down;
 
+	bool jump;
 };
 class Player :public gameNode
 {
@@ -74,24 +64,24 @@ private:
 	EnemyManager* _enemyManager;
 	Item* _item;
 	PlayerInfo _playerInfo;
+
 	Move* _move;
 	Jump* _jump;
 	Attack* _attack;
+
+	float _gravity;
 
 	tagTile _Tile[MaxTile_X][MaxTile_Y];
 	
 	vector<tagTile*> _vTile;
 	vector<tagTile*>::iterator _viTile;
-
-	map<POINT*, tagTile*> _mTile;
-
 public:
 	HRESULT init();
 	void release();
 	void update();
 	void render();
 
-	void PlayerIndexUpdate();
+	void PlayerInfoUpdate();
 	void Action();
 	void Frame();
 	void BlockCollision();

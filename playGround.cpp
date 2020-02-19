@@ -78,6 +78,7 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addFrameImage("Background4", "Resources/BackGrounds/Background4.bmp", 7680, 2880, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background5", "Resources/BackGrounds/Background5.bmp", 1280, 720,  true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background6", "Resources/BackGrounds/Background6.bmp", 1280, 720, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Background7", "Resources/BackGrounds/Background7.bmp", 1600,900, true, RGB(255, 0, 255));
 	//플레이어 이미지
 	IMAGEMANAGER->addFrameImage("Player_Head", "Resources/Player/Player_Head.bmp", 80*2, 2*1120, 2, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Player_Body", "Resources/Player/Player_Body.bmp", 80*2, 2*1120, 2, 20, true, RGB(255, 0, 255));

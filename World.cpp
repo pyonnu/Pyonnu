@@ -15,11 +15,11 @@ HRESULT World::init()
 	_player->EnemyManagerLink(_enemyManager);
 
 	_ui->init();
-	//_player->setTile(_map->getTile());
+
 	_player->setVTile(_map->getVTile());
 	_player->setViTile(_map->getViTile());
 
-	//_player->setTile(_map->getTile());
+
 
 	return S_OK;
 }
@@ -39,7 +39,7 @@ void World::update()
 void World::render()
 {
 	CAMERAMANAGER->render();
-	_map->render(_player->getPlayerInfo().x,_player->getPlayerInfo().y);
+	_map->render(_player->getPlayerInfo().x-WINSIZEX/2-160,_player->getPlayerInfo().y-WINSIZEY/2-90);
 	_player->render();
 	_enemyManager->render();
 	_ui->render();

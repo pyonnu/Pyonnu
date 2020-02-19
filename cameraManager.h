@@ -1,5 +1,6 @@
 #pragma once
 #include "singletonBase.h"
+#include"image.h"
 enum class cameraType
 {
 	MAPTOOL,WORLD,OPTION

@@ -42,4 +42,14 @@ namespace SEVENTEEN_UTIL
 		return angle;
 
 	}
+	LONG getRectWidth(RECT rc)
+	{
+		LONG WidthSize = rc.right - rc.left;
+		return WidthSize;
+	}
+	LONG getRectHeight(RECT rc)
+	{
+		LONG HeightSize = rc.bottom - rc.top;
+		return HeightSize;
+	}
 }

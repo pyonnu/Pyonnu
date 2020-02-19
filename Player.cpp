@@ -8,7 +8,7 @@ HRESULT Player::init()
 	_attack = new Attack;
 	_item = new Item;
 
-	_jump->init();
+	//_jump->init(&_playerInfo.y);
 	_move->init();
 	_attack->init();
 	_item->init();
@@ -30,11 +30,11 @@ HRESULT Player::init()
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
 	_playerInfo.Body = IMAGEMANAGER->findImage("Player_Body");
 	_playerInfo.Legs = IMAGEMANAGER->findImage("Player_Legs");
-	_playerInfo.dRect = RectMake(_playerInfo.x, _playerInfo.rect.bottom, _playerInfo.Head->getFrameWidth(), 10);
 	_playerInfo.HeadArmor = NULL;
 	_playerInfo.BodyArmor = NULL;
 	_playerInfo.LegsArmor = NULL;
 
+	_gravity = 0.05f;
 	return S_OK;
 }
 
@@ -44,72 +44,61 @@ void Player::release()
 
 void Player::update()
 {
-	PlayerIndexUpdate();
-	//cout << _mTile.find(&_playerInfo.D1Index)->second->rc.left << endl;
-	//cout << _playerInfo.index.x << endl;
-	//cout << _vTile[_playerInfo.index.x * MaxTile_Y + _playerInfo.index.y]->index.y << endl;
+	BlockCollision();
 	Action();
 	Frame();
 
-	BlockCollision();
-	_jump->update();
-	_playerInfo.rect = RectMakeCenter(_playerInfo.x, _playerInfo.y, _playerInfo.Head->getFrameWidth(), _playerInfo.Head->getFrameHeight() - 18);
-	//_playerInfo.dRect = RectMake(_playerInfo.x, _playerInfo.rect.bottom, _playerInfo.Head->getFrameWidth(), 10);
-
+	//_jump->update(_playerInfo.Down,_playerInfo.Up);
+	
+	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 }
 
 void Player::render()
 {
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.rect);
-	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.dRect);
-	_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.HeadFrameY);
-	_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.BodyFrameY);
-	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left, _playerInfo.rect.top - 15, _playerInfo.FrameX, _playerInfo.LegsFrameY);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 0) + _playerInfo.index.y + 3]->rc);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->rc);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 3]->rc);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.rect);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Lrect);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Trect);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Rrect);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Brect);
+	_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
+	_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
+	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
 }
 
-void Player::PlayerIndexUpdate()
+void Player::PlayerInfoUpdate()
 {
-	_playerInfo.index.x = _playerInfo.rect.left / TILESIZE;
+	_playerInfo.rect = RectMakeCenter(_playerInfo.x, _playerInfo.y, 60, 85);
+	_playerInfo.Lrect = RectMake(_playerInfo.rect.left -1, _playerInfo.rect.top, 1, getRectHeight(_playerInfo.rect));
+	_playerInfo.Rrect = RectMake(_playerInfo.rect.right, _playerInfo.rect.top, 1,getRectHeight(_playerInfo.rect));
+	_playerInfo.Trect = RectMake(_playerInfo.rect.left, _playerInfo.rect.top-1, getRectWidth(_playerInfo.rect),1);
+	_playerInfo.Brect = RectMake(_playerInfo.rect.left, _playerInfo.rect.bottom, getRectWidth(_playerInfo.rect), 1);
+	_playerInfo.index.x = (_playerInfo.rect.left+15) / TILESIZE;
 	_playerInfo.index.y = _playerInfo.rect.top / TILESIZE;
-
-	_playerInfo.L1Index.x = _playerInfo.index.x - 1;
-	_playerInfo.L1Index.y = _playerInfo.index.y;
-	_playerInfo.L2Index.x = _playerInfo.index.x - 1;
-	_playerInfo.L2Index.y = _playerInfo.index.y + 1;
-	_playerInfo.L3Index.x = _playerInfo.index.x - 1;
-	_playerInfo.L3Index.y = _playerInfo.index.y + 2;
-
-	_playerInfo.R1Index.x = _playerInfo.index.x + 2;
-	_playerInfo.R1Index.y = _playerInfo.index.y;
-	_playerInfo.R2Index.x = _playerInfo.index.x + 2;
-	_playerInfo.R2Index.y = _playerInfo.index.y + 1;
-	_playerInfo.R3Index.x = _playerInfo.index.x + 2;
-	_playerInfo.R3Index.y = _playerInfo.index.y + 2;
-
-	_playerInfo.U1Index.x = _playerInfo.index.x;
-	_playerInfo.U1Index.y = _playerInfo.index.y - 1;
-	_playerInfo.U2Index.x = _playerInfo.index.x + 1;
-	_playerInfo.U2Index.y = _playerInfo.index.y - 1;
-
-	_playerInfo.D1Index.x = _playerInfo.index.x;
-	_playerInfo.D1Index.y = _playerInfo.index.y + 3;
-	_playerInfo.D2Index.x = _playerInfo.index.x + 1;
-	_playerInfo.D2Index.y = _playerInfo.index.y + 3;
-
 }
 
 void Player::Action()
 {
+	if (_playerInfo.Up)
+	{
+		_playerInfo.jump = false;
+	}
 	if (_playerInfo.Down)
 	{
-		_playerInfo.y;
+		_gravity = 0;
+		_playerInfo.jump = false;
+		cout << "밑블록" << endl;
 	}
 	else
 	{
-		//중력 적용
+		_gravity -= 0.25f;
+		if (_gravity <= -20)_gravity = -20;
 	}
-	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x >= 0)
+	_playerInfo.y -= _gravity;
+	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x >= 0 && !_playerInfo.Left)
 	{
 		_playerInfo.direction = PlayerDirection::LEFT;
 		_playerInfo.HeadState = PlayerHeadState::MOVE;
@@ -124,7 +113,7 @@ void Player::Action()
 		_playerInfo.BodyState = PlayerBodyState::IDLE;
 		_playerInfo.LegsState = PlayerLegsState::IDLE;
 	}
-	if (KEYMANAGER->isStayKeyDown('D') && _playerInfo.x <= TILESIZE * MaxTile_X)
+	if (KEYMANAGER->isStayKeyDown('D') && _playerInfo.x <= TILESIZE * MaxTile_X && !_playerInfo.Right)
 	{
 		_playerInfo.direction = PlayerDirection::RIGHT;
 		_playerInfo.HeadState = PlayerHeadState::MOVE;
@@ -139,24 +128,28 @@ void Player::Action()
 		_playerInfo.BodyState = PlayerBodyState::IDLE;
 		_playerInfo.LegsState = PlayerLegsState::IDLE;
 	}
-	if (KEYMANAGER->isStayKeyDown('W'))
+	if (KEYMANAGER->isStayKeyDown('W') && !_playerInfo.Up)
 	{
 		_playerInfo.y -= 5;
 	}
-	if (KEYMANAGER->isStayKeyDown('S'))
+	if (KEYMANAGER->isStayKeyDown('S')&& !_playerInfo.Down)
 	{
 		_playerInfo.y += 5;
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_jump->jumping(&_playerInfo.x, &_playerInfo.y, 10, 0.5f);
+		//_jump->jumping(&_playerInfo.x, &_playerInfo.y,20, 0.5f);
+		_playerInfo.jump = true;
 	}
-
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		_playerInfo.BodyState = PlayerBodyState::ATTACK;
 	}
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
+	if (_playerInfo.jump)
+	{
+		_playerInfo.y -= 10;
+	}
 }
 
 void Player::Frame()
@@ -216,8 +209,8 @@ void Player::Frame()
 
 void Player::BlockCollision()
 {
-	//LeftBlockCollision();
-	//RightBlockCollision();
+	LeftBlockCollision();
+	RightBlockCollision();
 	UpBlockCollision();
 	DownBlockCollision();
 }
@@ -228,70 +221,73 @@ void Player::LeftBlockCollision()
 	BlockType	LeftBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
 	BlockType	LeftBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->blockType;
 	BlockType	LeftBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->blockType;
-	TileType	LeftTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
+	TileType	LeftTileType1 = _vTile[MaxTile_Y *  _playerInfo.index.x + _playerInfo.index.y]->tileType;
 	TileType	LeftTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->tileType;
 	TileType	LeftTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->tileType;
 	RECT		LeftTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
 	RECT		LeftTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->rc;
 	RECT		LeftTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->rc;
-	if (LeftTileType1 == TileType::BLOCK && LeftBlockType1 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect1, &_playerInfo.rect))
+	if ((LeftTileType1 == TileType::BLOCK && LeftBlockType1 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect1, &_playerInfo.Lrect))||
+		(LeftTileType2 == TileType::BLOCK && LeftBlockType2 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect2, &_playerInfo.Lrect))||
+		(LeftTileType3 == TileType::BLOCK && LeftBlockType3 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect3, &_playerInfo.Lrect)))
 	{
-		_playerInfo.x = LeftTileRect1.right + _playerInfo.Head->getFrameWidth() / 2;
+		_playerInfo.Left = true;
+		cout << "왼쪽 블럭" << endl;
 	}
-	if (LeftTileType2 == TileType::BLOCK && LeftBlockType2 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect2, &_playerInfo.rect))
+	else
 	{
-		_playerInfo.x = LeftTileRect2.right + _playerInfo.Head->getFrameWidth() / 2;
+		_playerInfo.Left = false;
 	}
-	if (LeftTileType3 == TileType::BLOCK && LeftBlockType3 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect3, &_playerInfo.rect))
-	{
-		_playerInfo.x = LeftTileRect3.right + _playerInfo.Head->getFrameWidth() / 2;
-	}
+
+	
 }
 
 void Player::RightBlockCollision()
 {
 	RECT temp;
-	BlockType	RightBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->blockType;
-	BlockType	RightBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->blockType;
-	BlockType	RightBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->blockType;
-	TileType	RightTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->tileType;
-	TileType	RightTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->tileType;
-	TileType	RightTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->tileType;
-	RECT		RightTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->rc;
-	RECT		RightTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 1]->rc;
-	RECT	    RightTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 2]->rc;
-	if (RightTileType1 == TileType::BLOCK && RightBlockType1 != BlockType::NONE && IntersectRect(&temp, &RightTileRect1, &_playerInfo.rect))
+	BlockType	RightBlockType1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->blockType;
+	BlockType	RightBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->blockType;
+	BlockType	RightBlockType3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->blockType;
+	TileType	RightTileType1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->tileType;
+	TileType	RightTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->tileType;
+	TileType	RightTileType3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->tileType;
+	RECT		RightTileRect1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->rc;
+	RECT		RightTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->rc;
+	RECT	    RightTileRect3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->rc;
+	if ((RightTileType1 == TileType::BLOCK && RightBlockType1 != BlockType::NONE && IntersectRect(&temp, &RightTileRect1, &_playerInfo.Rrect)) ||
+		(RightTileType2 == TileType::BLOCK && RightBlockType2 != BlockType::NONE && IntersectRect(&temp, &RightTileRect2, &_playerInfo.Rrect)) ||
+		(RightTileType3 == TileType::BLOCK && RightBlockType3 != BlockType::NONE && IntersectRect(&temp, &RightTileRect3, &_playerInfo.Rrect)))
 	{
-		_playerInfo.x = RightTileRect1.left - _playerInfo.Head->getFrameWidth() / 2;
+		//_playerInfo.x = RightTileRect3.left - _playerInfo.Head->getFrameWidth() / 2;
+		_playerInfo.Right = true;
+		cout << "오른쪽 블럭" << endl;
 	}
-	if (RightTileType2 == TileType::BLOCK && RightBlockType2 != BlockType::NONE && IntersectRect(&temp, &RightTileRect2, &_playerInfo.rect))
+	else
 	{
-		_playerInfo.x = RightTileRect2.left - _playerInfo.Head->getFrameWidth() / 2;
+		_playerInfo.Right = false;
 	}
-	if (RightTileType3 == TileType::BLOCK && RightBlockType3 != BlockType::NONE && IntersectRect(&temp, &RightTileRect3, &_playerInfo.rect))
-	{
-		_playerInfo.x = RightTileRect3.left - _playerInfo.Head->getFrameWidth() / 2;
-	}
+	
 }
 
 void Player::UpBlockCollision()
 {
 	RECT temp;
 	BlockType	upBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
-	BlockType	upBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->blockType;
+	BlockType	upBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->blockType;
 	TileType	upTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
-	TileType	upTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->tileType;
+	TileType	upTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->tileType;
 	RECT		upTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
-	RECT		upTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y]->rc;
-	if (upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.rect))
+	RECT		upTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->rc;
+	if ((upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.Trect))||
+		(upTileType2 == TileType::BLOCK && upBlockType2 != BlockType::NONE && IntersectRect(&temp, &upTileRect2, &_playerInfo.Trect)))
 	{
-		_playerInfo.y = upTileRect1.bottom + (_playerInfo.Head->getFrameHeight() - 18) / 2;
-
+		_playerInfo.Up = true;
+		_playerInfo.y = upTileRect1.bottom + getRectHeight(_playerInfo.rect) / 2;
+		cout << "위 블럭" << endl;
 	}
-	if (upTileType2 == TileType::BLOCK && upBlockType2 != BlockType::NONE && IntersectRect(&temp, &upTileRect2, &_playerInfo.dRect))
+	else
 	{
-		_playerInfo.y = upTileRect2.bottom + (_playerInfo.Head->getFrameHeight() - 18) / 2;
-
+		_playerInfo.Up = false;
 	}
 }
 
@@ -299,26 +295,21 @@ void Player::DownBlockCollision()
 {
 	RECT temp;
 	BlockType downBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->blockType;
-	BlockType downBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->blockType;
+	BlockType downBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->blockType;
 	TileType downTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->tileType;
-	TileType downTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->tileType;
+	TileType downTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->tileType;
 	RECT	 downTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->rc;
-	RECT	 downTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->rc;
-	if (downTileType1 == TileType::BLOCK && downBlockType1 != BlockType::NONE && IntersectRect(&temp, &downTileRect1, &_playerInfo.rect))
+	RECT	 downTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->rc;
+	if ((downTileType1 == TileType::BLOCK && downBlockType1 != BlockType::NONE && IntersectRect(&temp, &downTileRect1, &_playerInfo.Brect)) ||
+		(downTileType2 == TileType::BLOCK && downBlockType2 != BlockType::NONE && IntersectRect(&temp, &downTileRect2, &_playerInfo.Brect)))
 	{
-		_playerInfo.y = downTileRect1.top - (_playerInfo.Head->getFrameHeight() - 18) / 2;
-		cout << "블록" << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->rc.left << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->index.x << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->index.y << endl;
+		_playerInfo.Down = true;
+		_playerInfo.y = downTileRect1.top - (getRectHeight(_playerInfo.rect)) / 2;
+		cout << "밑에 블럭" << endl;
 	}
-	if (downTileType2 == TileType::BLOCK && downBlockType2 != BlockType::NONE && IntersectRect(&temp, &downTileRect2, &_playerInfo.dRect))
+	else
 	{
-		_playerInfo.y = downTileRect2.top - (_playerInfo.Head->getFrameHeight() - 18) / 2;
-		cout << "블록" << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->rc.left << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->index.x << endl;
-		cout << _vTile[MaxTile_Y * _playerInfo.index.x + 1 + _playerInfo.index.y + 3]->index.y << endl;
+		_playerInfo.Down = false;
 	}
 
 }

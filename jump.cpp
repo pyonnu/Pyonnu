@@ -9,10 +9,10 @@ Jump::~Jump()
 {
 }
 
-HRESULT Jump::init()
+HRESULT Jump::init(float* y)
 {
 	_isJumping = _jumpPower = _gravity = 0;
-
+	_y = y;
 	return S_OK;
 }
 
@@ -27,11 +27,24 @@ void Jump::update()
 	*_y -= _jumpPower;
 	_jumpPower -= _gravity;
 
-	if (_startY < *_y)
+	/*if (_starty < *_y)
 	{
-		_isJumping = false;
-		*_y = _startY;
-	}
+		_isjumping = false;
+		*_y = _starty;
+	}*/
+}
+
+void Jump::update(bool down,bool up)
+{
+
+	if (!_isJumping) return ;
+
+	if (up)_jumpPower = 0;
+	if (_jumpPower <= -20)_jumpPower = -20;
+	*_y -= _jumpPower;
+	_jumpPower -= _gravity;
+
+	if (_startY <= *_y)_isJumping = false;
 }
 
 void Jump::jumping(float* x, float* y, float jumpPower, float gravity)
@@ -41,12 +54,9 @@ void Jump::jumping(float* x, float* y, float jumpPower, float gravity)
 
 	_isJumping = true;
 
-	_x = x;
 	_y = y;
 
-	_startX = *x;
 	_startY = *y;
-
 	//call by value
 	//call by reference
 

@@ -16,4 +16,7 @@ namespace SEVENTEEN_UTIL
 
 	//두 점의 사이각을 알아오는 함수
 	float getAngle(float x1, float y1, float x2, float y2);
+
+	LONG getRectWidth(RECT rc);
+	LONG getRectHeight(RECT rc);
 }
