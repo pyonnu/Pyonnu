@@ -48,6 +48,12 @@ void Player::update()
 	Action();
 	Frame();
 
+	/*마우스 위치 블럭 파괴 공식
+	_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left)-WINSIZEX/2) / TILESIZE)+1) + ((((_ptMouse.y + _playerInfo.rect.top)-WINSIZEY/2) / TILESIZE)+1)]->blockType = BlockType::NONE;*/
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType = BlockType::WOOD;
+	}
 	//_jump->update(_playerInfo.Down,_playerInfo.Up);
 	
 	PlayerInfoUpdate();
@@ -56,17 +62,34 @@ void Player::update()
 
 void Player::render()
 {
-	Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 0) + _playerInfo.index.y + 3]->rc);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->rc);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 0) + _playerInfo.index.y + 3]->rc);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->rc);
 	//Rectangle(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 3]->rc);
 	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.rect);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Lrect);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Trect);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Rrect);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Brect);
-	_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
-	_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
-	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left-10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Lrect);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Trect);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Rrect);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Brect);
+	switch (_playerInfo.HeadState)
+	{
+	case PlayerHeadState::IDLE:
+		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
+		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
+		break;
+	case PlayerHeadState::MOVE:
+		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
+		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
+		break;
+	case PlayerHeadState::JUMP:
+		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
+		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
+		break;
+	case PlayerHeadState::ATTACK:
+		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
+		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
+		break;
+	}
+	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
 }
 
 void Player::PlayerInfoUpdate()
@@ -90,12 +113,12 @@ void Player::Action()
 	{
 		_gravity = 0;
 		_playerInfo.jump = false;
-		cout << "밑블록" << endl;
+		//cout << "밑블록" << endl;
 	}
 	else
 	{
 		_gravity -= 0.25f;
-		if (_gravity <= -20)_gravity = -20;
+		if (_gravity <= -40)_gravity = -40;
 	}
 	_playerInfo.y -= _gravity;
 	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x >= 0 && !_playerInfo.Left)
@@ -150,7 +173,8 @@ void Player::Action()
 	{
 		_playerInfo.y -= 10;
 	}
-}
+
+}	
 
 void Player::Frame()
 {
@@ -232,7 +256,7 @@ void Player::LeftBlockCollision()
 		(LeftTileType3 == TileType::BLOCK && LeftBlockType3 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect3, &_playerInfo.Lrect)))
 	{
 		_playerInfo.Left = true;
-		cout << "왼쪽 블럭" << endl;
+		//cout << "왼쪽 블럭" << endl;
 	}
 	else
 	{
@@ -260,7 +284,7 @@ void Player::RightBlockCollision()
 	{
 		//_playerInfo.x = RightTileRect3.left - _playerInfo.Head->getFrameWidth() / 2;
 		_playerInfo.Right = true;
-		cout << "오른쪽 블럭" << endl;
+		//cout << "오른쪽 블럭" << endl;
 	}
 	else
 	{
@@ -283,7 +307,7 @@ void Player::UpBlockCollision()
 	{
 		_playerInfo.Up = true;
 		_playerInfo.y = upTileRect1.bottom + getRectHeight(_playerInfo.rect) / 2;
-		cout << "위 블럭" << endl;
+		//cout << "위 블럭" << endl;
 	}
 	else
 	{
@@ -305,7 +329,7 @@ void Player::DownBlockCollision()
 	{
 		_playerInfo.Down = true;
 		_playerInfo.y = downTileRect1.top - (getRectHeight(_playerInfo.rect)) / 2;
-		cout << "밑에 블럭" << endl;
+		//cout << "밑에 블럭" << endl;
 	}
 	else
 	{

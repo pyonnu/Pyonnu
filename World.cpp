@@ -13,7 +13,7 @@ HRESULT World::init()
 	_player->init();
 	_enemyManager->init();
 	_player->EnemyManagerLink(_enemyManager);
-
+	_enemyManager->PlayerLink(_player);
 	_ui->init();
 
 	_player->setVTile(_map->getVTile());
