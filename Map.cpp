@@ -31,27 +31,27 @@ void Map::update()
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::WOOD:
-			(*_viTile)->FrameX = 2;
+			(*_viTile)->FrameX = 7;
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::STONE:
-			(*_viTile)->FrameX = 3;
+			(*_viTile)->FrameX = 2;
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::COPPER:
-			(*_viTile)->FrameX = 4;
+			(*_viTile)->FrameX = 3;
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::IRON:
-			(*_viTile)->FrameX = 5;
+			(*_viTile)->FrameX = 4;
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::GOLD:
-			(*_viTile)->FrameX = 6;
+			(*_viTile)->FrameX = 5;
 			(*_viTile)->FrameY = 0;
 			break;
 		case BlockType::PLATINUM:
-			(*_viTile)->FrameX = 7;
+			(*_viTile)->FrameX = 6;
 			(*_viTile)->FrameY = 0;
 			break;
 		}
@@ -74,61 +74,7 @@ void Map::update()
 			(*_viTile)->FrameY2 = 0;
 			break;
 		}
-		switch ((*_viTile)->objectType)
-		{
-		case ObjectType::NONE:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::DEMONATLER:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::HEARTCRYSTAL:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::LEFTOPENDOOR:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::RIGHTOPENDOOR:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::CLOSEDOOR:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::FURNACE:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::BOX:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::WORKBENCH:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::CHIR:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::DESK:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::ANVIL:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		case ObjectType::TREE:
-			(*_viTile)->FrameX3 = 0;
-			(*_viTile)->FrameY3 = 0;
-			break;
-		}
+		
 	}
 }
 

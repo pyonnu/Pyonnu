@@ -50,12 +50,13 @@ void Player::update()
 
 	/*마우스 위치 블럭 파괴 공식
 	_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left)-WINSIZEX/2) / TILESIZE)+1) + ((((_ptMouse.y + _playerInfo.rect.top)-WINSIZEY/2) / TILESIZE)+1)]->blockType = BlockType::NONE;*/
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType == BlockType::NONE && _vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->objectType == ObjectType::NONE)
 	{
-		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType = BlockType::WOOD;
+		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->tileType = TileType::BLOCK;
+		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType = BlockType::STONE;
 	}
 	//_jump->update(_playerInfo.Down,_playerInfo.Up);
-	
+	            
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 }

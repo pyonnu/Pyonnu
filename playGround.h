@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include"Scene.h"
-
+#define MaxItem 67
 class playGround : public gameNode
 {
 private:

@@ -2,17 +2,17 @@
 #include"gameNode.h"
 enum class MeterialItem
 {
-	WOOD,COPPER,COPPERBAR,IRON,IRONBAR,GOLD,GOLDBAR,PLATINUM,PLATINUMBAR,DEMONITE,LENS,GEL,
+	WOOD, COPPER, COPPERBAR, IRON, IRONBAR, GOLD, GOLDBAR, PLATINUM, PLATINUMBAR, DEMONITE, LENS, GEL,
 };
 //블럭 아이템
 enum class BlockItem
 {
-	DIRT,STONE,WOOD,
+	DIRT, STONE, WOOD,
 };
 //벽 아이템
 enum class WallItem
 {
-	DIRT,STONE,WOOD,
+	DIRT, STONE, WOOD,
 };
 //소모품 아이템 ex)물약
 enum class consumbleItem
@@ -22,7 +22,7 @@ enum class consumbleItem
 //공격전용 아이템
 enum class WeaponItem
 {
-	COPPER_SWORD,IRON_SWORD,GOLD_SWORD,PLATINUM_SWORD,DEMONITE_SWORD,
+	COPPER_SWORD, IRON_SWORD, GOLD_SWORD, PLATINUM_SWORD, DEMONITE_SWORD,
 };
 //도구용 아이템
 enum class ToolsItem
@@ -33,40 +33,34 @@ enum class ToolsItem
 	PLATINUM_PICKAXE, PLATINUM_AXE, PLATINUM_HAMMER,
 	DEMONITE_PICKAXE, DEMONITE_AXE, DEMONITE_HAMMER,
 };
-struct MeterialItemInfo
+enum class item
 {
-	MeterialItem itemType;
-	int itemStack;
+	DIRT_BLOCK, STONE_BLOCK, WOOD, COPPER, COPPER_BAR, IRON, IRON_BAR, GOLD, GOLD_BAR, PLATINUM, PLATINUM_BAR, DEMONITE, DEMONITE_BAR,
+	COPPER_PICKAXE, COPPER_AXE, COPPER_HAMMER, COPPER_SWORD, IRON_PICKAXE, IRON_AXE, IRON_HAMMER, IRON_SWORD, GOLD_PICKAXE, GOLD_AXE, GOLD_HAMMER, GOLD_SWORD,
+	PLATINUM_PICKAXE, PLATINUM_AXE, PLATINUM_HAMMER, PLATINUM_SWORD, DEMONITE_PICKAXE, DEMONITE_AXE, DEMONITE_HAMMER, DEMONITE_SWORD,
+	COPPER_HELMET, COPPER_ARMOR, COPPER_LEGGINGS, IRON_HELMET, IRON_ARMOR, IRON_LEGGINGS, GOLD_HELMET, GOLD_ARMOR, GOLD_LEGGINGS, PLATINUM_HELMET, PLATINUM_ARMOR, PLATINUM_LEGGINGS,
+	DEMONITE_HELMET, DEMONITE_ARMOR, DEMONITE_LEGGINGS, COPPER_COIN, IRON_COIN, GOLD_COIN, PLATINUM_COIN,
+	DESK, FURNACE, WORKBENCH, ANVIL, CHIR, BOX, DOOR, WOOD_WALL, GEL, LENS,
+	DEMONEYE, POTION100, POTION150, ACORN, HEARTCRYSTAL,
 };
-struct BlockItemInfo
+enum class ItemType
 {
-	BlockItem itemType;
-	int itemStack;
+	BLOCK,WALL,METERIAL,CONSUMBLE,TOOLS,ARMOR,
 };
-struct WallItemInfo
+struct ItemInfo
 {
-	WallItem itemType;
+	item Item;
+	ItemType itemType;
+	image* itemImage;
 	int itemStack;
-};
-struct ConsumbleItemtInfo
-{
-	consumbleItem itemType;
-	int itemStack;
-};
-struct WeaponItemInfo
-{
-	WeaponItem itemType;
-	int itemStack;
-};
-struct ToolsItemInfo
-{
-	ToolsItem itemType;
-	int ItemStack;
+	float weaponDamage;
+	float ArmorDefense;
+	float PotionHealthPoint;
 };
 class Item :public gameNode
 {
 private:
-
+	ItemInfo* itemInfo;
 public:
 	HRESULT init();
 	void release();
