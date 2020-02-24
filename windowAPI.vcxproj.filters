@@ -222,6 +222,9 @@
     <ClInclude Include="Attack.h">
       <Filter>playGround\Action</Filter>
     </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="Attack.cpp">
       <Filter>playGround\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

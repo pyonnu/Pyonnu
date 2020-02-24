@@ -6,7 +6,6 @@ class playGround : public gameNode
 {
 private:
 	Scene* _scene;
-
 public:
 	playGround();
 	~playGround();
@@ -17,5 +16,6 @@ public:
 	virtual void render();	//그리기 전용 함수
 	
 	void imageAdd();
+	void itemAdd();
 };
 

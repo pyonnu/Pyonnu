@@ -30,6 +30,7 @@ void World::release()
 
 void World::update()
 {
+	_map->setXY(_player->getStartX(),_player->getEndX(),_player->getStartY(),_player->getEndY());
 	_map->update();
 	_player->update();
 	_enemyManager->update();
@@ -44,3 +45,4 @@ void World::render()
 	_enemyManager->render();
 	_ui->render();
 }
+

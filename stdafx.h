@@ -33,7 +33,7 @@ using namespace std;
 #include "soundManager.h"
 #include "sceneManager.h"
 #include "keyAniManager.h"
-
+#include "ItemManager.h"
 using namespace SEVENTEEN_UTIL;
 
 //=========================================
@@ -57,6 +57,7 @@ using namespace SEVENTEEN_UTIL;
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
 #define CAMERAMANAGER cameraManager::getSingleton()
+#define ITEMMANAGER ItemManager::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}

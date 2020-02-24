@@ -6,12 +6,10 @@ HRESULT Player::init()
 	_jump = new Jump;
 	_move = new Move;
 	_attack = new Attack;
-	_item = new Item;
 
 	//_jump->init(&_playerInfo.y);
 	_move->init();
 	_attack->init();
-	_item->init();
 
 	_enemyManager = new EnemyManager;
 
@@ -23,7 +21,7 @@ HRESULT Player::init()
 	_playerInfo.BodyFrameY = 0;
 	_playerInfo.LegsFrameY = 0;
 
-	_playerInfo.x = WINSIZEX / 2;
+	_playerInfo.x = WINSIZEX / 2 + TILESIZE;
 	_playerInfo.y = 1400;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
 
@@ -44,19 +42,28 @@ void Player::release()
 
 void Player::update()
 {
+	int mouse = MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1);
 	BlockCollision();
 	Action();
 	Frame();
 
 	/*마우스 위치 블럭 파괴 공식
 	_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left)-WINSIZEX/2) / TILESIZE)+1) + ((((_ptMouse.y + _playerInfo.rect.top)-WINSIZEY/2) / TILESIZE)+1)]->blockType = BlockType::NONE;*/
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType == BlockType::NONE && _vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->objectType == ObjectType::NONE)
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) 
+		&& _vTile[mouse]->blockType == BlockType::NONE 
+		&& _vTile[mouse]->objectType == ObjectType::NONE)
 	{
-		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->tileType = TileType::BLOCK;
-		_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1)]->blockType = BlockType::STONE;
+		_vTile[mouse]->tileType = TileType::BLOCK;
+		_vTile[mouse]->blockType = BlockType::DIRT;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON)
+		&& _vTile[mouse]->tileType == TileType::BLOCK)
+	{
+		_vTile[mouse]->tileType = TileType::NONE;
+		_vTile[mouse]->blockType = BlockType::NONE;
 	}
 	//_jump->update(_playerInfo.Down,_playerInfo.Up);
-	            
+
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 }
@@ -96,11 +103,11 @@ void Player::render()
 void Player::PlayerInfoUpdate()
 {
 	_playerInfo.rect = RectMakeCenter(_playerInfo.x, _playerInfo.y, 60, 85);
-	_playerInfo.Lrect = RectMake(_playerInfo.rect.left -1, _playerInfo.rect.top, 1, getRectHeight(_playerInfo.rect));
-	_playerInfo.Rrect = RectMake(_playerInfo.rect.right, _playerInfo.rect.top, 1,getRectHeight(_playerInfo.rect));
-	_playerInfo.Trect = RectMake(_playerInfo.rect.left, _playerInfo.rect.top-1, getRectWidth(_playerInfo.rect),1);
+	_playerInfo.Lrect = RectMake(_playerInfo.rect.left - 1, _playerInfo.rect.top, 1, getRectHeight(_playerInfo.rect));
+	_playerInfo.Rrect = RectMake(_playerInfo.rect.right, _playerInfo.rect.top, 1, getRectHeight(_playerInfo.rect));
+	_playerInfo.Trect = RectMake(_playerInfo.rect.left, _playerInfo.rect.top - 1, getRectWidth(_playerInfo.rect), 1);
 	_playerInfo.Brect = RectMake(_playerInfo.rect.left, _playerInfo.rect.bottom, getRectWidth(_playerInfo.rect), 1);
-	_playerInfo.index.x = (_playerInfo.rect.left+15) / TILESIZE;
+	_playerInfo.index.x = (_playerInfo.rect.left + 15) / TILESIZE;
 	_playerInfo.index.y = _playerInfo.rect.top / TILESIZE;
 }
 
@@ -122,7 +129,7 @@ void Player::Action()
 		if (_gravity <= -40)_gravity = -40;
 	}
 	_playerInfo.y -= _gravity;
-	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x >= 0 && !_playerInfo.Left)
+	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x - getRectWidth(_playerInfo.rect) / 2 >= 0 && !_playerInfo.Left)
 	{
 		_playerInfo.direction = PlayerDirection::LEFT;
 		_playerInfo.HeadState = PlayerHeadState::MOVE;
@@ -137,7 +144,7 @@ void Player::Action()
 		_playerInfo.BodyState = PlayerBodyState::IDLE;
 		_playerInfo.LegsState = PlayerLegsState::IDLE;
 	}
-	if (KEYMANAGER->isStayKeyDown('D') && _playerInfo.x <= TILESIZE * MaxTile_X && !_playerInfo.Right)
+	if (KEYMANAGER->isStayKeyDown('D') && _playerInfo.x + getRectWidth(_playerInfo.rect) / 2 <= TILESIZE * MaxTile_X && !_playerInfo.Right)
 	{
 		_playerInfo.direction = PlayerDirection::RIGHT;
 		_playerInfo.HeadState = PlayerHeadState::MOVE;
@@ -156,7 +163,7 @@ void Player::Action()
 	{
 		_playerInfo.y -= 5;
 	}
-	if (KEYMANAGER->isStayKeyDown('S')&& !_playerInfo.Down)
+	if (KEYMANAGER->isStayKeyDown('S') && !_playerInfo.Down)
 	{
 		_playerInfo.y += 5;
 	}
@@ -175,7 +182,7 @@ void Player::Action()
 		_playerInfo.y -= 10;
 	}
 
-}	
+}
 
 void Player::Frame()
 {
@@ -246,14 +253,14 @@ void Player::LeftBlockCollision()
 	BlockType	LeftBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
 	BlockType	LeftBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->blockType;
 	BlockType	LeftBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->blockType;
-	TileType	LeftTileType1 = _vTile[MaxTile_Y *  _playerInfo.index.x + _playerInfo.index.y]->tileType;
+	TileType	LeftTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
 	TileType	LeftTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->tileType;
 	TileType	LeftTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->tileType;
 	RECT		LeftTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
 	RECT		LeftTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->rc;
 	RECT		LeftTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->rc;
-	if ((LeftTileType1 == TileType::BLOCK && LeftBlockType1 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect1, &_playerInfo.Lrect))||
-		(LeftTileType2 == TileType::BLOCK && LeftBlockType2 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect2, &_playerInfo.Lrect))||
+	if ((LeftTileType1 == TileType::BLOCK && LeftBlockType1 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect1, &_playerInfo.Lrect)) ||
+		(LeftTileType2 == TileType::BLOCK && LeftBlockType2 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect2, &_playerInfo.Lrect)) ||
 		(LeftTileType3 == TileType::BLOCK && LeftBlockType3 != BlockType::NONE && IntersectRect(&temp, &LeftTileRect3, &_playerInfo.Lrect)))
 	{
 		_playerInfo.Left = true;
@@ -264,7 +271,7 @@ void Player::LeftBlockCollision()
 		_playerInfo.Left = false;
 	}
 
-	
+
 }
 
 void Player::RightBlockCollision()
@@ -291,7 +298,7 @@ void Player::RightBlockCollision()
 	{
 		_playerInfo.Right = false;
 	}
-	
+
 }
 
 void Player::UpBlockCollision()
@@ -303,7 +310,7 @@ void Player::UpBlockCollision()
 	TileType	upTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->tileType;
 	RECT		upTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
 	RECT		upTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->rc;
-	if ((upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.Trect))||
+	if ((upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.Trect)) ||
 		(upTileType2 == TileType::BLOCK && upBlockType2 != BlockType::NONE && IntersectRect(&temp, &upTileRect2, &_playerInfo.Trect)))
 	{
 		_playerInfo.Up = true;
@@ -337,4 +344,25 @@ void Player::DownBlockCollision()
 		_playerInfo.Down = false;
 	}
 
+}
+
+int Player::getStartX()
+{
+	if (0 >= (_playerInfo.x - TILESIZE * 3 - WINSIZEX / 2) / TILESIZE)return 0;
+	else return(_playerInfo.x - TILESIZE * 1 - WINSIZEX / 2) / TILESIZE;
+}
+int Player::getEndX()
+{
+	if (MaxTile_X <= (_playerInfo.x + TILESIZE * 3 + WINSIZEX / 2) / TILESIZE)return MaxTile_X;
+	else return(_playerInfo.x + TILESIZE * 1 + WINSIZEX / 2) / TILESIZE;
+}
+int Player::getStartY()
+{
+	if (0 >= (_playerInfo.y - TILESIZE * 3 - WINSIZEY / 2) / TILESIZE)return 0;
+	else return(_playerInfo.y - TILESIZE * 1 - WINSIZEY / 2) / TILESIZE;
+}
+int Player::getEndY()
+{
+	if (MaxTile_Y <= (_playerInfo.y + TILESIZE * 3 + WINSIZEY / 2) / TILESIZE)return MaxTile_Y;
+	else return(_playerInfo.y + TILESIZE * 3 + WINSIZEY / 2) / TILESIZE;
 }

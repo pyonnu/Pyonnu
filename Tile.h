@@ -45,6 +45,11 @@ struct tagTile
 	WallType wallType;		//벽의 종류
 	ObjectType objectType;	//오브젝트의 종류
 
+	TileType currentTileType;	
+	BlockType currentBlockType;
+	WallType cuttenrWallType;
+	ObjectType cuttentObjectType;
+
 	// 만약에 struct 나 class에서 비교 연산이 필요할때 선언해야한다.
 	//bool operator=( tagTile &other ) {
 	//	bool a;

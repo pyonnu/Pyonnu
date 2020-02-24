@@ -9,6 +9,7 @@ HRESULT Map::init()
 	size.y = MaxTile_Y * TILESIZE;
 	CAMERAMANAGER->setCameraSize(size);
 	CAMERAMANAGER->changeCameraType();
+	_startX = _startY = _endX = _endY = 0;
 	return S_OK;
 }
 
@@ -18,111 +19,119 @@ void Map::release()
 
 void Map::update()
 {
-	for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
+
+	for (int x = _startX;x < _endX;++x)
 	{
-		switch ((*_viTile)->blockType)
+		for (int y = _startY;y < _endY;++y)
 		{
-		case BlockType::NONE:
-			(*_viTile)->FrameX = 0;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::DIRT:
-			(*_viTile)->FrameX = 1;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::WOOD:
-			(*_viTile)->FrameX = 7;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::STONE:
-			(*_viTile)->FrameX = 2;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::COPPER:
-			(*_viTile)->FrameX = 3;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::IRON:
-			(*_viTile)->FrameX = 4;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::GOLD:
-			(*_viTile)->FrameX = 5;
-			(*_viTile)->FrameY = 0;
-			break;
-		case BlockType::PLATINUM:
-			(*_viTile)->FrameX = 6;
-			(*_viTile)->FrameY = 0;
-			break;
+			//타일 타입이 none이 아닐때만
+			if (_vTile[MaxTile_Y * x + y]->currentTileType != TileType::NONE)
+			{
+				if (_vTile[MaxTile_Y * x + y]->tileType != _vTile[MaxTile_Y * x + y]->currentTileType)
+				{
+					//해당 타일의 아이템을 바닥에 뿌림
+					//_vTile[MaxTile_Y * x + y]->currentTileType
+					switch (_vTile[MaxTile_Y * x + y]->currentTileType)
+					{
+					case TileType::WALL:
+						break;
+					case TileType::BLOCK:
+						break;
+					case TileType::OBJECT:
+						break;
+					}
+				}
+			}
+			_vTile[MaxTile_Y * x + y]->currentTileType = _vTile[MaxTile_Y * x + y]->tileType;
+			_vTile[MaxTile_Y * x + y]->currentBlockType = _vTile[MaxTile_Y * x + y]->blockType;
+			_vTile[MaxTile_Y * x + y]->cuttenrWallType = _vTile[MaxTile_Y * x + y]->wallType;
+			_vTile[MaxTile_Y * x + y]->cuttentObjectType = _vTile[MaxTile_Y * x + y]->objectType;
+			switch (_vTile[MaxTile_Y * x + y]->blockType)
+			{
+			case BlockType::NONE:
+				_vTile[MaxTile_Y * x + y]->FrameX = 0;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::DIRT:
+				_vTile[MaxTile_Y * x + y]->FrameX = 1;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::WOOD:
+				_vTile[MaxTile_Y * x + y]->FrameX = 7;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::STONE:
+				_vTile[MaxTile_Y * x + y]->FrameX = 2;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::COPPER:
+				_vTile[MaxTile_Y * x + y]->FrameX = 3;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::IRON:
+				_vTile[MaxTile_Y * x + y]->FrameX = 4;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::GOLD:
+				_vTile[MaxTile_Y * x + y]->FrameX = 5;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			case BlockType::PLATINUM:
+				_vTile[MaxTile_Y * x + y]->FrameX = 6;
+				_vTile[MaxTile_Y * x + y]->FrameY = 0;
+				break;
+			}
+			switch (_vTile[MaxTile_Y * x + y]->wallType)
+			{
+			case WallType::NONE:
+				_vTile[MaxTile_Y * x + y]->FrameX2 = 0;
+				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+				break;
+			case WallType::DIRT:
+				_vTile[MaxTile_Y * x + y]->FrameX2 = 1;
+				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+				break;
+			case WallType::WOOD:
+				_vTile[MaxTile_Y * x + y]->FrameX2 = 3;
+				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+				break;
+			case WallType::STONE:
+				_vTile[MaxTile_Y * x + y]->FrameX2 = 2;
+				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+				break;
+			}
+			objectTileUpdate(x,y);
 		}
-		switch ((*_viTile)->wallType)
-		{
-		case WallType::NONE:
-			(*_viTile)->FrameX2 = 0;
-			(*_viTile)->FrameY2 = 0;
-			break;
-		case WallType::DIRT:
-			(*_viTile)->FrameX2 = 1;
-			(*_viTile)->FrameY2 = 0;
-			break;
-		case WallType::WOOD:
-			(*_viTile)->FrameX2 = 2;
-			(*_viTile)->FrameY2 = 0;
-			break;
-		case WallType::STONE:
-			(*_viTile)->FrameX2 = 3;
-			(*_viTile)->FrameY2 = 0;
-			break;
-		}
-		
 	}
+
+		
+	
 }
 
 void Map::render()
 {
-	RECT temp;
-	for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
-	{
-		if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
-		{
-			if ((*_viTile)->blockType != BlockType::NONE)
-			{
-				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX, (*_viTile)->FrameY);
-			}
-			if ((*_viTile)->objectType != ObjectType::NONE)
-			{
-				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX3, (*_viTile)->FrameY3);
-			}
-			if (((*_viTile)->wallType != WallType::NONE && (*_viTile)->blockType == BlockType::NONE) || ((*_viTile)->wallType != WallType::NONE && (*_viTile)->objectType != ObjectType::NONE))
-			{
-				//IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX2, (*_viTile)->FrameY2);
-				//Rectangle(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc);
-			}
-		}
-	}
 }
 
 void Map::render(float x, float y)
 {
-	IMAGEMANAGER->findImage("Background7")->render(CAMERAMANAGER->getCameraDC(),x,y);
+	IMAGEMANAGER->findImage("Background7")->render(CAMERAMANAGER->getCameraDC(), x, y);
 	RECT temp;
 	
-	for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
+	for (int x = _startX;x < _endX;++x)
 	{
-		
-		if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
+		for (int y = _startY;y < _endY;++y)
 		{
-			if (((*_viTile)->wallType != WallType::NONE && (*_viTile)->blockType == BlockType::NONE) || ((*_viTile)->wallType != WallType::NONE && (*_viTile)->objectType != ObjectType::NONE))
+			if ((_vTile[MaxTile_Y * x + y]->wallType != WallType::NONE && _vTile[MaxTile_Y * x + y]->blockType == BlockType::NONE) || (_vTile[MaxTile_Y * x + y]->wallType != WallType::NONE && _vTile[MaxTile_Y * x + y]->objectType != ObjectType::NONE))
 			{
-				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX2, (*_viTile)->FrameY2);
+				IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * x + y]->rc.left, _vTile[MaxTile_Y * x + y]->rc.top, _vTile[MaxTile_Y * x + y]->FrameX2, _vTile[MaxTile_Y * x + y]->FrameY2);
 			}
-			if ((*_viTile)->blockType != BlockType::NONE)
+			if (_vTile[MaxTile_Y * x + y]->blockType != BlockType::NONE)
 			{
-				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX, (*_viTile)->FrameY);
+				IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * x + y]->rc.left, _vTile[MaxTile_Y * x + y]->rc.top, _vTile[MaxTile_Y * x + y]->FrameX, _vTile[MaxTile_Y * x + y]->FrameY);
 			}
-			if ((*_viTile)->objectType != ObjectType::NONE)
+			if (_vTile[MaxTile_Y * x + y]->objectType != ObjectType::NONE)
 			{
-				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX3, (*_viTile)->FrameY3);
+				IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _vTile[MaxTile_Y * x + y]->rc.left, _vTile[MaxTile_Y * x + y]->rc.top, _vTile[MaxTile_Y * x + y]->FrameX3, _vTile[MaxTile_Y * x + y]->FrameY3);
 			}
 		}
 	}
@@ -145,4 +154,345 @@ void Map::setMap()
 		}
 	}
 	CloseHandle(file);
+}
+
+void Map::objectTileUpdate(int x,int y)
+{
+	switch (_vTile[MaxTile_Y * x + y]->objectType)
+	{
+	case ObjectType::NONE:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 7;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 16;
+		break;
+	case ObjectType::DESK1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::DESK2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::DESK3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::DESK4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::DESK5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::DESK6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::HEARTCRYSTAL1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::HEARTCRYSTAL4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::LEFTCHIR1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::LEFTCHIR2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::RIGHTCHIR1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 0;
+		break;
+	case ObjectType::RIGHTCHIR2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 1;
+		break;
+	case ObjectType::FURNACE1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::FURNACE2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::FURNACE3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::FURNACE4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::FURNACE5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::FURNACE6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::BOX1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::BOX2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::BOX3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::BOX4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::WORKBENCH1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::WORKBENCH2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 2;
+		break;
+	case ObjectType::ANVIL1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::ANVIL2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 3;
+		break;
+	case ObjectType::RIGHT_OPENDOOR1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::RIGHT_OPENDOOR2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::RIGHT_OPENDOOR3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::RIGHT_OPENDOOR4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::RIGHT_OPENDOOR5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 6;
+		break;
+	case ObjectType::RIGHT_OPENDOOR6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 6;
+		break;
+	case ObjectType::LEFT_OPENDOOR1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::LEFT_OPENDOOR2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::LEFT_OPENDOOR3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::LEFT_OPENDOOR4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::LEFT_OPENDOOR5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::LEFT_OPENDOOR6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::CLOSEDOOR1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::CLOSEDOOR2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::CLOSEDOOR3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 6;
+		break;
+	case ObjectType::DEMONALTER1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::DEMONALTER2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::DEMONALTER3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 4;
+		break;
+	case ObjectType::DEMONALTER4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::DEMONALTER5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::DEMONALTER6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 5;
+		break;
+	case ObjectType::TREE1:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::TREE2:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::TREE3:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::TREE4:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::TREE5:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 7;
+		break;
+	case ObjectType::TREE6:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::TREE7:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::TREE8:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::TREE9:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::TREE10:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 8;
+		break;
+	case ObjectType::TREE11:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::TREE12:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::TREE13:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::TREE14:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::TREE15:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 9;
+		break;
+	case ObjectType::TREE16:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
+		break;
+	case ObjectType::TREE17:
+		break;
+	case ObjectType::TREE18:
+		break;
+	case ObjectType::TREE19:
+		break;
+	case ObjectType::TREE20:
+		break;
+	case ObjectType::TREE21:
+		break;
+	case ObjectType::TREE22:
+		break;
+	case ObjectType::TREE23:
+		break;
+	case ObjectType::TREE24:
+		break;
+	case ObjectType::TREE25:
+		break;
+	case ObjectType::TREE26:
+		break;
+	case ObjectType::TREE27:
+		break;
+	case ObjectType::TREE28:
+		break;
+	case ObjectType::TREE29:
+		break;
+	case ObjectType::TREE30:
+		break;
+	case ObjectType::TREE31:
+		break;
+	case ObjectType::TREE32:
+		break;
+	case ObjectType::TREE33:
+		break;
+	case ObjectType::TREE34:
+		break;
+	case ObjectType::TREE35:
+		break;
+	case ObjectType::TREE36:
+		break;
+	case ObjectType::TREE37:
+		break;
+	case ObjectType::TREE38:
+		break;
+	case ObjectType::TREE39:
+		break;
+	case ObjectType::TREE40:
+		break;
+	case ObjectType::TREE41:
+		break;
+	case ObjectType::TREE42:
+		break;
+	case ObjectType::TREE43:
+		break;
+	case ObjectType::TREE44:
+		break;
+	case ObjectType::TREE45:
+		break;
+	case ObjectType::TREE46:
+		break;
+	case ObjectType::TREE47:
+		break;
+	case ObjectType::TREE48:
+		break;
+	case ObjectType::TREE49:
+		break;
+	case ObjectType::TREE50:
+		break;
+	default:
+		break;
+	}
 }

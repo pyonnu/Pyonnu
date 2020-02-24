@@ -18,10 +18,9 @@ HRESULT playGround::init()
 	SCENEMANAGER->init();
 
 	imageAdd();
-
+	itemAdd();
 	_scene = new Scene;
 	_scene->init();
-
 	return S_OK;
 }
 
@@ -86,7 +85,8 @@ void playGround::imageAdd()
 	//°©¿Ê ÀÌ¹ÌÁö
 
 	//UIÀÌ¹ÌÁö
-	IMAGEMANAGER->addImage("Inventory_Back", "Resources/UI/Inventory_Back.bmp", 104, 104, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Inventory_Back", "Resources/UI/Inventory_Back.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Inventory_Back14", "Resources/UI/Inventory_Back14.bmp", 62, 62, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Heart", "Resources/UI/Heart.bmp", 44, 44, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ButtonDelete", "Resources/UI/ButtonDelete.bmp", 44, 44, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Craft_Toggle_0", "Resources/UI/Craft_Toggle_0.bmp", 60, 60, true, RGB(255, 0, 255));
@@ -155,7 +155,6 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Item_55", "Resources/Item/Item_55.bmp", 64, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_56", "Resources/Item/Item_56.bmp", 64, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_57", "Resources/Item/Item_57.bmp", 32, 64, true, RGB(255, 0, 255));
-
 	IMAGEMANAGER->addImage("Item_58", "Resources/Item/Item_58.bmp", 64, 56, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_59", "Resources/Item/Item_59.bmp", 36, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_60", "Resources/Item/Item_60.bmp", 48, 48, true, RGB(255, 0, 255));
@@ -166,6 +165,88 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Item_65", "Resources/Item/Item_65.bmp", 40, 52, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_66", "Resources/Item/Item_66.bmp", 40, 40, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_67", "Resources/Item/Item_67.bmp", 44, 44, true, RGB(255, 0, 255));
+}
 
+void playGround::itemAdd()
+{
 
+	ITEMMANAGER->itemAdd("item_1", type::DIRT_BLOCK, ItemType::BLOCK, "Item_1", 0);
+	ITEMMANAGER->itemAdd("item_2", type::STONE_BLOCK, ItemType::BLOCK, "Item_2", 0);
+	ITEMMANAGER->itemAdd("item_3", type::WOOD, ItemType::BLOCK, ItemType::METERIAL, "Item_3", 0);
+	ITEMMANAGER->itemAdd("item_4", type::COPPER, ItemType::METERIAL, "Item_4", 0);
+	ITEMMANAGER->itemAdd("item_5", type::COPPER_BAR, ItemType::METERIAL, "Item_5", 0);
+	ITEMMANAGER->itemAdd("item_6", type::IRON, ItemType::METERIAL, "Item_6", 0);
+	ITEMMANAGER->itemAdd("item_7", type::IRON_BAR, ItemType::METERIAL, "Item_7", 0);
+	ITEMMANAGER->itemAdd("item_8", type::GOLD, ItemType::METERIAL, "Item_8", 0);
+	ITEMMANAGER->itemAdd("item_9", type::GOLD_BAR, ItemType::METERIAL, "Item_9", 0);
+	ITEMMANAGER->itemAdd("item_10", type::PLATINUM, ItemType::METERIAL, "Item_10", 0);
+	ITEMMANAGER->itemAdd("item_11", type::PLATINUM_BAR, ItemType::METERIAL, "Item_11", 0);
+	ITEMMANAGER->itemAdd("item_12", type::DEMONITE, ItemType::METERIAL, "Item_12", 0);
+	ITEMMANAGER->itemAdd("item_13", type::DEMONITE_BAR, ItemType::METERIAL, "Item_13", 0);
+
+	ITEMMANAGER->itemAdd("item_14", type::COPPER_PICKAXE, ItemType::PICKAXE, "Item_14", 0, 4);
+	ITEMMANAGER->itemAdd("item_15", type::COPPER_AXE, ItemType::AXE, "Item_15", 0, 3);
+	ITEMMANAGER->itemAdd("item_16", type::COPPER_HAMMER, ItemType::HAMMER, "Item_16", 0, 4);
+	ITEMMANAGER->itemAdd("item_17", type::COPPER_SWORD, ItemType::SWORD, "Item_16", 0, 8);
+
+	ITEMMANAGER->itemAdd("item_18", type::IRON_PICKAXE, ItemType::PICKAXE, "Item_18", 0, 5);
+	ITEMMANAGER->itemAdd("item_19", type::IRON_AXE, ItemType::AXE, "Item_19", 0, 5);
+	ITEMMANAGER->itemAdd("item_20", type::IRON_HAMMER, ItemType::HAMMER, "Item_20", 0, 7);
+	ITEMMANAGER->itemAdd("item_21", type::IRON_SWORD, ItemType::SWORD, "Item_21", 0, 10);
+
+	ITEMMANAGER->itemAdd("item_22", type::GOLD_PICKAXE, ItemType::PICKAXE, "Item_22", 0, 6);
+	ITEMMANAGER->itemAdd("item_23", type::GOLD_AXE, ItemType::AXE, "Item_23", 0, 7);
+	ITEMMANAGER->itemAdd("item_24", type::GOLD_HAMMER, ItemType::HAMMER, "Item_24", 0, 9);
+	ITEMMANAGER->itemAdd("item_25", type::GOLD_SWORD, ItemType::SWORD, "Item_25", 0, 13);
+
+	ITEMMANAGER->itemAdd("item_26", type::PLATINUM_PICKAXE, ItemType::PICKAXE, "Item_26", 0, 7);
+	ITEMMANAGER->itemAdd("item_27", type::PLATINUM_AXE, ItemType::AXE, "Item_27", 0, 8);
+	ITEMMANAGER->itemAdd("item_28", type::PLATINUM_HAMMER, ItemType::HAMMER, "Item_28", 0, 10);
+	ITEMMANAGER->itemAdd("item_29", type::PLATINUM_SWORD, ItemType::SWORD, "Item_29", 0, 15);
+
+	ITEMMANAGER->itemAdd("item_30", type::DEMONITE_PICKAXE, ItemType::PICKAXE, "Item_30", 0, 9);
+	ITEMMANAGER->itemAdd("item_31", type::DEMONITE_AXE, ItemType::AXE, "Item_31", 0, 20);
+	ITEMMANAGER->itemAdd("item_32", type::DEMONITE_HAMMER, ItemType::HAMMER, "Item_32", 0, 24);
+	ITEMMANAGER->itemAdd("item_33", type::DEMONITE_SWORD, ItemType::SWORD, "Item_33", 0, 17);
+
+	ITEMMANAGER->itemAdd("item_34", type::COPPER_HELMET, ItemType::HELMET, "Item_34", 0, 1);
+	ITEMMANAGER->itemAdd("item_35", type::COPPER_ARMOR, ItemType::ARMOR, "Item_35", 0, 2);
+	ITEMMANAGER->itemAdd("item_36", type::COPPER_LEGGINGS, ItemType::LEGGINGS, "Item_36", 0, 1);
+
+	ITEMMANAGER->itemAdd("item_37", type::IRON_HELMET, ItemType::HELMET, "Item_37", 0, 2);
+	ITEMMANAGER->itemAdd("item_38", type::IRON_ARMOR, ItemType::ARMOR, "Item_38", 0, 3);
+	ITEMMANAGER->itemAdd("item_39", type::IRON_LEGGINGS, ItemType::LEGGINGS, "Item_39", 0, 2);
+
+	ITEMMANAGER->itemAdd("item_40", type::GOLD_HELMET, ItemType::HELMET, "Item_40", 0, 4);
+	ITEMMANAGER->itemAdd("item_41", type::GOLD_ARMOR, ItemType::ARMOR, "Item_41", 0, 5);
+	ITEMMANAGER->itemAdd("item_42", type::GOLD_LEGGINGS, ItemType::LEGGINGS, "Item_42", 0, 4);
+
+	ITEMMANAGER->itemAdd("item_43", type::PLATINUM_HELMET, ItemType::HELMET, "Item_43", 0, 5);
+	ITEMMANAGER->itemAdd("item_44", type::PLATINUM_ARMOR, ItemType::ARMOR, "Item_44", 0, 6);
+	ITEMMANAGER->itemAdd("item_45", type::PLATINUM_LEGGINGS, ItemType::LEGGINGS, "Item_45", 0, 5);
+
+	ITEMMANAGER->itemAdd("item_46", type::DEMONITE_HELMET, ItemType::HELMET, "Item_46", 0, 6);
+	ITEMMANAGER->itemAdd("item_47", type::DEMONITE_ARMOR, ItemType::ARMOR, "Item_47", 0, 7);
+	ITEMMANAGER->itemAdd("item_48", type::DEMONITE_LEGGINGS, ItemType::LEGGINGS, "Item_48", 0, 6);
+
+	ITEMMANAGER->itemAdd("item_49", type::COPPER_COIN, ItemType::COIN, "Item_49", 0);
+	ITEMMANAGER->itemAdd("item_50", type::IRON_COIN, ItemType::COIN, "Item_50", 0);
+	ITEMMANAGER->itemAdd("item_51", type::GOLD_COIN, ItemType::COIN, "Item_51", 0);
+	ITEMMANAGER->itemAdd("item_52", type::PLATINUM_COIN, ItemType::COIN, "Item_52", 0);
+
+	ITEMMANAGER->itemAdd("item_53", type::DESK, ItemType::BLOCK, "Item_53", 0);
+	ITEMMANAGER->itemAdd("item_54", type::FURNACE, ItemType::BLOCK, "Item_54", 0);
+	ITEMMANAGER->itemAdd("item_55", type::WORKBENCH, ItemType::BLOCK, "Item_55", 0);
+	ITEMMANAGER->itemAdd("item_56", type::ANVIL, ItemType::BLOCK, "Item_56", 0);
+	ITEMMANAGER->itemAdd("item_57", type::CHIR, ItemType::BLOCK, "Item_57", 0);
+	ITEMMANAGER->itemAdd("item_58", type::BOX, ItemType::BLOCK, "Item_58", 0);
+	ITEMMANAGER->itemAdd("item_59", type::DOOR, ItemType::BLOCK, "Item_59", 0);
+	ITEMMANAGER->itemAdd("item_60", type::WOOD_WALL, ItemType::WALL, "Item_60", 0);
+	ITEMMANAGER->itemAdd("item_61", type::GEL, ItemType::METERIAL, "Item_61", 0);
+	ITEMMANAGER->itemAdd("item_62", type::LENS, ItemType::METERIAL, "Item_62", 0);
+	ITEMMANAGER->itemAdd("item_63", type::DEMONEYE, ItemType::CONSUMBLE, "Item_63", 0);
+	ITEMMANAGER->itemAdd("item_64", type::POTION50, ItemType::CONSUMBLE, "Item_64", 0,50);
+	ITEMMANAGER->itemAdd("item_65", type::POTION100, ItemType::CONSUMBLE, "Item_65", 0,100);
+	ITEMMANAGER->itemAdd("item_66", type::ACORN, ItemType::BLOCK, "Item_66", 0);
+	ITEMMANAGER->itemAdd("item_67", type::HEARTCRYSTAL, ItemType::CONSUMBLE, "Item_67", 0);
 }
