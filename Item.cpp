@@ -134,3 +134,8 @@ void Item::render()
 {
 }
 
+void Item::render(HDC dc)
+{
+	_itemInfo->itemImage->render(dc, 10, 10);
+}
+

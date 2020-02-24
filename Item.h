@@ -89,6 +89,7 @@ public:
 	void release();
 	void update();
 	void render();
+	void render(HDC dc);
 
 	inline type getItemType() { return _itemInfo->Type; }
 	inline ItemType getItemType1() { return _itemInfo->itemType; }
