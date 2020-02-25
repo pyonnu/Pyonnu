@@ -3,7 +3,7 @@
 #define TILESIZE 32			//타일 한개 사이즈
 
 //총 21,600타일
-#define MaxTile_X 240	//최대 x크기
+#define MaxTile_X 2400	//최대 x크기
 #define MaxTile_Y 90	//최대 y크기
 enum class TileType
 {
@@ -28,7 +28,7 @@ enum class ObjectType
 	TREE1, TREE2, TREE3, TREE4, TREE5, TREE6, TREE7, TREE8, TREE9, TREE10, TREE11, TREE12, TREE13, TREE14, TREE15,
 	TREE16, TREE17, TREE18, TREE19, TREE20, TREE21, TREE22, TREE23, TREE24, TREE25, TREE26, TREE27,
 	TREE28, TREE29, TREE30, TREE31, TREE32, TREE33, TREE34, TREE35, TREE36, TREE37, TREE38,
-	TREE39, TREE40, TREE41, TREE42, TREE43, TREE44, TREE45, TREE46, TREE47, TREE48, TREE49, TREE50,
+	TREE39, TREE40, TREE41, TREE42,
 };
 
 struct tagTile
@@ -47,8 +47,8 @@ struct tagTile
 
 	TileType currentTileType;	
 	BlockType currentBlockType;
-	WallType cuttenrWallType;
-	ObjectType cuttentObjectType;
+	WallType currentWallType;
+	ObjectType currentObjectType;
 
 	// 만약에 struct 나 class에서 비교 연산이 필요할때 선언해야한다.
 	//bool operator=( tagTile &other ) {

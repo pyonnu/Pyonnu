@@ -14,8 +14,12 @@ void ItemManager::update()
 {
 }
 
-void ItemManager::render()
+void ItemManager::render(HDC dc)
 {
+	for (_miItem = _mItem.begin();_miItem != _mItem.end();++_miItem)
+	{
+		_miItem->second->render(dc);
+	}
 }
 
 Item* ItemManager::itemAdd(string itemName, type type1, ItemType type2, string image, int stack)
@@ -152,6 +156,14 @@ Item* ItemManager::findItem(string itemName)
 	{
 		return key->second;
 	}
-
+	
 	return nullptr;
+}
+
+void ItemManager::CreateItem(string itemName, float x, float y)
+{
+	//Item* item;
+	//item = new Item;
+	//item->CreateItem(x,y);
+	findItem(itemName)->CreateItem(x, y);
 }

@@ -35,7 +35,7 @@ enum class ToolsItem
 };
 enum class type
 {
-	NONE,DIRT_BLOCK, STONE_BLOCK, WOOD, COPPER, COPPER_BAR, IRON, IRON_BAR, GOLD, GOLD_BAR, PLATINUM, PLATINUM_BAR, DEMONITE, DEMONITE_BAR,
+	NONE, DIRT_BLOCK, STONE_BLOCK, WOOD, COPPER, COPPER_BAR, IRON, IRON_BAR, GOLD, GOLD_BAR, PLATINUM, PLATINUM_BAR, DEMONITE, DEMONITE_BAR,
 	COPPER_PICKAXE, COPPER_AXE, COPPER_HAMMER, COPPER_SWORD, IRON_PICKAXE, IRON_AXE, IRON_HAMMER, IRON_SWORD, GOLD_PICKAXE, GOLD_AXE, GOLD_HAMMER, GOLD_SWORD,
 	PLATINUM_PICKAXE, PLATINUM_AXE, PLATINUM_HAMMER, PLATINUM_SWORD, DEMONITE_PICKAXE, DEMONITE_AXE, DEMONITE_HAMMER, DEMONITE_SWORD,
 	COPPER_HELMET, COPPER_ARMOR, COPPER_LEGGINGS, IRON_HELMET, IRON_ARMOR, IRON_LEGGINGS, GOLD_HELMET, GOLD_ARMOR, GOLD_LEGGINGS, PLATINUM_HELMET, PLATINUM_ARMOR, PLATINUM_LEGGINGS,
@@ -45,7 +45,7 @@ enum class type
 };
 enum class ItemType
 {
-	NONE,BLOCK,WALL,METERIAL,CONSUMBLE,PICKAXE,AXE,HAMMER,SWORD,HELMET,ARMOR,LEGGINGS,COIN,
+	NONE, BLOCK, WALL, METERIAL, CONSUMBLE, PICKAXE, AXE, HAMMER, SWORD, HELMET, ARMOR, LEGGINGS, COIN,
 };
 
 class Item
@@ -62,6 +62,7 @@ public:
 		float weaponDamage;
 		float ArmorDefense;
 		float PotionHealthPoint;
+		RECT rc;
 		tagItemInfo()
 		{
 			Type = type::NONE;
@@ -73,7 +74,7 @@ public:
 			ArmorDefense = NULL;
 			PotionHealthPoint = NULL;
 		}
-	}Item_Info, *PItem_Info;
+	}Item_Info, * PItem_Info;
 
 private:
 	PItem_Info _itemInfo;
@@ -88,9 +89,11 @@ public:
 
 	void release();
 	void update();
-	void render();
 	void render(HDC dc);
+	void render(HDC dc, float x, float y);
 
+	void CreateItem(float x, float y);
+	
 	inline type getItemType() { return _itemInfo->Type; }
 	inline ItemType getItemType1() { return _itemInfo->itemType; }
 	inline ItemType getItemType2() { return _itemInfo->itemType2; }
@@ -98,6 +101,11 @@ public:
 	inline float getWeaponDamage() { return _itemInfo->weaponDamage; }
 	inline float getArmorDefense() { return _itemInfo->ArmorDefense; }
 	inline float getPotionPower() { return _itemInfo->PotionHealthPoint; }
+	inline RECT getRect() { return _itemInfo->rc; }
 
+	inline void setItemStack(int stack) { _itemInfo->itemStack = stack; }
+	inline void PlusItemStack() { _itemInfo->itemStack += 1; }
+	inline void setWeaponDamage(float damage) { _itemInfo->weaponDamage = damage; }
+	inline void setArmorDefense(float defense) { _itemInfo->ArmorDefense = defense; }
 };
 

@@ -128,14 +128,21 @@ void Item::release()
 
 void Item::update()
 {
-}
 
-void Item::render()
-{
 }
 
 void Item::render(HDC dc)
 {
-	_itemInfo->itemImage->render(dc, 10, 10);
+	_itemInfo->itemImage->render(dc, _itemInfo->rc.left	, _itemInfo->rc.top);
+}
+
+void Item::render(HDC dc,float x,float y)
+{
+	_itemInfo->itemImage->render(dc, x, y);
+}
+
+void Item::CreateItem(float x, float y)
+{
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 }
 

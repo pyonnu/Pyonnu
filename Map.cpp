@@ -19,7 +19,6 @@ void Map::release()
 
 void Map::update()
 {
-
 	for (int x = _startX;x < _endX;++x)
 	{
 		for (int y = _startY;y < _endY;++y)
@@ -34,73 +33,22 @@ void Map::update()
 					switch (_vTile[MaxTile_Y * x + y]->currentTileType)
 					{
 					case TileType::WALL:
+						WallItemSpawn(x, y);
 						break;
 					case TileType::BLOCK:
+						BlockItemSpawn(x,y);
 						break;
 					case TileType::OBJECT:
+						ObjectItemSpawn(x, y);
 						break;
 					}
 				}
 			}
 			_vTile[MaxTile_Y * x + y]->currentTileType = _vTile[MaxTile_Y * x + y]->tileType;
 			_vTile[MaxTile_Y * x + y]->currentBlockType = _vTile[MaxTile_Y * x + y]->blockType;
-			_vTile[MaxTile_Y * x + y]->cuttenrWallType = _vTile[MaxTile_Y * x + y]->wallType;
-			_vTile[MaxTile_Y * x + y]->cuttentObjectType = _vTile[MaxTile_Y * x + y]->objectType;
-			switch (_vTile[MaxTile_Y * x + y]->blockType)
-			{
-			case BlockType::NONE:
-				_vTile[MaxTile_Y * x + y]->FrameX = 0;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::DIRT:
-				_vTile[MaxTile_Y * x + y]->FrameX = 1;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::WOOD:
-				_vTile[MaxTile_Y * x + y]->FrameX = 7;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::STONE:
-				_vTile[MaxTile_Y * x + y]->FrameX = 2;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::COPPER:
-				_vTile[MaxTile_Y * x + y]->FrameX = 3;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::IRON:
-				_vTile[MaxTile_Y * x + y]->FrameX = 4;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::GOLD:
-				_vTile[MaxTile_Y * x + y]->FrameX = 5;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			case BlockType::PLATINUM:
-				_vTile[MaxTile_Y * x + y]->FrameX = 6;
-				_vTile[MaxTile_Y * x + y]->FrameY = 0;
-				break;
-			}
-			switch (_vTile[MaxTile_Y * x + y]->wallType)
-			{
-			case WallType::NONE:
-				_vTile[MaxTile_Y * x + y]->FrameX2 = 0;
-				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
-				break;
-			case WallType::DIRT:
-				_vTile[MaxTile_Y * x + y]->FrameX2 = 1;
-				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
-				break;
-			case WallType::WOOD:
-				_vTile[MaxTile_Y * x + y]->FrameX2 = 3;
-				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
-				break;
-			case WallType::STONE:
-				_vTile[MaxTile_Y * x + y]->FrameX2 = 2;
-				_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
-				break;
-			}
-			objectTileUpdate(x,y);
+			_vTile[MaxTile_Y * x + y]->currentWallType = _vTile[MaxTile_Y * x + y]->wallType;
+			_vTile[MaxTile_Y * x + y]->currentObjectType = _vTile[MaxTile_Y * x + y]->objectType;
+			TileUpdate(x, y);
 		}
 	}
 
@@ -156,8 +104,62 @@ void Map::setMap()
 	CloseHandle(file);
 }
 
-void Map::objectTileUpdate(int x,int y)
+void Map::TileUpdate(int x, int y)
 {
+	switch (_vTile[MaxTile_Y * x + y]->blockType)
+	{
+	case BlockType::NONE:
+		_vTile[MaxTile_Y * x + y]->FrameX = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::DIRT:
+		_vTile[MaxTile_Y * x + y]->FrameX = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::WOOD:
+		_vTile[MaxTile_Y * x + y]->FrameX = 7;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::STONE:
+		_vTile[MaxTile_Y * x + y]->FrameX = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::COPPER:
+		_vTile[MaxTile_Y * x + y]->FrameX = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::IRON:
+		_vTile[MaxTile_Y * x + y]->FrameX = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::GOLD:
+		_vTile[MaxTile_Y * x + y]->FrameX = 5;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	case BlockType::PLATINUM:
+		_vTile[MaxTile_Y * x + y]->FrameX = 6;
+		_vTile[MaxTile_Y * x + y]->FrameY = 0;
+		break;
+	}
+	switch (_vTile[MaxTile_Y * x + y]->wallType)
+	{
+	case WallType::NONE:
+		_vTile[MaxTile_Y * x + y]->FrameX2 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+		break;
+	case WallType::DIRT:
+		_vTile[MaxTile_Y * x + y]->FrameX2 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+		break;
+	case WallType::WOOD:
+		_vTile[MaxTile_Y * x + y]->FrameX2 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+		break;
+	case WallType::STONE:
+		_vTile[MaxTile_Y * x + y]->FrameX2 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY2 = 0;
+		break;
+	}
 	switch (_vTile[MaxTile_Y * x + y]->objectType)
 	{
 	case ObjectType::NONE:
@@ -425,6 +427,285 @@ void Map::objectTileUpdate(int x,int y)
 		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
 		break;
 	case ObjectType::TREE17:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
+		break;
+	case ObjectType::TREE18:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
+		break;
+	case ObjectType::TREE19:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
+		break;
+	case ObjectType::TREE20:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 10;
+		break;
+	case ObjectType::TREE21:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 11;
+		break;
+	case ObjectType::TREE22:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 11;
+		break;
+	case ObjectType::TREE23:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 11;
+		break;
+	case ObjectType::TREE24:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 11;
+		break;
+	case ObjectType::TREE25:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 11;
+		break;
+	case ObjectType::TREE26:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 12;
+		break;
+	case ObjectType::TREE27:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 12;
+		break;
+	case ObjectType::TREE28:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 13;
+		break;
+	case ObjectType::TREE29:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 13;
+		break;
+	case ObjectType::TREE30:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 13;
+		break;
+	case ObjectType::TREE31:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 13;
+		break;
+	case ObjectType::TREE32:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 13;
+		break;
+	case ObjectType::TREE33:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 14;
+		break;
+	case ObjectType::TREE34:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 14;
+		break;
+	case ObjectType::TREE35:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 14;
+		break;
+	case ObjectType::TREE36:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 4;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 14;
+		break;
+	case ObjectType::TREE37:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 15;
+		break;
+	case ObjectType::TREE38:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 15;
+		break;
+	case ObjectType::TREE39:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 0;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 16;
+		break;
+	case ObjectType::TREE40:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 1;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 16;
+		break;
+	case ObjectType::TREE41:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 2;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 16;
+		break;
+	case ObjectType::TREE42:
+		_vTile[MaxTile_Y * x + y]->FrameX3 = 3;
+		_vTile[MaxTile_Y * x + y]->FrameY3 = 16;
+		break;
+	}
+}
+
+void Map::BlockItemSpawn(int x, int y)
+{
+	switch (_vTile[MaxTile_Y * x + y]->currentBlockType)
+	{
+	case BlockType::DIRT:
+		ITEMMANAGER->CreateItem("item_1", x * TILESIZE, y * TILESIZE);
+		break;
+	case BlockType::WOOD:
+		ITEMMANAGER->CreateItem("item_3", x * TILESIZE, y * TILESIZE);
+		break;
+	case BlockType::STONE:
+		ITEMMANAGER->CreateItem("item_2", x * TILESIZE, y * TILESIZE);
+		break;
+	case BlockType::COPPER:
+		break;
+	case BlockType::IRON:
+		break;
+	case BlockType::GOLD:
+		break;
+	case BlockType::PLATINUM:
+		break;
+	}
+}
+
+void Map::WallItemSpawn(int x, int y)
+{
+	switch (_vTile[MaxTile_Y * x + y]->currentWallType)
+	{
+	case WallType::DIRT:
+		break;
+	case WallType::WOOD:
+		break;
+	case WallType::STONE:
+		break;
+	}
+}
+
+void Map::ObjectItemSpawn(int x, int y)
+{
+
+	switch (_vTile[MaxTile_Y * x + y]->currentObjectType)
+	{
+	case ObjectType::DESK1:
+		break;
+	case ObjectType::DESK2:
+		break;
+	case ObjectType::DESK3:
+		break;
+	case ObjectType::DESK4:
+		break;
+	case ObjectType::DESK5:
+		break;
+	case ObjectType::DESK6:
+		break;
+	case ObjectType::HEARTCRYSTAL1:
+		break;
+	case ObjectType::HEARTCRYSTAL2:
+		break;
+	case ObjectType::HEARTCRYSTAL3:
+		break;
+	case ObjectType::HEARTCRYSTAL4:
+		break;
+	case ObjectType::LEFTCHIR1:
+		break;
+	case ObjectType::LEFTCHIR2:
+		break;
+	case ObjectType::RIGHTCHIR1:
+		break;
+	case ObjectType::RIGHTCHIR2:
+		break;
+	case ObjectType::FURNACE1:
+		break;
+	case ObjectType::FURNACE2:
+		break;
+	case ObjectType::FURNACE3:
+		break;
+	case ObjectType::FURNACE4:
+		break;
+	case ObjectType::FURNACE5:
+		break;
+	case ObjectType::FURNACE6:
+		break;
+	case ObjectType::BOX1:
+		break;
+	case ObjectType::BOX2:
+		break;
+	case ObjectType::BOX3:
+		break;
+	case ObjectType::BOX4:
+		break;
+	case ObjectType::WORKBENCH1:
+		break;
+	case ObjectType::WORKBENCH2:
+		break;
+	case ObjectType::ANVIL1:
+		break;
+	case ObjectType::ANVIL2:
+		break;
+	case ObjectType::RIGHT_OPENDOOR1:
+		break;
+	case ObjectType::RIGHT_OPENDOOR2:
+		break;
+	case ObjectType::RIGHT_OPENDOOR3:
+		break;
+	case ObjectType::RIGHT_OPENDOOR4:
+		break;
+	case ObjectType::RIGHT_OPENDOOR5:
+		break;
+	case ObjectType::RIGHT_OPENDOOR6:
+		break;
+	case ObjectType::LEFT_OPENDOOR1:
+		break;
+	case ObjectType::LEFT_OPENDOOR2:
+		break;
+	case ObjectType::LEFT_OPENDOOR3:
+		break;
+	case ObjectType::LEFT_OPENDOOR4:
+		break;
+	case ObjectType::LEFT_OPENDOOR5:
+		break;
+	case ObjectType::LEFT_OPENDOOR6:
+		break;
+	case ObjectType::CLOSEDOOR1:
+		break;
+	case ObjectType::CLOSEDOOR2:
+		break;
+	case ObjectType::CLOSEDOOR3:
+		break;
+	case ObjectType::DEMONALTER1:
+		break;
+	case ObjectType::DEMONALTER2:
+		break;
+	case ObjectType::DEMONALTER3:
+		break;
+	case ObjectType::DEMONALTER4:
+		break;
+	case ObjectType::DEMONALTER5:
+		break;
+	case ObjectType::DEMONALTER6:
+		break;
+	case ObjectType::TREE1:
+		break;
+	case ObjectType::TREE2:
+		break;
+	case ObjectType::TREE3:
+		break;
+	case ObjectType::TREE4:
+		break;
+	case ObjectType::TREE5:
+		break;
+	case ObjectType::TREE6:
+		break;
+	case ObjectType::TREE7:
+		break;
+	case ObjectType::TREE8:
+		break;
+	case ObjectType::TREE9:
+		break;
+	case ObjectType::TREE10:
+		break;
+	case ObjectType::TREE11:
+		break;
+	case ObjectType::TREE12:
+		break;
+	case ObjectType::TREE13:
+		break;
+	case ObjectType::TREE14:
+		break;
+	case ObjectType::TREE15:
+		break;
+	case ObjectType::TREE16:
+		break;
+	case ObjectType::TREE17:
 		break;
 	case ObjectType::TREE18:
 		break;
@@ -475,24 +756,6 @@ void Map::objectTileUpdate(int x,int y)
 	case ObjectType::TREE41:
 		break;
 	case ObjectType::TREE42:
-		break;
-	case ObjectType::TREE43:
-		break;
-	case ObjectType::TREE44:
-		break;
-	case ObjectType::TREE45:
-		break;
-	case ObjectType::TREE46:
-		break;
-	case ObjectType::TREE47:
-		break;
-	case ObjectType::TREE48:
-		break;
-	case ObjectType::TREE49:
-		break;
-	case ObjectType::TREE50:
-		break;
-	default:
 		break;
 	}
 }
