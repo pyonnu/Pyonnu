@@ -62,7 +62,8 @@ class Player :public gameNode
 private:
 	EnemyManager* _enemyManager;
 	PlayerInfo _playerInfo;
-
+	vector<Item*> _vItem;
+	vector<Item*>::iterator _viItem;
 	Move* _move;
 	Jump* _jump;
 	Attack* _attack;
@@ -81,6 +82,7 @@ public:
 	void Action();
 	void Frame();
 	void BlockCollision();
+	void ItemCollision();
 	void LeftBlockCollision();
 	void RightBlockCollision();
 	void UpBlockCollision();

@@ -1,17 +1,18 @@
 #include "stdafx.h"
 #include "Item.h"
 
-HRESULT Item::init(type type1, ItemType type2, string image, int stack)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, int stack)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = IMAGEMANAGER->findImage(image);
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	return S_OK;
 }
 
-HRESULT Item::init(type type1, ItemType type2, ItemType type3, string image, int stack)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, ItemType type3, string image, int stack)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
@@ -19,16 +20,18 @@ HRESULT Item::init(type type1, ItemType type2, ItemType type3, string image, int
 	_itemInfo->itemType2 = type3;
 	_itemInfo->itemImage = IMAGEMANAGER->findImage(image);
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	return S_OK;
 }
 
-HRESULT Item::init(type type1, ItemType type2, string image, int stack, float point)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, int stack, float point)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = IMAGEMANAGER->findImage(image);
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	switch (type2)
 	{
 	case ItemType::BLOCK:
@@ -61,17 +64,18 @@ HRESULT Item::init(type type1, ItemType type2, string image, int stack, float po
 	return S_OK;
 }
 
-HRESULT Item::init(type type1, ItemType type2, image* image, int stack)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, int stack)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = image;
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	return S_OK;
 }
 
-HRESULT Item::init(type type1, ItemType type2, ItemType type3, image* image, int stack)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, ItemType type3, image* image, int stack)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
@@ -79,16 +83,18 @@ HRESULT Item::init(type type1, ItemType type2, ItemType type3, image* image, int
 	_itemInfo->itemType2 = type3;
 	_itemInfo->itemImage = image;
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	return S_OK;
 }
 
-HRESULT Item::init(type type1, ItemType type2, image* image, int stack, float point)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, int stack, float point)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = image;
 	_itemInfo->itemStack = stack;
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	switch (type2)
 	{
 	case ItemType::BLOCK:
@@ -146,3 +152,8 @@ void Item::CreateItem(float x, float y)
 	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 }
 
+void Item::CreateItem(string itemName, float x, float y)
+{
+	_itemInfo->itemImage = IMAGEMANAGER->findImage(itemName);
+	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
+}

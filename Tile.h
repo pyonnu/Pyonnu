@@ -3,7 +3,7 @@
 #define TILESIZE 32			//타일 한개 사이즈
 
 //총 21,600타일
-#define MaxTile_X 2400	//최대 x크기
+#define MaxTile_X 240   //최대 x크기
 #define MaxTile_Y 90	//최대 y크기
 enum class TileType
 {

@@ -538,13 +538,13 @@ void Map::BlockItemSpawn(int x, int y)
 	switch (_vTile[MaxTile_Y * x + y]->currentBlockType)
 	{
 	case BlockType::DIRT:
-		ITEMMANAGER->CreateItem("item_1", x * TILESIZE, y * TILESIZE);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::DIRT_BLOCK,ItemType::BLOCK, IMAGEMANAGER->findImage("Item_1"),1);
 		break;
 	case BlockType::WOOD:
-		ITEMMANAGER->CreateItem("item_3", x * TILESIZE, y * TILESIZE);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::WOOD,ItemType::BLOCK,ItemType::METERIAL,IMAGEMANAGER->findImage("Item_3"),1);
 		break;
 	case BlockType::STONE:
-		ITEMMANAGER->CreateItem("item_2", x * TILESIZE, y * TILESIZE);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::STONE_BLOCK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_2"), 1);
 		break;
 	case BlockType::COPPER:
 		break;

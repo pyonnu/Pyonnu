@@ -22,7 +22,7 @@ HRESULT Player::init()
 	_playerInfo.LegsFrameY = 0;
 
 	_playerInfo.x = WINSIZEX / 2 + TILESIZE;
-	_playerInfo.y = 1400;
+	_playerInfo.y = 1500;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
 
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
@@ -42,8 +42,13 @@ void Player::release()
 
 void Player::update()
 {
+	_vItem = ITEMMANAGER->getVItem();
+	_viItem = ITEMMANAGER->getViItem();
+	
 	int mouse = MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1);
 	BlockCollision();
+	ItemCollision();
+	
 	Action();
 	Frame();
 
@@ -66,6 +71,8 @@ void Player::update()
 
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
+	ITEMMANAGER->setVItem(_vItem);
+	ITEMMANAGER->setViItem(_viItem);
 }
 
 void Player::render()
@@ -245,6 +252,25 @@ void Player::BlockCollision()
 	RightBlockCollision();
 	UpBlockCollision();
 	DownBlockCollision();
+}
+
+void Player::ItemCollision()
+{
+	RECT temp;
+	for (_viItem = _vItem.begin();_viItem != _vItem.end();)
+	{
+		//cout << (*_viItem)->getRect().left << endl;
+		if (IntersectRect(&temp, &(*_viItem)->getRect(), &_playerInfo.rect))
+		{
+			_vItem.erase(_viItem);
+			
+			break;
+		}
+		else
+		{
+			++_viItem;
+		}
+	}
 }
 
 void Player::LeftBlockCollision()

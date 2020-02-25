@@ -18,7 +18,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->init();
 
 	imageAdd();
-	itemAdd();
+	//itemAdd();
 	_scene = new Scene;
 	_scene->init();
 	return S_OK;
@@ -37,6 +37,7 @@ void playGround::update()
 	gameNode::update();
 
 	SCENEMANAGER->update();
+	ITEMMANAGER->update();
 }
 
 //여기다 그려라!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -46,7 +47,6 @@ void playGround::render()
 
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
-
 	_backBuffer->render(getHDC(), 0, 0);
 }
 
@@ -169,7 +169,6 @@ void playGround::imageAdd()
 
 void playGround::itemAdd()
 {
-
 	ITEMMANAGER->itemAdd("item_1", type::DIRT_BLOCK, ItemType::BLOCK, "Item_1", 0);
 	ITEMMANAGER->itemAdd("item_2", type::STONE_BLOCK, ItemType::BLOCK, "Item_2", 0);
 	ITEMMANAGER->itemAdd("item_3", type::WOOD, ItemType::BLOCK, ItemType::METERIAL, "Item_3", 0);

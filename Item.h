@@ -79,13 +79,13 @@ public:
 private:
 	PItem_Info _itemInfo;
 public:
-	HRESULT init(type type, ItemType type2, string image, int stack);
-	HRESULT init(type type, ItemType type2, ItemType type3, string image, int stack);
-	HRESULT init(type type, ItemType type2, string image, int stack, float point);
+	HRESULT init(float x,float y,type type, ItemType type2, string image, int stack);
+	HRESULT init(float x, float y, type type, ItemType type2, ItemType type3, string image, int stack);
+	HRESULT init(float x, float y, type type, ItemType type2, string image, int stack, float point);
 
-	HRESULT init(type type, ItemType type2, image* image, int stack);
-	HRESULT init(type type, ItemType type2, ItemType type3, image* image, int stack);
-	HRESULT init(type type, ItemType type2, image* image, int stack, float point);
+	HRESULT init(float x, float y, type type, ItemType type2, image* image, int stack);
+	HRESULT init(float x, float y, type type, ItemType type2, ItemType type3, image* image, int stack);
+	HRESULT init(float x, float y, type type, ItemType type2, image* image, int stack, float point);
 
 	void release();
 	void update();
@@ -93,6 +93,9 @@ public:
 	void render(HDC dc, float x, float y);
 
 	void CreateItem(float x, float y);
+	void CreateItem(string itemName, float x, float y);
+
+	void setRect(float x, float y) { _itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight()); }
 	
 	inline type getItemType() { return _itemInfo->Type; }
 	inline ItemType getItemType1() { return _itemInfo->itemType; }

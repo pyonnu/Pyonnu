@@ -4,9 +4,15 @@
 class Inventory :public gameNode
 {
 private:
+	typedef map<string, Item*> mItem;
+	typedef map<string, Item*>::iterator miItem;
+private:
 	Item* _item[InventorySize];
 	vector<Item*> _vItem;
 	vector<Item*>::iterator _viItem;
+
+	mItem _mItem;
+	miItem _miItem;
 
 	image* _inventoryImage;
 	image* _selectInventoryImage;
@@ -21,6 +27,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void InvenToryControl();
 
 	type getSelectItem() { return _vItem[_selectQuickSlot]->getItemType(); }
 	ItemType getSelectItemType1() { return _vItem[_selectQuickSlot]->getItemType1(); }

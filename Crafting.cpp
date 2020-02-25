@@ -3,7 +3,7 @@
 
 HRESULT Crafting::init()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void Crafting::release()

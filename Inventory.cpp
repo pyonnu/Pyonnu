@@ -17,34 +17,8 @@ void Inventory::release()
 
 void Inventory::update()
 {
-	if (KEYMANAGER->isOnceKeyDown('1'))_selectQuickSlot = 0;
-	if (KEYMANAGER->isOnceKeyDown('2'))_selectQuickSlot = 1;
-	if (KEYMANAGER->isOnceKeyDown('3'))_selectQuickSlot = 2;
-	if (KEYMANAGER->isOnceKeyDown('4'))_selectQuickSlot = 3;
-	if (KEYMANAGER->isOnceKeyDown('5'))_selectQuickSlot = 4;
-	if (KEYMANAGER->isOnceKeyDown('6'))_selectQuickSlot = 5;
-	if (KEYMANAGER->isOnceKeyDown('7'))_selectQuickSlot = 6;
-	if (KEYMANAGER->isOnceKeyDown('8'))_selectQuickSlot = 7;
-	if (KEYMANAGER->isOnceKeyDown('9'))_selectQuickSlot = 8;
-	if (KEYMANAGER->isOnceKeyDown('0'))_selectQuickSlot = 9;
-	if (KEYMANAGER->isToggleKey('I'))
-	{
-		_invenSee = true;
-	}
-	else
-	{
-		_invenSee = false;
-	}
-	Item* item;
-	item = new Item;
-	item = ITEMMANAGER->findItem("item_55");
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		
-		_viItem = _vItem.begin();
-		_viItem = _vItem.insert(_viItem, item);
-		
-	}
+	InvenToryControl();
+	
 }
 
 void Inventory::render()
@@ -75,7 +49,6 @@ void Inventory::render()
 				_vItem[x + y * 10]->render(getMemDC(), 20 + x * 62, 20 + y * 62);
 				sprintf_s(str, "%d", _vItem[x+y*10]->getItemStack());
 				TextOut(getMemDC(), 20+x*62, 20+y*62, str, strlen(str));
-
 				/*for (_viItem = _vItem.begin();_viItem != _vItem.end();++_viItem)
 				{
 					if (!(*_viItem) == NULL)
@@ -86,5 +59,27 @@ void Inventory::render()
 				//_vItem[x + y * 10]->render(getMemDC(), 30 + x * 62, 30 + y * 62);
 			}
 		}
+	}
+}
+
+void Inventory::InvenToryControl()
+{
+	if (KEYMANAGER->isOnceKeyDown('1'))_selectQuickSlot = 0;
+	if (KEYMANAGER->isOnceKeyDown('2'))_selectQuickSlot = 1;
+	if (KEYMANAGER->isOnceKeyDown('3'))_selectQuickSlot = 2;
+	if (KEYMANAGER->isOnceKeyDown('4'))_selectQuickSlot = 3;
+	if (KEYMANAGER->isOnceKeyDown('5'))_selectQuickSlot = 4;
+	if (KEYMANAGER->isOnceKeyDown('6'))_selectQuickSlot = 5;
+	if (KEYMANAGER->isOnceKeyDown('7'))_selectQuickSlot = 6;
+	if (KEYMANAGER->isOnceKeyDown('8'))_selectQuickSlot = 7;
+	if (KEYMANAGER->isOnceKeyDown('9'))_selectQuickSlot = 8;
+	if (KEYMANAGER->isOnceKeyDown('0'))_selectQuickSlot = 9;
+	if (KEYMANAGER->isToggleKey('I'))
+	{
+		_invenSee = true;
+	}
+	else
+	{
+		_invenSee = false;
 	}
 }

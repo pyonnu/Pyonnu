@@ -7,9 +7,13 @@ class ItemManager:public singletonBase<ItemManager>
 private:
 	typedef map<string, Item*> mItem;
 	typedef map<string, Item*>::iterator miItem;
+	typedef vector<Item*> vItem;
+	typedef vector<Item*>::iterator viItem;
 private:
 	mItem _mItem;
 	miItem _miItem;
+	vItem _vItem;
+	viItem _viItem;
 public:
 	HRESULT init();
 	void release();
@@ -27,5 +31,15 @@ public:
 	Item* findItem(string itemName);
 
 	void CreateItem(string itemName,float x,float y);
+
+	void CreateItem(float x,float y, type type1, ItemType type2, image* image, int stack);
+	void CreateItem(float x,float y, type type1, ItemType type2, ItemType type3, image* image, int stack);
+	void CreateItem(float x,float y, type type1, ItemType type2, image* image, int stack, float point);
+
+	vItem getVItem() { return _vItem; }
+	viItem getViItem() { return _viItem; }
+
+	void setVItem(vItem vitem) { _vItem = vitem; }
+	void setViItem(viItem viitem) { _viItem = viitem; }
 };
 
