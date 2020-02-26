@@ -19,7 +19,6 @@ HRESULT World::init()
 	_player->setViTile(_map->getViTile());
 
 	
-
 	return S_OK;
 }
 
@@ -44,6 +43,8 @@ void World::render()
 	_player->render();
 	_enemyManager->render();
 	_ui->render();
-	ITEMMANAGER->render(getMemDC());
+	ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
+
+	
 }
 

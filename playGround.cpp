@@ -21,6 +21,7 @@ HRESULT playGround::init()
 	//itemAdd();
 	_scene = new Scene;
 	_scene->init();
+
 	return S_OK;
 }
 
@@ -109,14 +110,14 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Item_11", "Resources/Item/Item_11.bmp", 60, 48, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_12", "Resources/Item/Item_12.bmp", 60, 48, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_13", "Resources/Item/Item_13.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_14", "Resources/Item/Item_14.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_15", "Resources/Item/Item_15.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_16", "Resources/Item/Item_16.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_17", "Resources/Item/Item_17.bmp", 64, 64, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_14", "Resources/Item/Item_14.bmp", 82,82, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_15", "Resources/Item/Item_15.bmp", 74, 65, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_16", "Resources/Item/Item_16.bmp", 82, 82, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_17", "Resources/Item/Item_17.bmp", 82, 82, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_18", "Resources/Item/Item_18.bmp", 64, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_19", "Resources/Item/Item_19.bmp", 64, 56, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_20", "Resources/Item/Item_20.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_21", "Resources/Item/Item_21.bmp", 64, 64, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_21", "Resources/Item/Item_21.bmp", 82, 82, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_22", "Resources/Item/Item_22.bmp", 64, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_23", "Resources/Item/Item_23.bmp", 64, 56, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_24", "Resources/Item/Item_24.bmp", 64, 64, true, RGB(255, 0, 255));
