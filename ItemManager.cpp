@@ -12,7 +12,10 @@ void ItemManager::release()
 
 void ItemManager::update()
 {
-	//cout << _vItem.size() << endl;
+	for (_viItem = _vItem.begin();_viItem != _vItem.end();++_viItem)
+	{
+		(*_viItem)->update();
+	}
 }
 
 void ItemManager::render(HDC dc)
@@ -202,5 +205,13 @@ void ItemManager::CreateItem(float x, float y, type type1, ItemType type2, image
 	Item* item;
 	item = new Item;
 	item->init(x, y, type1, type2, image, stack, point);
+	_vItem.push_back(item);
+}
+
+void ItemManager::CreateItem(float x, float y, type type1, ItemType type2, image* image, float point)
+{
+	Item* item;
+	item = new Item;
+	item->init(x, y, type1, type2, image, point);
 	_vItem.push_back(item);
 }

@@ -1,9 +1,8 @@
 #pragma once
+
 //=========================================
 // ## 2019.11.15 ## Image ##
 //=========================================
-
-#include "animation.h"
 
 class image
 {
@@ -34,7 +33,12 @@ public:
 		int frameWidth;		//한 프레임의 가로크기
 		int frameHeight;	//한 프레임의 세로크기
 
+		bool isAlpha;		//알파 렌더 해야하나 
+		BYTE alpha;			//알파값 
 		BYTE loadType;
+
+		bool isRotate;		//회전 해야하나 
+		float rotationAngle;//회전 각도 
 
 		tagImageInfo()
 		{
@@ -52,17 +56,22 @@ public:
 			maxFrameY = 0;
 			frameWidth = 0;
 			frameHeight = 0;
+			rotationAngle = 0;
+			alpha = 255;
 			loadType = LOAD_RESOURCE;
 		}
-	}IMAGE_INFO, *LPIMAGE_INFO;
+	}IMAGE_INFO, * LPIMAGE_INFO;
 private:
 	LPIMAGE_INFO	_imageInfo;
-	CHAR*			_fileName;
+	CHAR* _fileName;
 	BOOL			_trans;
 	COLORREF		_transColor;
 
 	BLENDFUNCTION _blendFunc;	//알파블렌드 관련 함수들
 	LPIMAGE_INFO  _blendImage;	//알파블렌드 처리할 이미지
+
+
+	LPIMAGE_INFO _rotateImage;	//회전 처리할 이미지 
 public:
 	image();
 	~image();
@@ -89,23 +98,48 @@ public:
 	//렌더함수 뿌려질DC, 뿌릴좌표X(left),뿌릴좌표Y(top), 잘라올곳X(left), 잘라올곳Y(top), 잘라올 가로크기, 잘라올 세로크기
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
-	void rotateRender(HDC hdc);
-
 	//이미지 프레임 렌더(뿌려질DC, 뿌려질left,  뿌려질top)
 	void frameRender(HDC hdc, int destX, int destY);
 	//이미지 프레임 렌더(뿌려질DC, 뿌려질left, 뿌려질top, 프레임X번호, 프레임Y번호
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 
-	void loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
-
 	//알파 렌더 (뿌려질DC, 알파값(투명도) 0 ~ 255)
 	void alphaRender(HDC hdc, BYTE alpha);
-	//알파 렌더(뿌려질DC, left, top, 알파값 0 ~ 255)
+	//알파 렌더 (뿌려질DC, 뿌릴좌표X, 뿌릴좌표Y , 알파값)
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
+	//알파 렌더 (뿌려질DC, 뿌릴좌표X(left),뿌릴좌표Y(top), 잘라올곳X(left), 잘라올곳Y(top), 잘라올 가로크기, 잘라올 세로크기, 알파값)
+	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 
-	void scaleRender(HDC, int destX, int destY, int scaleX, int scaleY);
+	//알파 프레임 렌더 (뿌려질DC, 뿌려질left,  뿌려질top, 알파값)
+	void alphaFrameRender(HDC hdc, int destX, int destY, BYTE alpha);
+	//알파 프레임 렌더(뿌려질DC, 뿌려질left, 뿌려질top, 프레임X번호, 프레임Y번호,알파값)
+	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
-	void aniRender(HDC hdc, int destX, int destY, animation* ani);
+	//이미지 회전 렌더
+	void rotateRender(HDC hdc, float centerX, float centerY, float angle);
+	void alphaRotateRender(HDC hdc, float centerX, float centerY, float angle, BYTE alpha);
+	void rotateFrameRender(HDC hdc, float centerX, float centerY, float angle);
+	void rotateFrameRender(HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle);
+	void alphaRotateFrameRender(HDC hdc, float centerX, float centerY, float angle, BYTE alpha);
+	void alphaRotateFrameRender(HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle, BYTE alpha);
+
+	//루프 렌더
+	void loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
+
+
+	//알파 세터, 게터 
+	void setAlpha(int byte);
+	BYTE getAlpha()
+	{
+		return _imageInfo->alpha;
+	}
+
+	//회전 세터, 게터
+	void setRotationAngle(float angle);
+	float getRotationAngle()
+	{
+		return _imageInfo->rotationAngle;
+	}
 
 	inline HDC getMemDC() { return _imageInfo->hMemDC; }
 

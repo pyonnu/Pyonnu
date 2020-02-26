@@ -9,7 +9,6 @@ HRESULT World::init()
 	_ui = new UI;
 
 	_map->init();
-
 	_player->init();
 	_enemyManager->init();
 	_player->EnemyManagerLink(_enemyManager);
@@ -19,7 +18,7 @@ HRESULT World::init()
 	_player->setVTile(_map->getVTile());
 	_player->setViTile(_map->getViTile());
 
-
+	
 
 	return S_OK;
 }
@@ -35,6 +34,7 @@ void World::update()
 	_player->update();
 	_enemyManager->update();
 	_ui->update();
+	ITEMMANAGER->update();
 }
 
 void World::render()
@@ -44,6 +44,6 @@ void World::render()
 	_player->render();
 	_enemyManager->render();
 	_ui->render();
-	ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
+	ITEMMANAGER->render(getMemDC());
 }
 

@@ -41,7 +41,7 @@ enum class type
 	COPPER_HELMET, COPPER_ARMOR, COPPER_LEGGINGS, IRON_HELMET, IRON_ARMOR, IRON_LEGGINGS, GOLD_HELMET, GOLD_ARMOR, GOLD_LEGGINGS, PLATINUM_HELMET, PLATINUM_ARMOR, PLATINUM_LEGGINGS,
 	DEMONITE_HELMET, DEMONITE_ARMOR, DEMONITE_LEGGINGS, COPPER_COIN, IRON_COIN, GOLD_COIN, PLATINUM_COIN,
 	DESK, FURNACE, WORKBENCH, ANVIL, CHIR, BOX, DOOR, WOOD_WALL, GEL, LENS,
-	DEMONEYE, POTION50, POTION100, ACORN, HEARTCRYSTAL,
+	DEMONEYE, POTION50, POTION100, ACORN, HEARTCRYSTAL,DIRT_WALL,STONE_WALL
 };
 enum class ItemType
 {
@@ -79,13 +79,15 @@ public:
 private:
 	PItem_Info _itemInfo;
 public:
-	HRESULT init(float x,float y,type type, ItemType type2, string image, int stack);
-	HRESULT init(float x, float y, type type, ItemType type2, ItemType type3, string image, int stack);
-	HRESULT init(float x, float y, type type, ItemType type2, string image, int stack, float point);
+	HRESULT init(float x,float y,type type1, ItemType type2, string image, int stack);
+	HRESULT init(float x, float y, type type1, ItemType type2, ItemType type3, string image, int stack);
+	HRESULT init(float x, float y, type type1, ItemType type2, string image, int stack, float point);
+	HRESULT init(float x, float y, type type1, ItemType type2, string image, float point);
 
-	HRESULT init(float x, float y, type type, ItemType type2, image* image, int stack);
-	HRESULT init(float x, float y, type type, ItemType type2, ItemType type3, image* image, int stack);
-	HRESULT init(float x, float y, type type, ItemType type2, image* image, int stack, float point);
+	HRESULT init(float x, float y, type type1, ItemType type2, image* image, int stack);
+	HRESULT init(float x, float y, type type1, ItemType type2, ItemType type3, image* image, int stack);
+	HRESULT init(float x, float y, type type1, ItemType type2, image* image, int stack, float point);
+	HRESULT init(float x, float y, type type1, ItemType type2, image* image, float point);
 
 	void release();
 	void update();
@@ -97,6 +99,7 @@ public:
 
 	void setRect(float x, float y) { _itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight()); }
 	
+	inline PItem_Info getPItemInfo() { return _itemInfo; }
 	inline type getItemType() { return _itemInfo->Type; }
 	inline ItemType getItemType1() { return _itemInfo->itemType; }
 	inline ItemType getItemType2() { return _itemInfo->itemType2; }
@@ -105,6 +108,7 @@ public:
 	inline float getArmorDefense() { return _itemInfo->ArmorDefense; }
 	inline float getPotionPower() { return _itemInfo->PotionHealthPoint; }
 	inline RECT getRect() { return _itemInfo->rc; }
+	inline image* getImage() { return _itemInfo->itemImage; }
 
 	inline void setItemStack(int stack) { _itemInfo->itemStack = stack; }
 	inline void PlusItemStack() { _itemInfo->itemStack += 1; }

@@ -35,6 +35,7 @@ public:
 	void CreateItem(float x,float y, type type1, ItemType type2, image* image, int stack);
 	void CreateItem(float x,float y, type type1, ItemType type2, ItemType type3, image* image, int stack);
 	void CreateItem(float x,float y, type type1, ItemType type2, image* image, int stack, float point);
+	void CreateItem(float x, float y, type type1, ItemType type2, image* image,float point);
 
 	vItem getVItem() { return _vItem; }
 	viItem getViItem() { return _viItem; }

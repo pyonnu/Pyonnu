@@ -1,37 +1,48 @@
 #pragma once
-#include"gameNode.h"
 #define InventorySize 50
-class Inventory :public gameNode
+class Inventory
 {
 private:
 	typedef map<string, Item*> mItem;
 	typedef map<string, Item*>::iterator miItem;
 private:
-	Item* _item[InventorySize];
-	vector<Item*> _vItem;
-	vector<Item*>::iterator _viItem;
+	Item* _item;
+	vector<Item*> _vInven;
+	vector<Item*>::iterator _viInven;
+	
 
 	mItem _mItem;
 	miItem _miItem;
 
 	image* _inventoryImage;
 	image* _selectInventoryImage;
+	image* _selectItemImage;
 	image* _coinSlotImage;
 	image* _armorSlotImage;
+	RECT _slot[InventorySize];
+	RECT _inventoryRect;
 
 	int _selectQuickSlot;
-
+	int _FilledInventory;
 	bool _invenSee;
+	bool _selectItem;
 public:
 	HRESULT init();
 	void release();
 	void update();
-	void render();
+	void render(HDC dc);
 
 	void InvenToryControl();
+	void ItemAdd(string itemName, Item* item);
+	void ItemSelect(int i,int j);
 
-	type getSelectItem() { return _vItem[_selectQuickSlot]->getItemType(); }
-	ItemType getSelectItemType1() { return _vItem[_selectQuickSlot]->getItemType1(); }
-	ItemType getSelectItemType2() {return _vItem[_selectQuickSlot]->getItemType2();}
+	Item* getItem() { return _vInven[_selectQuickSlot]; }
+	type getSelectItem() {return _vInven[_selectQuickSlot]->getItemType(); }
+	ItemType getSelectItemType1() { return _vInven[_selectQuickSlot]->getItemType1(); }
+	ItemType getSelectItemType2() { return _vInven[_selectQuickSlot]->getItemType2(); }
+	image* getSelectItemImage() { return _vInven[_selectQuickSlot]->getImage(); }
+	bool getInvenSee() { return _invenSee; }
+	RECT getInventoryRect() { return _inventoryRect; }
+	
 };
 
