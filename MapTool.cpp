@@ -716,19 +716,19 @@ void MapTool::drawTile()
 					case TileType::ENEMY:
 						break;
 					case TileType::WALL:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].wall = _selectTile.SelectTileType;
 						_Tile[x][y].wallType = _selectTile.SelectWallType;
 						_Tile[x][y].FrameX2 = _selectTile.FrameX;
 						_Tile[x][y].FrameY2 = _selectTile.FrameY;
 						break;
 					case TileType::BLOCK:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].block = _selectTile.SelectTileType;
 						_Tile[x][y].blockType = _selectTile.SelectBlockType;
 						_Tile[x][y].FrameX = _selectTile.FrameX;
 						_Tile[x][y].FrameY = _selectTile.FrameY;
 						break;
 					case TileType::OBJECT:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].object = _selectTile.SelectTileType;
 						_Tile[x][y].objectType = _selectTile.SelectObjectType;
 						_Tile[x][y].FrameX3 = _selectTile.FrameX;
 						_Tile[x][y].FrameY3 = _selectTile.FrameY;
@@ -756,19 +756,19 @@ void MapTool::drawTile()
 					case TileType::ENEMY:
 						break;
 					case TileType::WALL:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].wall = _selectTile.SelectTileType;
 						_Tile[x][y].wallType = _selectTile.SelectWallType;
 						_Tile[x][y].FrameX2 = _selectTile.FrameX;
 						_Tile[x][y].FrameY2 = _selectTile.FrameY;
 						break;
 					case TileType::BLOCK:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].block = _selectTile.SelectTileType;
 						_Tile[x][y].blockType = _selectTile.SelectBlockType;
 						_Tile[x][y].FrameX = _selectTile.FrameX;
 						_Tile[x][y].FrameY = _selectTile.FrameY;
 						break;
 					case TileType::OBJECT:
-						_Tile[x][y].tileType = _selectTile.SelectTileType;
+						_Tile[x][y].object = _selectTile.SelectTileType;
 						_Tile[x][y].objectType = _selectTile.SelectObjectType;
 						_Tile[x][y].FrameX3 = _selectTile.FrameX;
 						_Tile[x][y].FrameY3 = _selectTile.FrameY;

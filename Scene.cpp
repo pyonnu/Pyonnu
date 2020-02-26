@@ -21,5 +21,4 @@ void Scene::update()
 
 void Scene::render()
 {
-	SCENEMANAGER->render();
 }

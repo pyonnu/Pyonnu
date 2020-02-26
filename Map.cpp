@@ -24,34 +24,31 @@ void Map::update()
 		for (int y = _startY;y < _endY;++y)
 		{
 			//타일 타입이 none이 아닐때만
-			if (_vTile[MaxTile_Y * x + y]->currentTileType != TileType::NONE)
+			if (_vTile[MaxTile_Y * x + y]->currentTileBlockType != TileType::NONE)
 			{
-				if (_vTile[MaxTile_Y * x + y]->tileType != _vTile[MaxTile_Y * x + y]->currentTileType)
+				if (_vTile[MaxTile_Y * x + y]->block != _vTile[MaxTile_Y * x + y]->currentTileBlockType)
 				{
-					//해당 타일의 아이템을 바닥에 뿌림
-					//_vTile[MaxTile_Y * x + y]->currentTileType
-					switch (_vTile[MaxTile_Y * x + y]->currentTileType)
-					{
-					case TileType::WALL:
-						WallItemSpawn(x, y);
-						break;
-					case TileType::BLOCK:
-						BlockItemSpawn(x,y);
-						break;
-					case TileType::OBJECT:
+					BlockItemSpawn(x,y);
+				}
+				if (_vTile[MaxTile_Y * x + y]->wall != _vTile[MaxTile_Y * x + y]->currentTileWallType)
+				{
+					WallItemSpawn(x, y);
+				}
+				if (_vTile[MaxTile_Y * x + y]->object != _vTile[MaxTile_Y * x + y]->currentTileObjectType)
+				{
 						ObjectItemSpawn(x, y);
-						break;
-					}
 				}
 			}
-			_vTile[MaxTile_Y * x + y]->currentTileType = _vTile[MaxTile_Y * x + y]->tileType;
+			_vTile[MaxTile_Y * x + y]->currentTileBlockType = _vTile[MaxTile_Y * x + y]->block;
+			_vTile[MaxTile_Y * x + y]->currentTileWallType = _vTile[MaxTile_Y * x + y]->wall;
+			_vTile[MaxTile_Y * x + y]->currentTileObjectType = _vTile[MaxTile_Y * x + y]->object;
 			_vTile[MaxTile_Y * x + y]->currentBlockType = _vTile[MaxTile_Y * x + y]->blockType;
 			_vTile[MaxTile_Y * x + y]->currentWallType = _vTile[MaxTile_Y * x + y]->wallType;
 			_vTile[MaxTile_Y * x + y]->currentObjectType = _vTile[MaxTile_Y * x + y]->objectType;
 			TileUpdate(x, y);
 		}
 	}
-
+	
 		
 	
 }
@@ -541,18 +538,22 @@ void Map::BlockItemSpawn(int x, int y)
 		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::DIRT_BLOCK,ItemType::BLOCK, IMAGEMANAGER->findImage("Item_1"),1);
 		break;
 	case BlockType::WOOD:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::WOOD,ItemType::BLOCK,ItemType::METERIAL,IMAGEMANAGER->findImage("Item_3"),1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::WOOD,ItemType::METERIAL,ItemType::BLOCK,IMAGEMANAGER->findImage("Item_3"),1);
 		break;
 	case BlockType::STONE:
 		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::STONE_BLOCK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_2"), 1);
 		break;
 	case BlockType::COPPER:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::COPPER, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_4"), 1);
 		break;
 	case BlockType::IRON:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::IRON, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_5"), 1);
 		break;
 	case BlockType::GOLD:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::GOLD, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_6"), 1);
 		break;
 	case BlockType::PLATINUM:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::PLATINUM, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 1);
 		break;
 	}
 }
@@ -562,10 +563,13 @@ void Map::WallItemSpawn(int x, int y)
 	switch (_vTile[MaxTile_Y * x + y]->currentWallType)
 	{
 	case WallType::DIRT:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DIRT_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 1);
 		break;
 	case WallType::WOOD:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WOOD_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_60"), 1);
 		break;
 	case WallType::STONE:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::STONE_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_69"), 1);
 		break;
 	}
 }

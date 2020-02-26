@@ -38,6 +38,7 @@ HRESULT gameNode::init(bool managerInit)
 		KEYANIMANAGER->init();
 		CAMERAMANAGER->init();
 		ITEMMANAGER->init();
+		INVENTORYMANAGER->init();
 	}
 
 	return S_OK;
@@ -68,6 +69,8 @@ void gameNode::release()
 		CAMERAMANAGER->releaseSingleton();
 		ITEMMANAGER->release();
 		ITEMMANAGER->releaseSingleton();
+		INVENTORYMANAGER->release();
+		INVENTORYMANAGER->releaseSingleton();
 	}
 
 	ReleaseDC(_hWnd, _hdc);

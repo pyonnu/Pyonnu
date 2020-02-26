@@ -6,7 +6,6 @@ HRESULT Player::init()
 	_jump = new Jump;
 	_move = new Move;
 	_attack = new Attack;
-
 	//_jump->init(&_playerInfo.y);
 	_move->init();
 	_attack->init();
@@ -21,8 +20,8 @@ HRESULT Player::init()
 	_playerInfo.BodyFrameY = 0;
 	_playerInfo.LegsFrameY = 0;
 
-	_playerInfo.x = WINSIZEX / 2 + TILESIZE;
-	_playerInfo.y = 1500;
+	_playerInfo.x = MaxTile_X * TILESIZE / 2;
+	_playerInfo.y = MaxTile_Y * TILESIZE / 2;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
 
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
@@ -32,7 +31,14 @@ HRESULT Player::init()
 	_playerInfo.BodyArmor = NULL;
 	_playerInfo.LegsArmor = NULL;
 
+	_playerInfo.Attack = false;
+
 	_gravity = 0.05f;
+	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f);
+	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
+	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f);
+	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"), 8.0f);
+	
 	return S_OK;
 }
 
@@ -44,31 +50,14 @@ void Player::update()
 {
 	_vItem = ITEMMANAGER->getVItem();
 	_viItem = ITEMMANAGER->getViItem();
-	
 	int mouse = MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1);
 	BlockCollision();
 	ItemCollision();
 	
 	Action();
 	Frame();
-
-	/*마우스 위치 블럭 파괴 공식
-	_vTile[MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left)-WINSIZEX/2) / TILESIZE)+1) + ((((_ptMouse.y + _playerInfo.rect.top)-WINSIZEY/2) / TILESIZE)+1)]->blockType = BlockType::NONE;*/
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) 
-		&& _vTile[mouse]->blockType == BlockType::NONE 
-		&& _vTile[mouse]->objectType == ObjectType::NONE)
-	{
-		_vTile[mouse]->tileType = TileType::BLOCK;
-		_vTile[mouse]->blockType = BlockType::DIRT;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON)
-		&& _vTile[mouse]->tileType == TileType::BLOCK)
-	{
-		_vTile[mouse]->tileType = TileType::NONE;
-		_vTile[mouse]->blockType = BlockType::NONE;
-	}
-	//_jump->update(_playerInfo.Down,_playerInfo.Up);
-
+	TileDestroyCreate(mouse);
+	if(INVENTORYMANAGER->getItem()!=NULL)_playerInfo.attackRect = RectMake(_playerInfo.rect.left - INVENTORYMANAGER->getImage()->getWidth(), _playerInfo.rect.top + 20, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	ITEMMANAGER->setVItem(_vItem);
@@ -105,6 +94,7 @@ void Player::render()
 		break;
 	}
 	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
+	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.attackRect);
 }
 
 void Player::PlayerInfoUpdate()
@@ -182,6 +172,7 @@ void Player::Action()
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		_playerInfo.BodyState = PlayerBodyState::ATTACK;
+		_playerInfo.Attack = true;
 	}
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	if (_playerInfo.jump)
@@ -262,8 +253,8 @@ void Player::ItemCollision()
 		//cout << (*_viItem)->getRect().left << endl;
 		if (IntersectRect(&temp, &(*_viItem)->getRect(), &_playerInfo.rect))
 		{
+			InventoryItemAdd(_viItem);
 			_vItem.erase(_viItem);
-			
 			break;
 		}
 		else
@@ -273,15 +264,251 @@ void Player::ItemCollision()
 	}
 }
 
+void Player::TileDestroyCreate(int mouse)
+{
+	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)
+			&& _vTile[mouse]->blockType == BlockType::NONE
+			&& _vTile[mouse]->objectType == ObjectType::NONE)
+		{
+			_vTile[mouse]->block = TileType::BLOCK;
+			_vTile[mouse]->blockType = BlockType::DIRT;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_RBUTTON)
+			&& _vTile[mouse]->block == TileType::BLOCK)
+		{
+			_vTile[mouse]->block = TileType::NONE;
+			_vTile[mouse]->blockType = BlockType::NONE;
+		}
+	}
+}
+
+void Player::InventoryItemAdd(vector<Item*>::iterator viItem)
+{
+	switch ((*viItem)->getItemType())
+	{
+	case type::DIRT_BLOCK:
+		INVENTORYMANAGER->ItemAdd("item_1", (*viItem));
+		break;
+	case type::STONE_BLOCK:
+		INVENTORYMANAGER->ItemAdd("item_2", (*viItem));
+		break;
+	case type::WOOD:
+		INVENTORYMANAGER->ItemAdd("item_3", (*viItem));
+		break;
+	case type::COPPER:
+		INVENTORYMANAGER->ItemAdd("item_4", (*viItem));
+		break;
+	case type::COPPER_BAR:
+		INVENTORYMANAGER->ItemAdd("item_5", (*viItem));
+		break;
+	case type::IRON:
+		INVENTORYMANAGER->ItemAdd("item_6", (*viItem));
+		break;
+	case type::IRON_BAR:
+		INVENTORYMANAGER->ItemAdd("item_7", (*viItem));
+		break;
+	case type::GOLD:
+		INVENTORYMANAGER->ItemAdd("item_8", (*viItem));
+		break;
+	case type::GOLD_BAR:
+		INVENTORYMANAGER->ItemAdd("item_9", (*viItem));
+		break;
+	case type::PLATINUM:
+		INVENTORYMANAGER->ItemAdd("item_10", (*viItem));
+		break;
+	case type::PLATINUM_BAR:
+		INVENTORYMANAGER->ItemAdd("item_11", (*viItem));
+		break;
+	case type::DEMONITE:
+		INVENTORYMANAGER->ItemAdd("item_12", (*viItem));
+		break;
+	case type::DEMONITE_BAR:
+		INVENTORYMANAGER->ItemAdd("item_13", (*viItem));
+		break;
+	case type::COPPER_PICKAXE:
+		INVENTORYMANAGER->ItemAdd("item_14", (*viItem));
+		break;
+	case type::COPPER_AXE:
+		INVENTORYMANAGER->ItemAdd("item_15", (*viItem));
+		break;
+	case type::COPPER_HAMMER:
+		INVENTORYMANAGER->ItemAdd("item_16", (*viItem));
+		break;
+	case type::COPPER_SWORD:
+		INVENTORYMANAGER->ItemAdd("item_17", (*viItem));
+		break;
+	case type::IRON_PICKAXE:
+		INVENTORYMANAGER->ItemAdd("item_18", (*viItem));
+		break;
+	case type::IRON_AXE:
+		INVENTORYMANAGER->ItemAdd("item_19", (*viItem));
+		break;
+	case type::IRON_HAMMER:
+		INVENTORYMANAGER->ItemAdd("item_20", (*viItem));
+		break;
+	case type::IRON_SWORD:
+		INVENTORYMANAGER->ItemAdd("item_21", (*viItem));
+		break;
+	case type::GOLD_PICKAXE:
+		INVENTORYMANAGER->ItemAdd("item_22", (*viItem));
+		break;
+	case type::GOLD_AXE:
+		INVENTORYMANAGER->ItemAdd("item_23", (*viItem));
+		break;
+	case type::GOLD_HAMMER:
+		INVENTORYMANAGER->ItemAdd("item_24", (*viItem));
+		break;
+	case type::GOLD_SWORD:
+		INVENTORYMANAGER->ItemAdd("item_25", (*viItem));
+		break;
+	case type::PLATINUM_PICKAXE:
+		INVENTORYMANAGER->ItemAdd("item_26", (*viItem));
+		break;
+	case type::PLATINUM_AXE:
+		INVENTORYMANAGER->ItemAdd("item_27", (*viItem));
+		break;
+	case type::PLATINUM_HAMMER:
+		INVENTORYMANAGER->ItemAdd("item_28", (*viItem));
+		break;
+	case type::PLATINUM_SWORD:
+		INVENTORYMANAGER->ItemAdd("item_29", (*viItem));
+		break;
+	case type::DEMONITE_PICKAXE:
+		INVENTORYMANAGER->ItemAdd("item_30", (*viItem));
+		break;
+	case type::DEMONITE_AXE:
+		INVENTORYMANAGER->ItemAdd("item_31", (*viItem));
+		break;
+	case type::DEMONITE_HAMMER:
+		INVENTORYMANAGER->ItemAdd("item_32", (*viItem));
+		break;
+	case type::DEMONITE_SWORD:
+		INVENTORYMANAGER->ItemAdd("item_33", (*viItem));
+		break;
+	case type::COPPER_HELMET:
+		INVENTORYMANAGER->ItemAdd("item_34", (*viItem));
+		break;
+	case type::COPPER_ARMOR:
+		INVENTORYMANAGER->ItemAdd("item_35", (*viItem));
+		break;
+	case type::COPPER_LEGGINGS:
+		INVENTORYMANAGER->ItemAdd("item_36", (*viItem));
+		break;
+	case type::IRON_HELMET:
+		INVENTORYMANAGER->ItemAdd("item_37", (*viItem));
+		break;
+	case type::IRON_ARMOR:
+		INVENTORYMANAGER->ItemAdd("item_38", (*viItem));
+		break;
+	case type::IRON_LEGGINGS:
+		INVENTORYMANAGER->ItemAdd("item_39", (*viItem));
+		break;
+	case type::GOLD_HELMET:
+		INVENTORYMANAGER->ItemAdd("item_40", (*viItem));
+		break;
+	case type::GOLD_ARMOR:
+		INVENTORYMANAGER->ItemAdd("item_41", (*viItem));
+		break;
+	case type::GOLD_LEGGINGS:
+		INVENTORYMANAGER->ItemAdd("item_42", (*viItem));
+		break;
+	case type::PLATINUM_HELMET:
+		INVENTORYMANAGER->ItemAdd("item_43", (*viItem));
+		break;
+	case type::PLATINUM_ARMOR:
+		INVENTORYMANAGER->ItemAdd("item_44", (*viItem));
+		break;
+	case type::PLATINUM_LEGGINGS:
+		INVENTORYMANAGER->ItemAdd("item_45", (*viItem));
+		break;
+	case type::DEMONITE_HELMET:
+		INVENTORYMANAGER->ItemAdd("item_46", (*viItem));
+		break;
+	case type::DEMONITE_ARMOR:
+		INVENTORYMANAGER->ItemAdd("item_47", (*viItem));
+		break;
+	case type::DEMONITE_LEGGINGS:
+		INVENTORYMANAGER->ItemAdd("item_48", (*viItem));
+		break;
+	case type::COPPER_COIN:
+		INVENTORYMANAGER->ItemAdd("item_49", (*viItem));
+		break;
+	case type::IRON_COIN:
+		INVENTORYMANAGER->ItemAdd("item_50", (*viItem));
+		break;
+	case type::GOLD_COIN:
+		INVENTORYMANAGER->ItemAdd("item_51", (*viItem));
+		break;
+	case type::PLATINUM_COIN:
+		INVENTORYMANAGER->ItemAdd("item_52", (*viItem));
+		break;
+	case type::DESK:
+		INVENTORYMANAGER->ItemAdd("item_53", (*viItem));
+		break;
+	case type::FURNACE:
+		INVENTORYMANAGER->ItemAdd("item_54", (*viItem));
+		break;
+	case type::WORKBENCH:
+		INVENTORYMANAGER->ItemAdd("item_55", (*viItem));
+		break;
+	case type::ANVIL:
+		INVENTORYMANAGER->ItemAdd("item_56", (*viItem));
+		break;
+	case type::CHIR:
+		INVENTORYMANAGER->ItemAdd("item_57", (*viItem));
+		break;
+	case type::BOX:
+		INVENTORYMANAGER->ItemAdd("item_58", (*viItem));
+		break;
+	case type::DOOR:
+		INVENTORYMANAGER->ItemAdd("item_59", (*viItem));
+		break;
+	case type::WOOD_WALL:
+		INVENTORYMANAGER->ItemAdd("item_60", (*viItem));
+		break;
+	case type::GEL:
+		INVENTORYMANAGER->ItemAdd("item_61", (*viItem));
+		break;
+	case type::LENS:
+		INVENTORYMANAGER->ItemAdd("item_62", (*viItem));
+		break;
+	case type::DEMONEYE:
+		INVENTORYMANAGER->ItemAdd("item_63", (*viItem));
+		break;
+	case type::POTION50:
+		INVENTORYMANAGER->ItemAdd("item_64", (*viItem));
+		break;
+	case type::POTION100:
+		INVENTORYMANAGER->ItemAdd("item_65", (*viItem));
+		break;
+	case type::ACORN:
+		INVENTORYMANAGER->ItemAdd("item_66", (*viItem));
+		break;
+	case type::HEARTCRYSTAL:
+		INVENTORYMANAGER->ItemAdd("item_67", (*viItem));
+		break;
+	case type::DIRT_WALL:
+		INVENTORYMANAGER->ItemAdd("item_68", (*viItem));
+		break;
+	case type::STONE_WALL:
+		INVENTORYMANAGER->ItemAdd("item_69", (*viItem));
+		break;
+	default:
+		break;
+	}
+}
+
 void Player::LeftBlockCollision()
 {
 	RECT temp;
 	BlockType	LeftBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
 	BlockType	LeftBlockType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->blockType;
 	BlockType	LeftBlockType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->blockType;
-	TileType	LeftTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
-	TileType	LeftTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->tileType;
-	TileType	LeftTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->tileType;
+	TileType	LeftTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->block;
+	TileType	LeftTileType2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->block;
+	TileType	LeftTileType3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->block;
 	RECT		LeftTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
 	RECT		LeftTileRect2 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 1]->rc;
 	RECT		LeftTileRect3 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 2]->rc;
@@ -306,9 +533,9 @@ void Player::RightBlockCollision()
 	BlockType	RightBlockType1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->blockType;
 	BlockType	RightBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->blockType;
 	BlockType	RightBlockType3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->blockType;
-	TileType	RightTileType1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->tileType;
-	TileType	RightTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->tileType;
-	TileType	RightTileType3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->tileType;
+	TileType	RightTileType1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->block;
+	TileType	RightTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->block;
+	TileType	RightTileType3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->block;
 	RECT		RightTileRect1 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y]->rc;
 	RECT		RightTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 1]->rc;
 	RECT	    RightTileRect3 = _vTile[MaxTile_Y * (_playerInfo.index.x + 2) + _playerInfo.index.y + 2]->rc;
@@ -332,8 +559,8 @@ void Player::UpBlockCollision()
 	RECT temp;
 	BlockType	upBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->blockType;
 	BlockType	upBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->blockType;
-	TileType	upTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->tileType;
-	TileType	upTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->tileType;
+	TileType	upTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->block;
+	TileType	upTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->block;
 	RECT		upTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y]->rc;
 	RECT		upTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y]->rc;
 	if ((upTileType1 == TileType::BLOCK && upBlockType1 != BlockType::NONE && IntersectRect(&temp, &upTileRect1, &_playerInfo.Trect)) ||
@@ -354,8 +581,8 @@ void Player::DownBlockCollision()
 	RECT temp;
 	BlockType downBlockType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->blockType;
 	BlockType downBlockType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->blockType;
-	TileType downTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->tileType;
-	TileType downTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->tileType;
+	TileType downTileType1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->block;
+	TileType downTileType2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->block;
 	RECT	 downTileRect1 = _vTile[MaxTile_Y * _playerInfo.index.x + _playerInfo.index.y + 3]->rc;
 	RECT	 downTileRect2 = _vTile[MaxTile_Y * (_playerInfo.index.x + 1) + _playerInfo.index.y + 3]->rc;
 	if ((downTileType1 == TileType::BLOCK && downBlockType1 != BlockType::NONE && IntersectRect(&temp, &downTileRect1, &_playerInfo.Brect)) ||

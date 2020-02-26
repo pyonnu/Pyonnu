@@ -34,6 +34,7 @@ struct PlayerInfo
 	float speed;
 	float damage;
 	float Defense;
+	float Health;
 	PlayerHeadState HeadState;
 	PlayerBodyState BodyState;
 	PlayerLegsState LegsState;
@@ -55,6 +56,7 @@ struct PlayerInfo
 	bool Right;
 	bool Down;
 
+	bool Attack;
 	bool jump;
 };
 class Player :public gameNode
@@ -67,6 +69,8 @@ private:
 	Move* _move;
 	Jump* _jump;
 	Attack* _attack;
+
+
 
 	float _gravity;
 
@@ -83,6 +87,8 @@ public:
 	void Frame();
 	void BlockCollision();
 	void ItemCollision();
+	void TileDestroyCreate(int mouse);
+	void InventoryItemAdd(vector<Item*>::iterator viItem);
 	void LeftBlockCollision();
 	void RightBlockCollision();
 	void UpBlockCollision();

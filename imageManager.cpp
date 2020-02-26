@@ -6,7 +6,6 @@ imageManager::imageManager()
 {
 }
 
-
 imageManager::~imageManager()
 {
 }
@@ -42,7 +41,7 @@ image* imageManager::addImage(string strKey, int width, int height)
 	return img;
 }
 
-image * imageManager::addImage(string strKey, const char * fileName, int width, int height, bool trans, COLORREF transColor)
+image* imageManager::addImage(string strKey, const char* fileName, int width, int height, bool trans, COLORREF transColor)
 {
 	image* img = findImage(strKey);
 
@@ -63,7 +62,7 @@ image * imageManager::addImage(string strKey, const char * fileName, int width, 
 	return img;
 }
 
-image * imageManager::addFrameImage(string strKey, const char * fileName, float x, float y, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor)
+image* imageManager::addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor)
 {
 	image* img = findImage(strKey);
 
@@ -84,7 +83,7 @@ image * imageManager::addFrameImage(string strKey, const char * fileName, float 
 	return img;
 }
 
-image * imageManager::addFrameImage(string strKey, const char * fileName, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor)
+image* imageManager::addFrameImage(string strKey, const char* fileName, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor)
 {
 	image* img = findImage(strKey);
 
@@ -176,3 +175,104 @@ void imageManager::render(string strKey, HDC hdc, int destX, int destY, int sour
 
 	if (img) img->render(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight);
 }
+
+void imageManager::frameRender(string strKey, HDC hdc, int destX, int destY)
+{
+	image* img = findImage(strKey);
+	if (img) img->frameRender(hdc, destX, destY);
+
+}
+
+void imageManager::frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
+{
+	image* img = findImage(strKey);
+	if (img) img->frameRender(hdc, destX, destY, currentFrameX, currentFrameY);
+
+}
+
+void imageManager::alphaRender(string strKey, HDC hdc, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, alpha);
+}
+
+void imageManager::alphaRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, alpha);
+}
+
+void imageManager::alphaRender(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight, alpha);
+
+
+}
+
+void imageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaFrameRender(hdc, destX, destY, alpha);
+
+
+}
+
+void imageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaFrameRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
+}
+
+void imageManager::rotateRender(string strKey, HDC hdc, float centerX, float centerY, float angle)
+{
+	image* img = findImage(strKey);
+	if (img) img->rotateRender(hdc, centerX, centerY, angle);
+
+
+}
+
+void imageManager::alphaRotateRender(string strKey, HDC hdc, float centerX, float centerY, float angle, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRotateRender(hdc, centerX, centerY, angle, alpha);
+
+}
+
+void imageManager::rotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, float angle)
+{
+	image* img = findImage(strKey);
+	if (img) img->rotateFrameRender(hdc, centerX, centerY, angle);
+
+}
+
+void imageManager::rotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle)
+{
+	image* img = findImage(strKey);
+	if (img) img->rotateFrameRender(hdc, centerX, centerY, currentFrameX, currentFrameY, angle);
+
+
+}
+
+void imageManager::alphaRotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, float angle, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRotateFrameRender(hdc, centerX, centerY, angle, alpha);
+
+}
+
+void imageManager::alphaRotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRotateFrameRender(hdc, centerX, centerY, currentFrameX, currentFrameY, angle, alpha);
+
+
+}
+
+void imageManager::loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
+{
+	image* img = findImage(strKey);
+	if (img) img->loopRender(hdc, drawArea, offSetX, offSetY);
+
+}
+

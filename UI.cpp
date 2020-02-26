@@ -3,8 +3,7 @@
 
 HRESULT UI::init()
 {
-	_inventory = new Inventory;
-	_inventory->init();
+	INVENTORYMANAGER->init();
 	return S_OK;
 }
 
@@ -14,10 +13,10 @@ void UI::release()
 
 void UI::update()
 {
-	_inventory->update();
+	INVENTORYMANAGER->update();
 }
 
 void UI::render()
 {
-	_inventory->render();
+	INVENTORYMANAGER->render(getMemDC());
 }

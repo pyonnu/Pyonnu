@@ -37,7 +37,26 @@ public:
 	void render(string strKey, HDC hdc, int destX, int destY);
 	void render(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
-	//프레임렌더 만들어보세욤 여러분 손으로
+	void frameRender(string strKey, HDC hdc, int destX, int destY);
+	void frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+
+	void alphaRender(string strKey, HDC hdc, BYTE alpha);
+	void alphaRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha);
+	void alphaRender(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
+
+	void alphaFrameRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha);
+	void alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
+
+
+	void rotateRender(string strKey, HDC hdc, float centerX, float centerY, float angle);
+	void alphaRotateRender(string strKey, HDC hdc, float centerX, float centerY, float angle, BYTE alpha);
+	void rotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, float angle);
+	void rotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle);
+	void alphaRotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, float angle, BYTE alpha);
+	void alphaRotateFrameRender(string strKey, HDC hdc, float centerX, float centerY, int currentFrameX, int currentFrameY, float angle, BYTE alpha);
+
+	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
+
 
 };
 

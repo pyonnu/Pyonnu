@@ -40,12 +40,16 @@ struct tagTile
 	int FrameX2, FrameY2;
 	int FrameX3, FrameY3;
 	RECT rc;				//타일의 몸뚱아리
-	TileType tileType;		//타일의 종류
+	TileType block;
+	TileType wall;
+	TileType object;
 	BlockType blockType;	//블럭의 종류
 	WallType wallType;		//벽의 종류
 	ObjectType objectType;	//오브젝트의 종류
 
-	TileType currentTileType;	
+	TileType currentTileBlockType;
+	TileType currentTileWallType;
+	TileType currentTileObjectType;
 	BlockType currentBlockType;
 	WallType currentWallType;
 	ObjectType currentObjectType;

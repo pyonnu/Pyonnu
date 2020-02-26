@@ -3,11 +3,20 @@
 
 HRESULT Inventory::init()
 {
-	_vItem.resize(InventorySize);
+	_vInven.resize(InventorySize);
 	_inventoryImage = IMAGEMANAGER->findImage("Inventory_Back");
 	_selectInventoryImage = IMAGEMANAGER->findImage("Inventory_Back14");
-	
+	_selectQuickSlot = _FilledInventory = 0;
+	_selectItemImage = NULL;
 	_invenSee = false;
+	_inventoryRect = RectMake(0, 0, 20 + 62 * 10, 20 + 62 * 5);
+	for (int i = 0; i < 10;i++)
+	{
+		for (int j = 0;j < 5;j++)
+		{
+			_slot[i + j * 10] = RectMake(20 + i * 62, 20 + j * 62, 52, 52);
+		}
+	}
 	return S_OK;
 }
 
@@ -18,25 +27,28 @@ void Inventory::release()
 void Inventory::update()
 {
 	InvenToryControl();
-	
 }
 
-void Inventory::render()
+void Inventory::render(HDC dc)
 {
 	char str[256];
-	SetTextColor(getMemDC(), RGB(255, 255, 255));
-	SetBkMode(getMemDC(), TRANSPARENT);
+	SetTextColor(dc, RGB(255, 255, 255));
+	SetBkMode(dc, TRANSPARENT);
 	for (int i = 0;i < 10;i++)
 	{
-		_inventoryImage->render(getMemDC(), 20 + i * 62, 20);
-		if (i == _selectQuickSlot && !_invenSee)_selectInventoryImage->render(getMemDC(), 15 + i * 62, 15);
+		_inventoryImage->render(dc, 20 + i * 62, 20);
+		if (i == _selectQuickSlot && !_invenSee)_selectInventoryImage->render(dc, 15 + i * 62, 15);
 	}
 	if (_invenSee)
 	{
 		for (int x = 0;x < 10;x++)
 		{
-			for (int y = 0;y < 4;y++)
-				_inventoryImage->render(getMemDC(), 20 + x * 62, 82 + y * 62);
+			for (int y = 0;y < 5;y++)
+			{
+				_inventoryImage->render(dc, 20 + x * 62, 20 + y * 62);
+			}
+
+
 		}
 	}
 	for (int x = 0;x < 10;x++)
@@ -45,21 +57,29 @@ void Inventory::render()
 		{
 			if (y < 1 || _invenSee)
 			{
-				if (_vItem[x + y * 10] == NULL)continue;
-				_vItem[x + y * 10]->render(getMemDC(), 20 + x * 62, 20 + y * 62);
-				sprintf_s(str, "%d", _vItem[x+y*10]->getItemStack());
-				TextOut(getMemDC(), 20+x*62, 20+y*62, str, strlen(str));
-				/*for (_viItem = _vItem.begin();_viItem != _vItem.end();++_viItem)
+				if (_vInven[x + y * 10] == NULL)continue;
+				_vInven[x + y * 10]->render(dc, 20 + x * 62, 20 + y * 62);
+				if (_vInven[x + y * 10]->getItemType1() == ItemType::ARMOR
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::HELMET
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::LEGGINGS
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::PICKAXE
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::AXE
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::HAMMER
+					|| _vInven[x + y * 10]->getItemType1() == ItemType::SWORD)
 				{
-					if (!(*_viItem) == NULL)
-					{
-						(*_viItem)->render(getMemDC(), 30+x*62,30+y*62);
-					}
-				}*/
-				//_vItem[x + y * 10]->render(getMemDC(), 30 + x * 62, 30 + y * 62);
+
+				}
+				else
+				{
+					sprintf_s(str, "%d", _vInven[x + y * 10]->getItemStack());
+					TextOut(dc, 20 + x * 62, 20 + y * 62, str, strlen(str));
+				}
+				
 			}
 		}
 	}
+	if (_selectItem)_selectItemImage->render(dc, _ptMouse.x, _ptMouse.y);
+	//Rectangle(dc, _inventoryRect);
 }
 
 void Inventory::InvenToryControl()
@@ -81,5 +101,61 @@ void Inventory::InvenToryControl()
 	else
 	{
 		_invenSee = false;
+	}
+	if (_invenSee)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0;i < 10;i++)
+			{
+				for (int j = 0;j < 5;j++)
+				{
+					if (PtInRect(&_slot[i + j * 10], _ptMouse))
+					{
+						ItemSelect(i, j);
+					}
+				}
+			}
+		}
+	}
+
+}
+
+void Inventory::ItemAdd(string itemName, Item* item)
+{
+	miItem key = _mItem.find(itemName);
+
+	if (key != _mItem.end())
+	{
+		_mItem.find(itemName)->second->PlusItemStack();
+	}
+	else
+	{
+		if (_FilledInventory >= 50) return;
+		_mItem.insert(make_pair(itemName, item));
+		_viInven = _vInven.begin() + _FilledInventory;
+		_viInven = _vInven.insert(_viInven, item);
+		_FilledInventory++;
+	}
+
+}
+
+void Inventory::ItemSelect(int i, int j)
+{
+	if (!_selectItem)
+	{
+		if (_vInven[i + j * 10] == NULL)return;
+		_selectItemImage = _vInven[i + j * 10]->getImage();
+		_item = _vInven[i + j * 10];
+		_vInven[i + j * 10] = NULL;
+		_selectItem = true;
+	}
+	else if (_selectItem)
+	{
+		if (_vInven[i + j * 10] != NULL)return;
+		_selectItemImage = NULL;
+		_vInven[i + j * 10] = _item;
+		_item = NULL;
+		_selectItem = false;
 	}
 }

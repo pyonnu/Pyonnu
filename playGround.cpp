@@ -47,6 +47,7 @@ void playGround::render()
 
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
+	
 	_backBuffer->render(getHDC(), 0, 0);
 }
 
@@ -165,6 +166,8 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Item_65", "Resources/Item/Item_65.bmp", 40, 52, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_66", "Resources/Item/Item_66.bmp", 40, 40, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_67", "Resources/Item/Item_67.bmp", 44, 44, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_68", "Resources/Item/Item_68.bmp", 48,48, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_69", "Resources/Item/Item_69.bmp", 48,48, true, RGB(255, 0, 255));
 }
 
 void playGround::itemAdd()
