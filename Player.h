@@ -9,18 +9,11 @@ enum class PlayerDirection
 {
 	LEFT, RIGHT
 };
-enum class PlayerHeadState
+enum class PlayerState
 {
 	IDLE, MOVE, JUMP, ATTACK
 };
-enum class PlayerBodyState
-{
-	IDLE, MOVE, JUMP, ATTACK
-};
-enum class PlayerLegsState
-{
-	IDLE, MOVE, JUMP, ATTACK
-};
+
 struct PlayerInfo
 {
 	POINT index;
@@ -35,13 +28,15 @@ struct PlayerInfo
 	float attackY;
 	float angle;
 	float speed;
+	float attackSpeed;
 	float damage;
 	float Defense;
 	float Health;
-	PlayerHeadState HeadState;
-	PlayerBodyState BodyState;
-	PlayerLegsState LegsState;
+	PlayerState HeadState;
+	PlayerState BodyState;
+	PlayerState LegsState;
 	PlayerDirection direction;
+	PlayerDirection currentDirection;
 	int FrameX;
 	int HeadFrameY;
 	int BodyFrameY;
@@ -53,6 +48,7 @@ struct PlayerInfo
 	image* HeadArmor;
 	image* BodyArmor;
 	image* LegsArmor;
+	image* attackImage;
 
 	bool Up;
 	bool Left;
@@ -60,6 +56,7 @@ struct PlayerInfo
 	bool Down;
 
 	bool Attack;
+	bool AttackIng;
 	bool jump;
 };
 class Player :public gameNode
@@ -87,6 +84,7 @@ public:
 
 	void PlayerInfoUpdate();
 	void Action();
+	void Attack();
 	void Frame();
 	void BlockCollision();
 	void ItemCollision();

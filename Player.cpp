@@ -5,10 +5,8 @@ HRESULT Player::init()
 {
 	_jump = new Jump;
 	_move = new Move;
-	_attack = new Attack;
 	//_jump->init(&_playerInfo.y);
 	_move->init();
-	_attack->init();
 
 	_enemyManager = new EnemyManager;
 
@@ -33,6 +31,7 @@ HRESULT Player::init()
 
 	_playerInfo.Attack = false;
 	_playerInfo.angle = 0;
+	_playerInfo.attackSpeed = 0.1f;
 	_gravity = 0.05f;
 	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_17"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
@@ -53,14 +52,14 @@ void Player::update()
 	int mouse = MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1);
 	BlockCollision();
 	ItemCollision();
-	
+
 	Action();
+	Attack();
+
 	Frame();
+
 	TileDestroyCreate(mouse);
-	if (INVENTORYMANAGER->getItem() != NULL)
-	{
-		_playerInfo.attackRect = RectMakeCenter(_playerInfo.attackX,_playerInfo.attackY, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
-	}
+	
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	ITEMMANAGER->setVItem(_vItem);
@@ -79,19 +78,19 @@ void Player::render()
 	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.Brect);
 	switch (_playerInfo.HeadState)
 	{
-	case PlayerHeadState::IDLE:
+	case PlayerState::IDLE:
 		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
 		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
 		break;
-	case PlayerHeadState::MOVE:
+	case PlayerState::MOVE:
 		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
 		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
 		break;
-	case PlayerHeadState::JUMP:
+	case PlayerState::JUMP:
 		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
 		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
 		break;
-	case PlayerHeadState::ATTACK:
+	case PlayerState::ATTACK:
 		_playerInfo.Head->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.HeadFrameY);
 		_playerInfo.Body->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.BodyFrameY);
 		break;
@@ -100,7 +99,7 @@ void Player::render()
 	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.attackRect);
 	if (_playerInfo.Attack)
 	{
-		ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
+		_playerInfo.attackImage->rotateRender(CAMERAMANAGER->getCameraDC(), (_playerInfo.attackRect.left + _playerInfo.attackRect.right) / 2, (_playerInfo.attackRect.top + _playerInfo.attackRect.bottom) / 2, _playerInfo.angle-0.785398);
 	}
 }
 
@@ -136,32 +135,34 @@ void Player::Action()
 	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x - getRectWidth(_playerInfo.rect) / 2 >= 0 && !_playerInfo.Left)
 	{
 		_playerInfo.direction = PlayerDirection::LEFT;
-		_playerInfo.HeadState = PlayerHeadState::MOVE;
-		_playerInfo.BodyState = PlayerBodyState::MOVE;
-		_playerInfo.LegsState = PlayerLegsState::MOVE;
+		_playerInfo.HeadState = PlayerState::MOVE;
+		_playerInfo.BodyState = PlayerState::MOVE;
+		_playerInfo.LegsState = PlayerState::MOVE;
 		_playerInfo.x -= 5;
 	}
 	if (KEYMANAGER->isOnceKeyUp('A'))
 	{
 		_playerInfo.direction = PlayerDirection::LEFT;
-		_playerInfo.HeadState = PlayerHeadState::IDLE;
-		_playerInfo.BodyState = PlayerBodyState::IDLE;
-		_playerInfo.LegsState = PlayerLegsState::IDLE;
+		_playerInfo.HeadState = PlayerState::IDLE;
+		if (_playerInfo.BodyState == PlayerState::MOVE)_playerInfo.BodyState = PlayerState::IDLE;
+		if (_playerInfo.LegsState == PlayerState::MOVE)_playerInfo.LegsState = PlayerState::IDLE;
 	}
 	if (KEYMANAGER->isStayKeyDown('D') && _playerInfo.x + getRectWidth(_playerInfo.rect) / 2 <= TILESIZE * MaxTile_X && !_playerInfo.Right)
 	{
 		_playerInfo.direction = PlayerDirection::RIGHT;
-		_playerInfo.HeadState = PlayerHeadState::MOVE;
-		_playerInfo.BodyState = PlayerBodyState::MOVE;
-		_playerInfo.LegsState = PlayerLegsState::MOVE;
+
+		_playerInfo.HeadState = PlayerState::MOVE;
+		if(_playerInfo.BodyState == PlayerState::IDLE)_playerInfo.BodyState = PlayerState::MOVE;
+		_playerInfo.LegsState = PlayerState::MOVE;
 		_playerInfo.x += 5;
 	}
 	if (KEYMANAGER->isOnceKeyUp('D'))
 	{
 		_playerInfo.direction = PlayerDirection::RIGHT;
-		_playerInfo.HeadState = PlayerHeadState::IDLE;
-		_playerInfo.BodyState = PlayerBodyState::IDLE;
-		_playerInfo.LegsState = PlayerLegsState::IDLE;
+		_playerInfo.HeadState = PlayerState::IDLE;
+		if (_playerInfo.BodyState == PlayerState::MOVE)_playerInfo.BodyState = PlayerState::IDLE;
+		if (_playerInfo.LegsState == PlayerState::MOVE)_playerInfo.LegsState = PlayerState::IDLE;
+
 	}
 	if (KEYMANAGER->isStayKeyDown('W') && !_playerInfo.Up)
 	{
@@ -174,33 +175,31 @@ void Player::Action()
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		//_jump->jumping(&_playerInfo.x, &_playerInfo.y,20, 0.5f);
+		_playerInfo.HeadState = PlayerState::JUMP;
+		if (_playerInfo.BodyState != PlayerState::ATTACK)_playerInfo.BodyState = PlayerState::JUMP;
+		_playerInfo.LegsState = PlayerState::JUMP;
 		_playerInfo.jump = true;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
-		_playerInfo.BodyState = PlayerBodyState::ATTACK;
-		_playerInfo.Attack = true;
-	
-		if (INVENTORYMANAGER->getItem() != NULL)
+		_playerInfo.HeadState = PlayerState::ATTACK;
+		if (_playerInfo.LegsState != PlayerState::MOVE)_playerInfo.LegsState = PlayerState::ATTACK;
+		_playerInfo.BodyState = PlayerState::ATTACK;
+		if (!_playerInfo.AttackIng && INVENTORYMANAGER->getItem() != NULL)
 		{
+			_playerInfo.Attack = true;
+			_playerInfo.AttackIng = true;
 			switch (_playerInfo.direction)
 			{
 			case PlayerDirection::LEFT:
-				_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
-				_playerInfo.attackY = sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
-				_playerInfo.angle -= 0.1f;
-				if (_playerInfo.angle < -PI)_playerInfo.angle = 0;
+				_playerInfo.angle = 0;
 				break;
 			case PlayerDirection::RIGHT:
-				_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
-				_playerInfo.attackY = sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
-				_playerInfo.angle += 0.1f;
-				if (_playerInfo.angle > PI * 2)_playerInfo.angle = PI;
+				_playerInfo.angle = PI;
 				break;
 			}
+			_playerInfo.attackImage = INVENTORYMANAGER->getImage();
 		}
-		cout << _playerInfo.angle << endl;
-
 	}
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	if (_playerInfo.jump)
@@ -208,6 +207,58 @@ void Player::Action()
 		_playerInfo.y -= 10;
 	}
 
+}
+
+void Player::Attack()
+{
+	if (_playerInfo.currentDirection != _playerInfo.direction)
+	{
+		switch (_playerInfo.direction)
+		{
+		case PlayerDirection::LEFT:
+			_playerInfo.angle = PI - _playerInfo.angle;
+			break;
+		case PlayerDirection::RIGHT:
+			_playerInfo.angle = PI - _playerInfo.angle;
+
+			break;
+		}
+	}
+	if (_playerInfo.Attack)
+	{
+		switch (_playerInfo.direction)
+		{
+		case PlayerDirection::LEFT:
+			_playerInfo.angle += _playerInfo.attackSpeed;
+			if (_playerInfo.angle > PI)
+			{
+				_playerInfo.angle = 0;
+				_playerInfo.Attack = false;
+				_playerInfo.AttackIng = false;
+				_playerInfo.BodyState = PlayerState::IDLE;
+			}
+			break;
+		case PlayerDirection::RIGHT:
+			_playerInfo.angle -= _playerInfo.attackSpeed;
+			if (_playerInfo.angle < 0)
+			{
+				_playerInfo.angle = PI;
+				_playerInfo.Attack = false;
+				_playerInfo.AttackIng = false;
+				_playerInfo.BodyState = PlayerState::IDLE;
+			}
+			break;
+		}
+	}
+	cout << _playerInfo.angle << endl;
+	if (INVENTORYMANAGER->getItem() != NULL)
+	{
+		_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
+		_playerInfo.attackY = -sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
+		_playerInfo.attackRect = RectMakeCenter(_playerInfo.attackX, _playerInfo.attackY, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
+	}
+
+	_playerInfo.currentDirection = _playerInfo.direction;
 }
 
 void Player::Frame()
@@ -224,25 +275,27 @@ void Player::Frame()
 	}
 	if (_playerInfo.FrameCount >= 0.05f)
 	{
-		if (_playerInfo.HeadFrameY >= 19)_playerInfo.HeadFrameY = 6;
+		/*if (_playerInfo.HeadFrameY >= 19)_playerInfo.HeadFrameY = 6;
 		if (_playerInfo.BodyFrameY >= 19)_playerInfo.BodyFrameY = 6;
 		if (_playerInfo.LegsFrameY >= 19)_playerInfo.LegsFrameY = 6;
 		_playerInfo.HeadFrameY++;
 		_playerInfo.BodyFrameY++;
-		_playerInfo.LegsFrameY++;
-		/*switch (_playerInfo.BodyState)
+		_playerInfo.LegsFrameY++;*/
+		switch (_playerInfo.BodyState)
 		{
-		case PlayerBodyState::IDLE:
+		case PlayerState::IDLE:
 			_playerInfo.BodyFrameY = 0;
 			break;
-		case PlayerBodyState::MOVE:
+		case PlayerState::MOVE:
 			if (_playerInfo.BodyFrameY < 6 && _playerInfo.BodyFrameY >= 19)_playerInfo.BodyFrameY = 6;
 			_playerInfo.BodyFrameY++;
 			break;
-		case PlayerBodyState::JUMP:
+		case PlayerState::JUMP:
 			_playerInfo.BodyFrameY = 5;
 			break;
-		case PlayerBodyState::ATTACK:
+		case PlayerState::ATTACK:
+			if (_playerInfo.BodyFrameY < 0 && _playerInfo.BodyFrameY > 4)_playerInfo.BodyFrameY = 1;
+			_playerInfo.BodyFrameY++;
 			break;
 		default:
 			break;
@@ -250,15 +303,18 @@ void Player::Frame()
 
 		switch (_playerInfo.LegsState)
 		{
-		case PlayerLegsState::IDLE:
+		case PlayerState::IDLE:
+			_playerInfo.LegsFrameY = 0;
 			break;
-		case PlayerLegsState::MOVE:
+		case PlayerState::MOVE:
+			if (_playerInfo.LegsFrameY < 6 && _playerInfo.LegsFrameY >= 19)_playerInfo.LegsFrameY = 6;
+			_playerInfo.LegsFrameY++;
 			break;
-		case PlayerLegsState::JUMP:
+		case PlayerState::JUMP:
 			break;
-		case PlayerLegsState::ATTACK:
+		case PlayerState::ATTACK:
 			break;
-		}*/
+		}
 		_playerInfo.FrameCount = 0;
 	}
 
@@ -294,9 +350,9 @@ void Player::ItemCollision()
 
 void Player::TileDestroyCreate(int mouse)
 {
-	/*if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
+	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
 	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) 
 			&& _vTile[mouse]->blockType == BlockType::NONE
 			&& _vTile[mouse]->objectType == ObjectType::NONE)
 		{
@@ -309,7 +365,7 @@ void Player::TileDestroyCreate(int mouse)
 			_vTile[mouse]->block = TileType::NONE;
 			_vTile[mouse]->blockType = BlockType::NONE;
 		}
-	}*/
+	}
 }
 
 void Player::InventoryItemAdd(vector<Item*>::iterator viItem)

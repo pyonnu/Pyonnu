@@ -206,7 +206,7 @@ void Item::render(HDC dc)
 		_itemInfo->itemImage->rotateRender(dc, _itemInfo->rc.left, _itemInfo->rc.top, _itemInfo->itemImage->getRotationAngle() - 0.01f);
 	else
 	{
-		_itemInfo->itemImage->render(dc, _itemInfo->rc.left-_itemInfo->itemImage->getWidth()/2, _itemInfo->rc.top- _itemInfo->itemImage->getHeight()/ 2);
+		_itemInfo->itemImage->render(dc, _itemInfo->rc.left-_itemInfo->itemImage->getWidth()/2-_itemInfo->itemImage->getWidth() / 2/2, _itemInfo->rc.top- _itemInfo->itemImage->getHeight()/2 - _itemInfo->itemImage->getHeight() / 2/2);
 	}
 }
 
