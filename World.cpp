@@ -44,6 +44,6 @@ void World::render()
 	_player->render();
 	_enemyManager->render();
 	_ui->render();
-	ITEMMANAGER->render(getMemDC());
+	ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
 }
 

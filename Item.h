@@ -93,6 +93,7 @@ public:
 	void update();
 	void render(HDC dc);
 	void render(HDC dc, float x, float y);
+	void render(HDC dc, float x, float y,float angle);
 
 	void CreateItem(float x, float y);
 	void CreateItem(string itemName, float x, float y);

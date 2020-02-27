@@ -19,6 +19,8 @@ public:
 	void release();
 	void update();
 	void render(HDC dc);
+	void render(HDC dc, float x, float y);
+	void render(HDC dc, float x, float y,float angle);
 
 	Item* itemAdd(string itemName, type type1, ItemType type2, string image, int stack);
 	Item* itemAdd(string itemName, type type1, ItemType type2, ItemType type3, string image, int stack);

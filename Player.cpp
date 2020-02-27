@@ -32,9 +32,9 @@ HRESULT Player::init()
 	_playerInfo.LegsArmor = NULL;
 
 	_playerInfo.Attack = false;
-
+	_playerInfo.angle = 0;
 	_gravity = 0.05f;
-	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f);
+	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_17"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"), 8.0f);
@@ -57,7 +57,10 @@ void Player::update()
 	Action();
 	Frame();
 	TileDestroyCreate(mouse);
-	if(INVENTORYMANAGER->getItem()!=NULL)_playerInfo.attackRect = RectMake(_playerInfo.rect.left - INVENTORYMANAGER->getImage()->getWidth(), _playerInfo.rect.top + 20, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
+	if (INVENTORYMANAGER->getItem() != NULL)
+	{
+		_playerInfo.attackRect = RectMakeCenter(_playerInfo.attackX,_playerInfo.attackY, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
+	}
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	ITEMMANAGER->setVItem(_vItem);
@@ -95,6 +98,10 @@ void Player::render()
 	}
 	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
 	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.attackRect);
+	if (_playerInfo.Attack)
+	{
+		ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
+	}
 }
 
 void Player::PlayerInfoUpdate()
@@ -173,6 +180,27 @@ void Player::Action()
 	{
 		_playerInfo.BodyState = PlayerBodyState::ATTACK;
 		_playerInfo.Attack = true;
+	
+		if (INVENTORYMANAGER->getItem() != NULL)
+		{
+			switch (_playerInfo.direction)
+			{
+			case PlayerDirection::LEFT:
+				_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
+				_playerInfo.attackY = sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
+				_playerInfo.angle -= 0.1f;
+				if (_playerInfo.angle < -PI)_playerInfo.angle = 0;
+				break;
+			case PlayerDirection::RIGHT:
+				_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
+				_playerInfo.attackY = sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
+				_playerInfo.angle += 0.1f;
+				if (_playerInfo.angle > PI * 2)_playerInfo.angle = PI;
+				break;
+			}
+		}
+		cout << _playerInfo.angle << endl;
+
 	}
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	if (_playerInfo.jump)
@@ -266,7 +294,7 @@ void Player::ItemCollision()
 
 void Player::TileDestroyCreate(int mouse)
 {
-	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
+	/*if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)
 			&& _vTile[mouse]->blockType == BlockType::NONE
@@ -281,7 +309,7 @@ void Player::TileDestroyCreate(int mouse)
 			_vTile[mouse]->block = TileType::NONE;
 			_vTile[mouse]->blockType = BlockType::NONE;
 		}
-	}
+	}*/
 }
 
 void Player::InventoryItemAdd(vector<Item*>::iterator viItem)

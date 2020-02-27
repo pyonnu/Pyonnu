@@ -215,6 +215,11 @@ void Item::render(HDC dc,float x,float y)
 	_itemInfo->itemImage->render(dc, x, y);
 }
 
+void Item::render(HDC dc, float x, float y,float angle)
+{
+	_itemInfo->itemImage->rotateRender(dc, x, y,angle);
+}
+
 void Item::CreateItem(float x, float y)
 {
 	_itemInfo->rc = RectMake(x, y, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());

@@ -31,6 +31,9 @@ struct PlayerInfo
 	RECT Rrect;
 	RECT Brect;
 	RECT attackRect;
+	float attackX;
+	float attackY;
+	float angle;
 	float speed;
 	float damage;
 	float Defense;

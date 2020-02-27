@@ -47,7 +47,7 @@ void playGround::render()
 
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
-	
+
 	_backBuffer->render(getHDC(), 0, 0);
 }
 
@@ -95,79 +95,84 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Craft_Toggle_2", "Resources/UI/Craft_Toggle_2.bmp", 60, 60, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Craft_Toggle_3", "Resources/UI/Craft_Toggle_3.bmp", 60, 60, true, RGB(255, 0, 255));
 	//ItemÀÌ¹ÌÁö
-	IMAGEMANAGER->addImage("Item_0", "Resources/Item/Item_0.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_1", "Resources/Item/Item_1.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_2", "Resources/Item/Item_2.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_3", "Resources/Item/Item_3.bmp", 48, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_4", "Resources/Item/Item_4.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_5", "Resources/Item/Item_5.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_6", "Resources/Item/Item_6.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_7", "Resources/Item/Item_7.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_8", "Resources/Item/Item_8.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_9", "Resources/Item/Item_9.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_10", "Resources/Item/Item_10.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_11", "Resources/Item/Item_11.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_12", "Resources/Item/Item_12.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_13", "Resources/Item/Item_13.bmp", 60, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_14", "Resources/Item/Item_14.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_15", "Resources/Item/Item_15.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_16", "Resources/Item/Item_16.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_17", "Resources/Item/Item_17.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_18", "Resources/Item/Item_18.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_19", "Resources/Item/Item_19.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_20", "Resources/Item/Item_20.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_21", "Resources/Item/Item_21.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_22", "Resources/Item/Item_22.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_23", "Resources/Item/Item_23.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_24", "Resources/Item/Item_24.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_25", "Resources/Item/Item_25.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_26", "Resources/Item/Item_26.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_27", "Resources/Item/Item_27.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_28", "Resources/Item/Item_28.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_29", "Resources/Item/Item_29.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_30", "Resources/Item/Item_30.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_31", "Resources/Item/Item_31.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_32", "Resources/Item/Item_32.bmp", 64, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_33", "Resources/Item/Item_33.bmp", 72, 72, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_0", "Resources/Item/Item_0.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_1", "Resources/Item/Item_1.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_2", "Resources/Item/Item_2.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_3", "Resources/Item/Item_3.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_4", "Resources/Item/Item_4.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_5", "Resources/Item/Item_5.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_6", "Resources/Item/Item_6.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_7", "Resources/Item/Item_7.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_8", "Resources/Item/Item_8.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_9", "Resources/Item/Item_9.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_10", "Resources/Item/Item_10.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_11", "Resources/Item/Item_11.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_12", "Resources/Item/Item_12.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_13", "Resources/Item/Item_13.bmp", 52, 52, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("Item_34", "Resources/Item/Item_34.bmp", 48, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_35", "Resources/Item/Item_35.bmp", 60, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_36", "Resources/Item/Item_36.bmp", 44, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_37", "Resources/Item/Item_37.bmp", 44, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_38", "Resources/Item/Item_38.bmp", 60, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_39", "Resources/Item/Item_39.bmp", 44, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_40", "Resources/Item/Item_40.bmp", 52, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_41", "Resources/Item/Item_41.bmp", 60, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_42", "Resources/Item/Item_42.bmp", 44, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_43", "Resources/Item/Item_43.bmp", 48, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_44", "Resources/Item/Item_44.bmp", 60, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_45", "Resources/Item/Item_45.bmp", 44, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_46", "Resources/Item/Item_46.bmp", 48, 52, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_47", "Resources/Item/Item_47.bmp", 52, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_48", "Resources/Item/Item_48.bmp", 44, 36, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_14", "Resources/Item/Item_14.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_15", "Resources/Item/Item_15.bmp", 86,76, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_16", "Resources/Item/Item_16.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_17", "Resources/Item/Item_17.bmp", 86,86, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("Item_49", "Resources/Item/Item_49.bmp", 24, 24, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_50", "Resources/Item/Item_50.bmp", 24, 28, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_51", "Resources/Item/Item_51.bmp", 24, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_52", "Resources/Item/Item_52.bmp", 28, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_18", "Resources/Item/Item_18.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_19", "Resources/Item/Item_19.bmp", 86,76, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_20", "Resources/Item/Item_20.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_21", "Resources/Item/Item_21.bmp", 86,86, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("Item_53", "Resources/Item/Item_53.bmp", 60, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_54", "Resources/Item/Item_54.bmp", 60, 52, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_55", "Resources/Item/Item_55.bmp", 64, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_56", "Resources/Item/Item_56.bmp", 64, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_57", "Resources/Item/Item_57.bmp", 32, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_58", "Resources/Item/Item_58.bmp", 64, 56, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_59", "Resources/Item/Item_59.bmp", 36, 64, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_60", "Resources/Item/Item_60.bmp", 48, 48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_61", "Resources/Item/Item_61.bmp", 32, 28, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_62", "Resources/Item/Item_62.bmp", 32, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_63", "Resources/Item/Item_63.bmp", 60, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_64", "Resources/Item/Item_64.bmp", 40, 52, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_65", "Resources/Item/Item_65.bmp", 40, 52, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_66", "Resources/Item/Item_66.bmp", 40, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_67", "Resources/Item/Item_67.bmp", 44, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_68", "Resources/Item/Item_68.bmp", 48,48, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Item_69", "Resources/Item/Item_69.bmp", 48,48, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_22", "Resources/Item/Item_22.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_23", "Resources/Item/Item_23.bmp", 86,76, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_24", "Resources/Item/Item_24.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_25", "Resources/Item/Item_25.bmp", 86,86, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Item_26", "Resources/Item/Item_26.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_27", "Resources/Item/Item_27.bmp", 86,76, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_28", "Resources/Item/Item_28.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_29", "Resources/Item/Item_29.bmp", 86,86, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Item_30", "Resources/Item/Item_30.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_31", "Resources/Item/Item_31.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_32", "Resources/Item/Item_32.bmp", 86,86, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_33", "Resources/Item/Item_33.bmp", 94, 94, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Item_34", "Resources/Item/Item_34.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_35", "Resources/Item/Item_35.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_36", "Resources/Item/Item_36.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_37", "Resources/Item/Item_37.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_38", "Resources/Item/Item_38.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_39", "Resources/Item/Item_39.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_40", "Resources/Item/Item_40.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_41", "Resources/Item/Item_41.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_42", "Resources/Item/Item_42.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_43", "Resources/Item/Item_43.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_44", "Resources/Item/Item_44.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_45", "Resources/Item/Item_45.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_46", "Resources/Item/Item_46.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_47", "Resources/Item/Item_47.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_48", "Resources/Item/Item_48.bmp", 52, 52, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Item_49", "Resources/Item/Item_49.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_50", "Resources/Item/Item_50.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_51", "Resources/Item/Item_51.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_52", "Resources/Item/Item_52.bmp", 52, 52, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Item_53", "Resources/Item/Item_53.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_54", "Resources/Item/Item_54.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_55", "Resources/Item/Item_55.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_56", "Resources/Item/Item_56.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_57", "Resources/Item/Item_57.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_58", "Resources/Item/Item_58.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_59", "Resources/Item/Item_59.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_60", "Resources/Item/Item_60.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_61", "Resources/Item/Item_61.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_62", "Resources/Item/Item_62.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_63", "Resources/Item/Item_63.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_64", "Resources/Item/Item_64.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_65", "Resources/Item/Item_65.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_66", "Resources/Item/Item_66.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_67", "Resources/Item/Item_67.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_68", "Resources/Item/Item_68.bmp", 52, 52, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Item_69", "Resources/Item/Item_69.bmp", 52, 52, true, RGB(255, 0, 255));
 }
 
 void playGround::itemAdd()
@@ -247,8 +252,8 @@ void playGround::itemAdd()
 	ITEMMANAGER->itemAdd("item_61", type::GEL, ItemType::METERIAL, "Item_61", 0);
 	ITEMMANAGER->itemAdd("item_62", type::LENS, ItemType::METERIAL, "Item_62", 0);
 	ITEMMANAGER->itemAdd("item_63", type::DEMONEYE, ItemType::CONSUMBLE, "Item_63", 0);
-	ITEMMANAGER->itemAdd("item_64", type::POTION50, ItemType::CONSUMBLE, "Item_64", 0,50);
-	ITEMMANAGER->itemAdd("item_65", type::POTION100, ItemType::CONSUMBLE, "Item_65", 0,100);
+	ITEMMANAGER->itemAdd("item_64", type::POTION50, ItemType::CONSUMBLE, "Item_64", 0, 50);
+	ITEMMANAGER->itemAdd("item_65", type::POTION100, ItemType::CONSUMBLE, "Item_65", 0, 100);
 	ITEMMANAGER->itemAdd("item_66", type::ACORN, ItemType::BLOCK, "Item_66", 0);
 	ITEMMANAGER->itemAdd("item_67", type::HEARTCRYSTAL, ItemType::CONSUMBLE, "Item_67", 0);
 }

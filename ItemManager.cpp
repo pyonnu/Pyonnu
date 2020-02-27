@@ -30,6 +30,22 @@ void ItemManager::render(HDC dc)
 	}
 }
 
+void ItemManager::render(HDC dc, float x, float y)
+{
+	for (_viItem = _vItem.begin();_viItem != _vItem.end();++_viItem)
+	{
+		(*_viItem)->render(dc, x, y);
+	}
+}
+
+void ItemManager::render(HDC dc, float x, float y,float angle)
+{
+	for (_viItem = _vItem.begin();_viItem != _vItem.end();++_viItem)
+	{
+		(*_viItem)->render(dc, x, y,angle);
+	}
+}
+
 Item* ItemManager::itemAdd(string itemName, type type1, ItemType type2, string image, int stack)
 {
 	Item* item = findItem(itemName);
