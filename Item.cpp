@@ -203,7 +203,7 @@ void Item::update()
 void Item::render(HDC dc)
 {
 	if (_itemInfo->itemType == ItemType::PICKAXE || _itemInfo->itemType == ItemType::AXE || _itemInfo->itemType == ItemType::HAMMER || _itemInfo->itemType == ItemType::SWORD)
-		_itemInfo->itemImage->rotateRender(dc, _itemInfo->rc.left, _itemInfo->rc.top, _itemInfo->itemImage->getRotationAngle() - 0.1f);
+		_itemInfo->itemImage->rotateRender(dc, _itemInfo->rc.left, _itemInfo->rc.top, _itemInfo->itemImage->getRotationAngle() - 0.01f);
 	else
 	{
 		_itemInfo->itemImage->render(dc, _itemInfo->rc.left-_itemInfo->itemImage->getWidth()/2, _itemInfo->rc.top- _itemInfo->itemImage->getHeight()/ 2);
