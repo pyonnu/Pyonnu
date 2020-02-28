@@ -7,6 +7,8 @@ private:
 	typedef map<string, Item*>::iterator miItem;
 private:
 	Item* _item;
+	string _itemName[InventorySize];
+	string _name;
 	vector<Item*> _vInven;
 	vector<Item*>::iterator _viInven;
 	
@@ -16,7 +18,6 @@ private:
 
 	image* _inventoryImage;
 	image* _selectInventoryImage;
-	image* _selectItemImage;
 	image* _coinSlotImage;
 	image* _armorSlotImage;
 	RECT _slot[InventorySize];
@@ -33,7 +34,9 @@ public:
 	void render(HDC dc);
 
 	void InvenToryControl();
+	void setItem(Item* item) { _item = item; }
 	void ItemAdd(string itemName, Item* item);
+	void ItemAdd(string itemName, Item* item,int stack);
 	void ItemSelect(int i,int j);
 
 	Item* getItem() { return _vInven[_selectQuickSlot]; }
@@ -44,5 +47,7 @@ public:
 	bool getInvenSee() { return _invenSee; }
 	RECT getInventoryRect() { return _inventoryRect; }
 	
+	mItem getMItem() { return _mItem; }
+	Item* findItem(string itemName);
 };
 

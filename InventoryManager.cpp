@@ -26,3 +26,13 @@ void InventoryManager::ItemAdd(string name, Item* item)
 {
 	_inventory->ItemAdd(name, item);
 }
+
+void InventoryManager::ItemAdd(string name, Item* item, int stack)
+{
+	_inventory->ItemAdd(name, item,stack);
+}
+
+Item* InventoryManager::findItem(string itemName)
+{
+	return _inventory->findItem(itemName);
+}

@@ -10,16 +10,21 @@ HRESULT Player::init()
 
 	_enemyManager = new EnemyManager;
 
+	//_playerInfo = new PlayerInfo;
+
 	_playerInfo.direction = PlayerDirection::RIGHT;
+	_playerInfo.HeadState = PlayerState::IDLE;
+	_playerInfo.BodyState = PlayerState::IDLE;
+	_playerInfo.LegsState = PlayerState::IDLE;
 
 	_playerInfo.FrameCount = 0;
 	_playerInfo.FrameX = 0;
 	_playerInfo.HeadFrameY = 0;
 	_playerInfo.BodyFrameY = 0;
 	_playerInfo.LegsFrameY = 0;
-
+	
 	_playerInfo.x = MaxTile_X * TILESIZE / 2;
-	_playerInfo.y = MaxTile_Y * TILESIZE / 2;
+	_playerInfo.y = MaxTile_Y * TILESIZE / 2/2;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
 
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
@@ -31,12 +36,16 @@ HRESULT Player::init()
 
 	_playerInfo.Attack = false;
 	_playerInfo.angle = 0;
-	_playerInfo.attackSpeed = 0.1f;
+	_playerInfo.attackSpeed = 0.12f;
+	_playerInfo.MaxHealth = 100;
+	_playerInfo.Health = 100;
 	_gravity = 0.05f;
-	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_17"), 4.0f);
+	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,50);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"), 8.0f);
+
+	//Load();
 	
 	return S_OK;
 }
@@ -54,16 +63,18 @@ void Player::update()
 	ItemCollision();
 
 	Action();
-	Attack();
+	Attack(mouse);
 
 	Frame();
-
-	TileDestroyCreate(mouse);
+	
+	//TileDestroyCreate(mouse);
 	
 	PlayerInfoUpdate();
 	CAMERAMANAGER->setCameraPos(_playerInfo.x - WINSIZEX / 2, _playerInfo.y - WINSIZEY / 2);
 	ITEMMANAGER->setVItem(_vItem);
 	ITEMMANAGER->setViItem(_viItem);
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))Save();
+	if (KEYMANAGER->isOnceKeyDown(VK_F2))Load();
 }
 
 void Player::render()
@@ -96,7 +107,7 @@ void Player::render()
 		break;
 	}
 	_playerInfo.Legs->frameRender(CAMERAMANAGER->getCameraDC(), _playerInfo.rect.left - 10, _playerInfo.rect.top - 20, _playerInfo.FrameX, _playerInfo.LegsFrameY);
-	Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.attackRect);
+	//Rectangle(CAMERAMANAGER->getCameraDC(), _playerInfo.attackRect);
 	if (_playerInfo.Attack)
 	{
 		_playerInfo.attackImage->rotateRender(CAMERAMANAGER->getCameraDC(), (_playerInfo.attackRect.left + _playerInfo.attackRect.right) / 2, (_playerInfo.attackRect.top + _playerInfo.attackRect.bottom) / 2, _playerInfo.angle-0.785398);
@@ -124,6 +135,9 @@ void Player::Action()
 	{
 		_gravity = 0;
 		_playerInfo.jump = false;
+		_playerInfo.HeadState = PlayerState::IDLE;
+		if(_playerInfo.BodyState!=PlayerState::ATTACK)_playerInfo.BodyState = PlayerState::IDLE;
+		_playerInfo.LegsState = PlayerState::IDLE;
 		//cout << "¹Øºí·Ï" << endl;
 	}
 	else
@@ -135,9 +149,9 @@ void Player::Action()
 	if (KEYMANAGER->isStayKeyDown('A') && _playerInfo.x - getRectWidth(_playerInfo.rect) / 2 >= 0 && !_playerInfo.Left)
 	{
 		_playerInfo.direction = PlayerDirection::LEFT;
-		_playerInfo.HeadState = PlayerState::MOVE;
-		_playerInfo.BodyState = PlayerState::MOVE;
-		_playerInfo.LegsState = PlayerState::MOVE;
+		if (_playerInfo.HeadState != PlayerState::JUMP)_playerInfo.HeadState = PlayerState::MOVE;
+		if(_playerInfo.BodyState != PlayerState::ATTACK && _playerInfo.BodyState != PlayerState::JUMP)_playerInfo.BodyState = PlayerState::MOVE;
+		if(_playerInfo.LegsState!=PlayerState::JUMP)_playerInfo.LegsState = PlayerState::MOVE;
 		_playerInfo.x -= 5;
 	}
 	if (KEYMANAGER->isOnceKeyUp('A'))
@@ -151,9 +165,9 @@ void Player::Action()
 	{
 		_playerInfo.direction = PlayerDirection::RIGHT;
 
-		_playerInfo.HeadState = PlayerState::MOVE;
-		if(_playerInfo.BodyState == PlayerState::IDLE)_playerInfo.BodyState = PlayerState::MOVE;
-		_playerInfo.LegsState = PlayerState::MOVE;
+		if(_playerInfo.HeadState != PlayerState::JUMP)_playerInfo.HeadState = PlayerState::MOVE;
+		if (_playerInfo.BodyState != PlayerState::ATTACK && _playerInfo.BodyState != PlayerState::JUMP)_playerInfo.BodyState = PlayerState::MOVE;
+		if (_playerInfo.LegsState != PlayerState::JUMP)_playerInfo.LegsState = PlayerState::MOVE;
 		_playerInfo.x += 5;
 	}
 	if (KEYMANAGER->isOnceKeyUp('D'))
@@ -180,12 +194,12 @@ void Player::Action()
 		_playerInfo.LegsState = PlayerState::JUMP;
 		_playerInfo.jump = true;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)&& INVENTORYMANAGER->getItem() != NULL)
 	{
 		_playerInfo.HeadState = PlayerState::ATTACK;
-		if (_playerInfo.LegsState != PlayerState::MOVE)_playerInfo.LegsState = PlayerState::ATTACK;
 		_playerInfo.BodyState = PlayerState::ATTACK;
-		if (!_playerInfo.AttackIng && INVENTORYMANAGER->getItem() != NULL)
+		if (_playerInfo.LegsState != PlayerState::MOVE && _playerInfo.LegsState != PlayerState::JUMP)_playerInfo.LegsState = PlayerState::ATTACK;
+		if (!_playerInfo.AttackIng)
 		{
 			_playerInfo.Attack = true;
 			_playerInfo.AttackIng = true;
@@ -209,7 +223,7 @@ void Player::Action()
 
 }
 
-void Player::Attack()
+void Player::Attack(int mouse)
 {
 	if (_playerInfo.currentDirection != _playerInfo.direction)
 	{
@@ -235,7 +249,9 @@ void Player::Attack()
 				_playerInfo.angle = 0;
 				_playerInfo.Attack = false;
 				_playerInfo.AttackIng = false;
-				_playerInfo.BodyState = PlayerState::IDLE;
+				TileDestroy(mouse);
+				if (_playerInfo.LegsState == PlayerState::JUMP)_playerInfo.BodyState = PlayerState::JUMP;
+				else _playerInfo.BodyState = PlayerState::IDLE;
 			}
 			break;
 		case PlayerDirection::RIGHT:
@@ -245,19 +261,27 @@ void Player::Attack()
 				_playerInfo.angle = PI;
 				_playerInfo.Attack = false;
 				_playerInfo.AttackIng = false;
-				_playerInfo.BodyState = PlayerState::IDLE;
+				TileDestroy(mouse);
+				if (_playerInfo.LegsState == PlayerState::JUMP)_playerInfo.BodyState = PlayerState::JUMP;
+				else _playerInfo.BodyState = PlayerState::IDLE;
 			}
 			break;
 		}
 	}
-	cout << _playerInfo.angle << endl;
+	//cout << _playerInfo.angle << endl;
 	if (INVENTORYMANAGER->getItem() != NULL)
 	{
-		_playerInfo.attackX = cosf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getWidth() + _playerInfo.x;
-		_playerInfo.attackY = -sinf(_playerInfo.angle) * INVENTORYMANAGER->getImage()->getHeight() + _playerInfo.y;
+		_playerInfo.attackX = cosf(_playerInfo.angle) * (INVENTORYMANAGER->getImage()->getWidth()/1.3) + _playerInfo.x;
+		_playerInfo.attackY = -sinf(_playerInfo.angle) * (INVENTORYMANAGER->getImage()->getHeight()/1.3) + _playerInfo.y;
 		_playerInfo.attackRect = RectMakeCenter(_playerInfo.attackX, _playerInfo.attackY, INVENTORYMANAGER->getImage()->getWidth(), INVENTORYMANAGER->getImage()->getHeight());
 	}
-
+	else
+	{
+		_playerInfo.attackRect.left = NULL;
+		_playerInfo.attackRect.right = NULL;
+		_playerInfo.attackRect.top = NULL;
+		_playerInfo.attackRect.bottom = NULL;
+	}
 	_playerInfo.currentDirection = _playerInfo.direction;
 }
 
@@ -273,31 +297,41 @@ void Player::Frame()
 		_playerInfo.FrameX = 1;
 		break;
 	}
-	if (_playerInfo.FrameCount >= 0.05f)
+	if (_playerInfo.FrameCount >= 0.12f)
 	{
-		/*if (_playerInfo.HeadFrameY >= 19)_playerInfo.HeadFrameY = 6;
-		if (_playerInfo.BodyFrameY >= 19)_playerInfo.BodyFrameY = 6;
-		if (_playerInfo.LegsFrameY >= 19)_playerInfo.LegsFrameY = 6;
-		_playerInfo.HeadFrameY++;
-		_playerInfo.BodyFrameY++;
-		_playerInfo.LegsFrameY++;*/
+		switch (_playerInfo.HeadState)
+		{
+		case PlayerState::IDLE:
+			_playerInfo.HeadFrameY = 0;
+			break;
+		case PlayerState::MOVE:
+			if (_playerInfo.HeadFrameY < 6 || _playerInfo.HeadFrameY >= 19)_playerInfo.HeadFrameY = 6;
+			_playerInfo.HeadFrameY++;
+			break;
+		case PlayerState::JUMP:
+			_playerInfo.HeadFrameY = 5;
+			break;
+		case PlayerState::ATTACK:
+			if (_playerInfo.HeadFrameY < 0 || _playerInfo.HeadFrameY >3)_playerInfo.HeadFrameY = 0;
+			_playerInfo.HeadFrameY++;
+			break;
+		}
+
 		switch (_playerInfo.BodyState)
 		{
 		case PlayerState::IDLE:
 			_playerInfo.BodyFrameY = 0;
 			break;
 		case PlayerState::MOVE:
-			if (_playerInfo.BodyFrameY < 6 && _playerInfo.BodyFrameY >= 19)_playerInfo.BodyFrameY = 6;
+			if (_playerInfo.BodyFrameY < 6 || _playerInfo.BodyFrameY >= 19)_playerInfo.BodyFrameY = 6;
 			_playerInfo.BodyFrameY++;
 			break;
 		case PlayerState::JUMP:
 			_playerInfo.BodyFrameY = 5;
 			break;
 		case PlayerState::ATTACK:
-			if (_playerInfo.BodyFrameY < 0 && _playerInfo.BodyFrameY > 4)_playerInfo.BodyFrameY = 1;
+			if (_playerInfo.BodyFrameY < 0 || _playerInfo.BodyFrameY >3)_playerInfo.BodyFrameY = 0;
 			_playerInfo.BodyFrameY++;
-			break;
-		default:
 			break;
 		}
 
@@ -307,18 +341,20 @@ void Player::Frame()
 			_playerInfo.LegsFrameY = 0;
 			break;
 		case PlayerState::MOVE:
-			if (_playerInfo.LegsFrameY < 6 && _playerInfo.LegsFrameY >= 19)_playerInfo.LegsFrameY = 6;
+			if (_playerInfo.LegsFrameY < 6 || _playerInfo.LegsFrameY >= 19)_playerInfo.LegsFrameY = 6;
 			_playerInfo.LegsFrameY++;
 			break;
 		case PlayerState::JUMP:
+			_playerInfo.LegsFrameY = 5;
 			break;
 		case PlayerState::ATTACK:
+			if (_playerInfo.LegsFrameY < 0 || _playerInfo.LegsFrameY >3)_playerInfo.LegsFrameY = 0;
+			_playerInfo.LegsFrameY++;
 			break;
 		}
+
 		_playerInfo.FrameCount = 0;
 	}
-
-
 }
 
 void Player::BlockCollision()
@@ -350,21 +386,258 @@ void Player::ItemCollision()
 
 void Player::TileDestroyCreate(int mouse)
 {
-	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse))
+	if(_playerInfo.angle < 0.09 || _playerInfo.angle > PI-0.09)
+	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse) || !INVENTORYMANAGER->getInvenSee())
 	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) 
-			&& _vTile[mouse]->blockType == BlockType::NONE
-			&& _vTile[mouse]->objectType == ObjectType::NONE)
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			_vTile[mouse]->block = TileType::BLOCK;
-			_vTile[mouse]->blockType = BlockType::DIRT;
+			if (INVENTORYMANAGER->getItem() != NULL)
+			{
+				switch (INVENTORYMANAGER->getItemType1())
+				{
+				case ItemType::BLOCK:
+					if(_vTile[mouse]->block == TileType::NONE)
+					switch (INVENTORYMANAGER->getitem())
+					{
+					case type::DIRT_BLOCK:
+						cout << 1 << endl;
+						_vTile[mouse]->blockBurglar = 50.0f;
+						_vTile[mouse]->blockType = BlockType::DIRT;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::STONE_BLOCK:
+						cout << 2 << endl;
+						_vTile[mouse]->blockBurglar = 100.0f;
+						_vTile[mouse]->blockType = BlockType::STONE;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::WOOD:
+						cout << 3 << endl;
+						_vTile[mouse]->blockBurglar = 100.0f;
+						_vTile[mouse]->blockType = BlockType::WOOD;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::COPPER:
+						cout << 4 << endl;
+						_vTile[mouse]->blockBurglar = 100.0f;
+						_vTile[mouse]->blockType = BlockType::COPPER;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::IRON:
+						cout << 5 << endl;
+						_vTile[mouse]->blockBurglar = 100.0f;
+						_vTile[mouse]->blockType = BlockType::IRON;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::GOLD:
+						cout << 6 << endl;
+						_vTile[mouse]->blockBurglar = 100.0f;
+						_vTile[mouse]->blockType = BlockType::GOLD;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					case type::PLATINUM:
+						cout << 7 << endl;
+						_vTile[mouse]->blockBurglar = 150.0f;
+						_vTile[mouse]->blockType = BlockType::PLATINUM;
+						_vTile[mouse]->block = TileType::BLOCK;
+						INVENTORYMANAGER->getItem()->removeItemStack(1);
+						break;
+					default:
+						cout <<18<< endl;
+						break;
+					}
+					break;
+				case ItemType::WALL:
+					switch (INVENTORYMANAGER->getitem())
+					{
+					case type::WOOD_WALL:
+						_vTile[mouse]->wallType = WallType::WOOD;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					case type::DIRT_WALL:
+						_vTile[mouse]->wallType = WallType::DIRT;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					case type::STONE_WALL:
+						_vTile[mouse]->wallType = WallType::STONE;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					default:
+						break;
+					}
+					break;
+				case ItemType::CONSUMBLE:
+					switch (INVENTORYMANAGER->getitem())
+					{
+					case type::POTION50:
+						if (_playerInfo.Health + 50 >= _playerInfo.MaxHealth)_playerInfo.Health = _playerInfo.MaxHealth;
+						else _playerInfo.Health += 50;
+						break;
+					case type::POTION100:
+						if (_playerInfo.Health + 100 >= _playerInfo.MaxHealth)_playerInfo.Health = _playerInfo.MaxHealth;
+						else _playerInfo.Health += 100;
+						break;
+					case type::HEARTCRYSTAL:
+						_playerInfo.MaxHealth += 20;
+						break;
+					default:
+						break;
+					}
+					break;
+				case ItemType::PICKAXE:
+					_vTile[mouse]->blockBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					cout << 1 << endl;
+					break;
+				case ItemType::AXE:
+					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					break;
+				case ItemType::HAMMER:
+					_vTile[mouse]->wallBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					break;
+				case ItemType::SWORD:
+
+					break;
+				default:
+					break;
+				}
+			}
 		}
-		if (KEYMANAGER->isStayKeyDown(VK_RBUTTON)
-			&& _vTile[mouse]->block == TileType::BLOCK)
+		
+	}
+}
+
+void Player::TileDestroy(int mouse)
+{
+	if (!PtInRect(&INVENTORYMANAGER->getRect(), _ptMouse) || !INVENTORYMANAGER->getInvenSee())
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			_vTile[mouse]->block = TileType::NONE;
-			_vTile[mouse]->blockType = BlockType::NONE;
+			if (INVENTORYMANAGER->getItem() != NULL)
+			{
+				switch (INVENTORYMANAGER->getItemType1())
+				{
+				case ItemType::BLOCK:
+					if (_vTile[mouse]->block == TileType::NONE)
+						switch (INVENTORYMANAGER->getitem())
+						{
+						case type::DIRT_BLOCK:
+							cout << 1 << endl;
+							_vTile[mouse]->blockBurglar = 50.0f;
+							_vTile[mouse]->blockType = BlockType::DIRT;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::STONE_BLOCK:
+							cout << 2 << endl;
+							_vTile[mouse]->blockBurglar = 100.0f;
+							_vTile[mouse]->blockType = BlockType::STONE;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::WOOD:
+							cout << 3 << endl;
+							_vTile[mouse]->blockBurglar = 100.0f;
+							_vTile[mouse]->blockType = BlockType::WOOD;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::COPPER:
+							cout << 4 << endl;
+							_vTile[mouse]->blockBurglar = 100.0f;
+							_vTile[mouse]->blockType = BlockType::COPPER;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::IRON:
+							cout << 5 << endl;
+							_vTile[mouse]->blockBurglar = 100.0f;
+							_vTile[mouse]->blockType = BlockType::IRON;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::GOLD:
+							cout << 6 << endl;
+							_vTile[mouse]->blockBurglar = 100.0f;
+							_vTile[mouse]->blockType = BlockType::GOLD;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						case type::PLATINUM:
+							cout << 7 << endl;
+							_vTile[mouse]->blockBurglar = 150.0f;
+							_vTile[mouse]->blockType = BlockType::PLATINUM;
+							_vTile[mouse]->block = TileType::BLOCK;
+							INVENTORYMANAGER->getItem()->removeItemStack(1);
+							break;
+						default:
+							cout << 18 << endl;
+							break;
+						}
+					break;
+				case ItemType::WALL:
+					switch (INVENTORYMANAGER->getitem())
+					{
+					case type::WOOD_WALL:
+						_vTile[mouse]->wallType = WallType::WOOD;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					case type::DIRT_WALL:
+						_vTile[mouse]->wallType = WallType::DIRT;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					case type::STONE_WALL:
+						_vTile[mouse]->wallType = WallType::STONE;
+						_vTile[mouse]->wall = TileType::WALL;
+						break;
+					default:
+						break;
+					}
+					break;
+				case ItemType::CONSUMBLE:
+					switch (INVENTORYMANAGER->getitem())
+					{
+					case type::POTION50:
+						if (_playerInfo.Health + 50 >= _playerInfo.MaxHealth)_playerInfo.Health = _playerInfo.MaxHealth;
+						else _playerInfo.Health += 50;
+						break;
+					case type::POTION100:
+						if (_playerInfo.Health + 100 >= _playerInfo.MaxHealth)_playerInfo.Health = _playerInfo.MaxHealth;
+						else _playerInfo.Health += 100;
+						break;
+					case type::HEARTCRYSTAL:
+						_playerInfo.MaxHealth += 20;
+						break;
+					default:
+						break;
+					}
+					break;
+				case ItemType::PICKAXE:
+					_vTile[mouse]->blockBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					cout << 1 << endl;
+					break;
+				case ItemType::AXE:
+					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					break;
+				case ItemType::HAMMER:
+					_vTile[mouse]->wallBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
+					break;
+				case ItemType::SWORD:
+
+					break;
+				default:
+					break;
+				}
+			}
 		}
+
 	}
 }
 
@@ -702,4 +975,31 @@ int Player::getEndY()
 {
 	if (MaxTile_Y <= (_playerInfo.y + TILESIZE * 3 + WINSIZEY / 2) / TILESIZE)return MaxTile_Y;
 	else return(_playerInfo.y + TILESIZE * 3 + WINSIZEY / 2) / TILESIZE;
+}
+
+void Player::Save()
+{
+	HANDLE file;
+	DWORD write;
+
+	file = CreateFile("PlayerSaveFile.txt", GENERIC_WRITE, 0, NULL,
+		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	WriteFile(file, &_playerInfo, sizeof(PlayerInfo), &write, NULL);
+
+	CloseHandle(file);
+}
+
+void Player::Load()
+{
+	HANDLE file;
+	DWORD read;
+	ZeroMemory(&_playerInfo, sizeof(_playerInfo));
+
+	file = CreateFile("PlayerSaveFile.txt", GENERIC_READ, 0, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, &_playerInfo, sizeof(PlayerInfo), &read, NULL);
+
+	CloseHandle(file);
 }

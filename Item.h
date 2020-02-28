@@ -62,6 +62,8 @@ public:
 		float weaponDamage;
 		float ArmorDefense;
 		float PotionHealthPoint;
+		float CriticalChance;
+		float ToolsPower;
 		RECT rc;
 		tagItemInfo()
 		{
@@ -82,12 +84,14 @@ public:
 	HRESULT init(float x,float y,type type1, ItemType type2, string image, int stack);
 	HRESULT init(float x, float y, type type1, ItemType type2, ItemType type3, string image, int stack);
 	HRESULT init(float x, float y, type type1, ItemType type2, string image, int stack, float point);
-	HRESULT init(float x, float y, type type1, ItemType type2, string image, float point);
+	HRESULT init(float x, float y, type type1, ItemType type2, string image, float point,float criticalChance);
+	HRESULT init(float x, float y, type type1, ItemType type2, string image, float point, float criticalChance,float toolsPower);
 
 	HRESULT init(float x, float y, type type1, ItemType type2, image* image, int stack);
 	HRESULT init(float x, float y, type type1, ItemType type2, ItemType type3, image* image, int stack);
 	HRESULT init(float x, float y, type type1, ItemType type2, image* image, int stack, float point);
-	HRESULT init(float x, float y, type type1, ItemType type2, image* image, float point);
+	HRESULT init(float x, float y, type type1, ItemType type2, image* image, float point,float criticalChance);
+	HRESULT init(float x, float y, type type1, ItemType type2, image* image, float point, float criticalChance,float toolsPower);
 
 	void release();
 	void update();
@@ -108,12 +112,18 @@ public:
 	inline float getWeaponDamage() { return _itemInfo->weaponDamage; }
 	inline float getArmorDefense() { return _itemInfo->ArmorDefense; }
 	inline float getPotionPower() { return _itemInfo->PotionHealthPoint; }
+	inline float getCriticalChance() { return _itemInfo->CriticalChance; }
+	inline float getToolsPower() { return _itemInfo->ToolsPower; }
 	inline RECT getRect() { return _itemInfo->rc; }
 	inline image* getImage() { return _itemInfo->itemImage; }
 
 	inline void setItemStack(int stack) { _itemInfo->itemStack = stack; }
+	inline void AddItemStack(int stack) { _itemInfo->itemStack += stack; }
 	inline void PlusItemStack() { _itemInfo->itemStack += 1; }
+	inline void removeItemStack(int stack) { if(_itemInfo->itemStack - stack >= 0)_itemInfo->itemStack -= stack; }
 	inline void setWeaponDamage(float damage) { _itemInfo->weaponDamage = damage; }
 	inline void setArmorDefense(float defense) { _itemInfo->ArmorDefense = defense; }
+	
+	
 };
 

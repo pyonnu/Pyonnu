@@ -5,18 +5,18 @@ class InventoryManager:public singletonBase<InventoryManager>
 {
 private:
 	Inventory* _inventory;
-	vector<Item*> _vItem;
-	vector<Item*>::iterator _viItem;
-
-	vector<Item*> _vInven;
-	vector<Item*>::iterator _viInven;
+	
+	map<string, Item*> _mInven;
 public:
 	HRESULT init();
 	void release();
 	void update();
 	void render(HDC dc);
-
+	
 	void ItemAdd(string name, Item* item);
+	void ItemAdd(string name, Item* item,int stack);
+
+	Item* findItem(string itemName);
 
 	Item* getItem() { return _inventory->getItem(); }
 	bool getInvenSee() { return _inventory->getInvenSee(); }
@@ -25,5 +25,7 @@ public:
 	ItemType getItemType1() { return _inventory->getSelectItemType1(); }
 	ItemType getitemType2() { return _inventory->getSelectItemType2(); }
 	image* getImage() { return _inventory->getSelectItemImage(); }
+	map<string,Item*> getmItem() { return _inventory->getMItem(); }
+	
 };
 

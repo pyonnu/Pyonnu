@@ -156,6 +156,7 @@
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Crafting.h" />
+    <ClInclude Include="CraftingManager.h" />
     <ClInclude Include="Demon.h" />
     <ClInclude Include="DemonEye.h" />
     <ClInclude Include="effect.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="Crafting.cpp" />
+    <ClCompile Include="CraftingManager.cpp" />
     <ClCompile Include="Demon.cpp" />
     <ClCompile Include="DemonEye.cpp" />
     <ClCompile Include="effect.cpp" />

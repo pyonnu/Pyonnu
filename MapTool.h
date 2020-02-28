@@ -12,6 +12,7 @@ struct tagSetTile
 	RECT rc;
 	int FrameX;
 	int FrameY;
+	float burglar;
 	TileType SetTileType;
 	BlockType SetBlockType;
 	WallType SetWallType;
@@ -20,6 +21,7 @@ struct tagSetTile
 struct SelectTile
 {
 	int FrameX, FrameY;
+	float burglar;
 	TileType SelectTileType;
 	BlockType SelectBlockType;
 	WallType SelectWallType;

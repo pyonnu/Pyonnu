@@ -215,12 +215,19 @@ void MapTool::blockTileInit()
 		}
 		_UITile[0][0].SetBlockType = BlockType::NONE;
 		_UITile[1][0].SetBlockType = BlockType::DIRT;
+		_UITile[1][0].burglar = 50.0f;
 		_UITile[2][0].SetBlockType = BlockType::STONE;
+		_UITile[2][0].burglar = 100.0f;
 		_UITile[3][0].SetBlockType = BlockType::COPPER;
+		_UITile[3][0].burglar = 100.0f;
 		_UITile[4][0].SetBlockType = BlockType::IRON;
+		_UITile[4][0].burglar = 100.0f;
 		_UITile[5][0].SetBlockType = BlockType::GOLD;
+		_UITile[5][0].burglar = 100.0f;
 		_UITile[6][0].SetBlockType = BlockType::PLATINUM;
+		_UITile[6][0].burglar = 150.0f;
 		_UITile[7][0].SetBlockType = BlockType::WOOD;
+		_UITile[7][0].burglar = 100.0f;
 		//Wall √ ±‚»≠ ===============================================
 		for (int x = 0;x < MaxBlockTile_X;x++)
 		{
@@ -228,8 +235,11 @@ void MapTool::blockTileInit()
 		}
 		_UITile[0][1].SetWallType = WallType::NONE;
 		_UITile[1][1].SetWallType = WallType::DIRT;
+		_UITile[1][1].burglar = 50.0f;
 		_UITile[2][1].SetWallType = WallType::STONE;
+		_UITile[2][1].burglar = 100.0f;
 		_UITile[3][1].SetWallType = WallType::WOOD;
+		_UITile[3][1].burglar = 100.0f;
 		_UITile[4][1].SetWallType = WallType::NONE;
 		_UITile[5][1].SetWallType = WallType::NONE;
 		_UITile[6][1].SetWallType = WallType::NONE;
@@ -240,6 +250,7 @@ void MapTool::blockTileInit()
 			for (int y = 2;y < MaxBlockTile_Y;y++)
 			{
 				_UITile[x][y].SetTileType = TileType::OBJECT;
+				_UITile[x][y].burglar = 100.0f;
 			}
 		}
 		_UITile[0][2].SetObjectType = ObjectType::DESK1;
@@ -250,6 +261,7 @@ void MapTool::blockTileInit()
 		_UITile[5][2].SetObjectType = ObjectType::LEFTCHIR1;
 		_UITile[6][2].SetObjectType = ObjectType::RIGHTCHIR1;
 		_UITile[7][2].SetObjectType = ObjectType::NONE;
+		_UITile[7][2].burglar = NULL;
 
 		_UITile[0][3].SetObjectType = ObjectType::DESK4;
 		_UITile[1][3].SetObjectType = ObjectType::DESK5;
@@ -259,6 +271,7 @@ void MapTool::blockTileInit()
 		_UITile[5][3].SetObjectType = ObjectType::LEFTCHIR2;
 		_UITile[6][3].SetObjectType = ObjectType::RIGHTCHIR2;
 		_UITile[7][3].SetObjectType = ObjectType::NONE;
+		_UITile[7][3].burglar = NULL;
 
 		_UITile[0][4].SetObjectType = ObjectType::FURNACE1;
 		_UITile[1][4].SetObjectType = ObjectType::FURNACE2;
@@ -268,6 +281,7 @@ void MapTool::blockTileInit()
 		_UITile[5][4].SetObjectType = ObjectType::WORKBENCH1;
 		_UITile[6][4].SetObjectType = ObjectType::WORKBENCH2;
 		_UITile[7][4].SetObjectType = ObjectType::NONE;
+		_UITile[7][4].burglar = NULL;
 
 		_UITile[0][5].SetObjectType = ObjectType::FURNACE4;
 		_UITile[1][5].SetObjectType = ObjectType::FURNACE5;
@@ -277,6 +291,7 @@ void MapTool::blockTileInit()
 		_UITile[5][5].SetObjectType = ObjectType::ANVIL1;
 		_UITile[6][5].SetObjectType = ObjectType::ANVIL2;
 		_UITile[7][5].SetObjectType = ObjectType::NONE;
+		_UITile[7][5].burglar = NULL;
 
 		_UITile[0][6].SetObjectType = ObjectType::RIGHT_OPENDOOR1;
 		_UITile[1][6].SetObjectType = ObjectType::RIGHT_OPENDOOR2;
@@ -286,6 +301,8 @@ void MapTool::blockTileInit()
 		_UITile[5][6].SetObjectType = ObjectType::DEMONALTER3;
 		_UITile[6][6].SetObjectType = ObjectType::NONE;
 		_UITile[7][6].SetObjectType = ObjectType::NONE;
+		_UITile[6][6].burglar = NULL;
+		_UITile[7][6].burglar = NULL;
 
 		_UITile[0][7].SetObjectType = ObjectType::RIGHT_OPENDOOR3;
 		_UITile[1][7].SetObjectType = ObjectType::RIGHT_OPENDOOR4;
@@ -295,6 +312,8 @@ void MapTool::blockTileInit()
 		_UITile[5][7].SetObjectType = ObjectType::DEMONALTER6;
 		_UITile[6][7].SetObjectType = ObjectType::NONE;
 		_UITile[7][7].SetObjectType = ObjectType::NONE;
+		_UITile[6][7].burglar = NULL;
+		_UITile[7][7].burglar = NULL;
 
 		_UITile[0][8].SetObjectType = ObjectType::RIGHT_OPENDOOR5;
 		_UITile[1][8].SetObjectType = ObjectType::RIGHT_OPENDOOR6;
@@ -304,6 +323,11 @@ void MapTool::blockTileInit()
 		_UITile[5][8].SetObjectType = ObjectType::NONE;
 		_UITile[6][8].SetObjectType = ObjectType::NONE;
 		_UITile[7][8].SetObjectType = ObjectType::NONE;
+		_UITile[3][8].burglar = NULL;
+		_UITile[4][8].burglar = NULL;
+		_UITile[5][8].burglar = NULL;
+		_UITile[6][8].burglar = NULL;
+		_UITile[7][8].burglar = NULL;
 
 		_UITile[0][9].SetObjectType = ObjectType::TREE1;
 		_UITile[1][9].SetObjectType = ObjectType::TREE2;
@@ -313,6 +337,7 @@ void MapTool::blockTileInit()
 		_UITile[5][9].SetObjectType = ObjectType::LEFT_OPENDOOR1;
 		_UITile[6][9].SetObjectType = ObjectType::LEFT_OPENDOOR2;
 		_UITile[7][9].SetObjectType = ObjectType::NONE;
+		_UITile[7][9].burglar = NULL;
 
 		_UITile[0][10].SetObjectType = ObjectType::TREE6;
 		_UITile[1][10].SetObjectType = ObjectType::TREE7;
@@ -322,6 +347,7 @@ void MapTool::blockTileInit()
 		_UITile[5][10].SetObjectType = ObjectType::LEFT_OPENDOOR3;
 		_UITile[6][10].SetObjectType = ObjectType::LEFT_OPENDOOR4;
 		_UITile[7][10].SetObjectType = ObjectType::NONE;
+		_UITile[7][10].burglar = NULL;
 
 		_UITile[0][11].SetObjectType = ObjectType::TREE11;
 		_UITile[1][11].SetObjectType = ObjectType::TREE12;
@@ -331,6 +357,7 @@ void MapTool::blockTileInit()
 		_UITile[5][11].SetObjectType = ObjectType::LEFT_OPENDOOR5;
 		_UITile[6][11].SetObjectType = ObjectType::LEFT_OPENDOOR6;
 		_UITile[7][11].SetObjectType = ObjectType::NONE;
+		_UITile[7][11].burglar = NULL;
 
 		_UITile[0][12].SetObjectType = ObjectType::TREE16;
 		_UITile[1][12].SetObjectType = ObjectType::TREE17;
@@ -340,6 +367,9 @@ void MapTool::blockTileInit()
 		_UITile[5][12].SetObjectType = ObjectType::NONE;
 		_UITile[6][12].SetObjectType = ObjectType::NONE;
 		_UITile[7][12].SetObjectType = ObjectType::NONE;
+		_UITile[5][12].burglar = NULL;
+		_UITile[6][12].burglar = NULL;
+		_UITile[7][12].burglar = NULL;
 
 		_UITile[0][13].SetObjectType = ObjectType::TREE21;
 		_UITile[1][13].SetObjectType = ObjectType::TREE22;
@@ -349,6 +379,9 @@ void MapTool::blockTileInit()
 		_UITile[5][13].SetObjectType = ObjectType::NONE;
 		_UITile[6][13].SetObjectType = ObjectType::NONE;
 		_UITile[7][13].SetObjectType = ObjectType::NONE;
+		_UITile[5][13].burglar = NULL;
+		_UITile[6][13].burglar = NULL;
+		_UITile[7][13].burglar = NULL;
 
 		_UITile[0][14].SetObjectType = ObjectType::NONE;
 		_UITile[1][14].SetObjectType = ObjectType::TREE26;
@@ -358,6 +391,12 @@ void MapTool::blockTileInit()
 		_UITile[5][14].SetObjectType = ObjectType::NONE;
 		_UITile[6][14].SetObjectType = ObjectType::NONE;
 		_UITile[7][14].SetObjectType = ObjectType::NONE;
+		_UITile[0][14].burglar = NULL;
+		_UITile[3][14].burglar = NULL;
+		_UITile[4][14].burglar = NULL;
+		_UITile[5][14].burglar = NULL;
+		_UITile[6][14].burglar = NULL;
+		_UITile[7][14].burglar = NULL;
 
 		_UITile[0][15].SetObjectType = ObjectType::TREE28;
 		_UITile[1][15].SetObjectType = ObjectType::TREE29;
@@ -367,6 +406,9 @@ void MapTool::blockTileInit()
 		_UITile[5][15].SetObjectType = ObjectType::NONE;
 		_UITile[6][15].SetObjectType = ObjectType::NONE;
 		_UITile[7][15].SetObjectType = ObjectType::NONE;
+		_UITile[5][15].burglar = NULL;
+		_UITile[6][15].burglar = NULL;
+		_UITile[7][15].burglar = NULL;
 
 		_UITile[0][16].SetObjectType = ObjectType::NONE;
 		_UITile[1][16].SetObjectType = ObjectType::TREE33;
@@ -376,6 +418,10 @@ void MapTool::blockTileInit()
 		_UITile[5][16].SetObjectType = ObjectType::NONE;
 		_UITile[6][16].SetObjectType = ObjectType::NONE;
 		_UITile[7][16].SetObjectType = ObjectType::NONE;
+		_UITile[0][16].burglar = NULL;
+		_UITile[5][16].burglar = NULL;
+		_UITile[6][16].burglar = NULL;
+		_UITile[7][16].burglar = NULL;
 
 		_UITile[0][17].SetObjectType = ObjectType::NONE;
 		_UITile[1][17].SetObjectType = ObjectType::TREE37;
@@ -385,6 +431,12 @@ void MapTool::blockTileInit()
 		_UITile[5][17].SetObjectType = ObjectType::NONE;
 		_UITile[6][17].SetObjectType = ObjectType::NONE;
 		_UITile[7][17].SetObjectType = ObjectType::NONE;
+		_UITile[0][17].burglar = NULL;
+		_UITile[3][17].burglar = NULL;
+		_UITile[4][17].burglar = NULL;
+		_UITile[5][17].burglar = NULL;
+		_UITile[6][17].burglar = NULL;
+		_UITile[7][17].burglar = NULL;
 
 		_UITile[0][18].SetObjectType = ObjectType::TREE39;
 		_UITile[1][18].SetObjectType = ObjectType::TREE40;
@@ -394,8 +446,10 @@ void MapTool::blockTileInit()
 		_UITile[5][18].SetObjectType = ObjectType::NONE;
 		_UITile[6][18].SetObjectType = ObjectType::NONE;
 		_UITile[7][18].SetObjectType = ObjectType::NONE;
-		break;
-	default:
+		_UITile[4][18].burglar = NULL;
+		_UITile[5][18].burglar = NULL;
+		_UITile[6][18].burglar = NULL;
+		_UITile[7][18].burglar = NULL;
 		break;
 	}
 
@@ -431,41 +485,41 @@ void MapTool::CameraControl()
 {
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_CameraPositon.y -= 10;
+		_CameraPositon.y -= 20;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_CameraPositon.y += 10;
+		_CameraPositon.y += 20;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		_CameraPositon.x -= 10;
+		_CameraPositon.x -= 20;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_CameraPositon.x += 10;
+		_CameraPositon.x += 20;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		//UP
 		if (PtInRect(&_button[0], _ptMouse))
 		{
-			_CameraPositon.y -= 10;
+			_CameraPositon.y -= 20;
 		}
 		//DOWN
 		if (PtInRect(&_button[1], _ptMouse))
 		{
-			_CameraPositon.y += 10;
+			_CameraPositon.y += 20;
 		}
 		//LEFT
 		if (PtInRect(&_button[2], _ptMouse))
 		{
-			_CameraPositon.x -= 10;
+			_CameraPositon.x -= 20;
 		}
 		//RIGHT
 		if (PtInRect(&_button[3], _ptMouse))
 		{
-			_CameraPositon.x += 10;
+			_CameraPositon.x += 20;
 		}
 	}
 
@@ -542,6 +596,8 @@ void MapTool::blockFrameSet(int x, int y)
 	_selectTile.FrameX = x;
 	_selectTile.FrameY = y;
 	_selectTile.SelectBlockType = _UITile[x][y].SetBlockType;
+	_selectTile.burglar = _UITile[x][y].burglar;
+	cout << _selectTile.burglar << endl;
 	/*switch (_UITile[x][y].SetBlockType)
 	{
 	case BlockType::NONE:
@@ -593,6 +649,7 @@ void MapTool::wallFrameSet(int x, int y)
 	_selectTile.FrameX = x;
 	_selectTile.FrameY = y;
 	_selectTile.SelectWallType = _UITile[x][y+1].SetWallType;
+	_selectTile.burglar = _UITile[x][y + 1].burglar;
 	//switch (_UITile[x][y].SetWallType)
 	//{
 	//case WallType::NONE:
@@ -624,6 +681,7 @@ void MapTool::objectFrameSet(int x, int y)
 	_selectTile.FrameX = x;
 	_selectTile.FrameY = y;
 	_selectTile.SelectObjectType = _UITile[x][y+2].SetObjectType;
+	_selectTile.burglar = _UITile[x][y + 2].burglar;
 	/*switch (_UITile[x][y].SetObjectType)
 	{
 	case ObjectType::NONE:
@@ -720,18 +778,22 @@ void MapTool::drawTile()
 						_Tile[x][y].wallType = _selectTile.SelectWallType;
 						_Tile[x][y].FrameX2 = _selectTile.FrameX;
 						_Tile[x][y].FrameY2 = _selectTile.FrameY;
+						_Tile[x][y].wallBurglar = _selectTile.burglar;
+						cout << _Tile[x][y].wallBurglar << endl;
 						break;
 					case TileType::BLOCK:
 						_Tile[x][y].block = _selectTile.SelectTileType;
 						_Tile[x][y].blockType = _selectTile.SelectBlockType;
 						_Tile[x][y].FrameX = _selectTile.FrameX;
 						_Tile[x][y].FrameY = _selectTile.FrameY;
+						_Tile[x][y].blockBurglar = _selectTile.burglar;
 						break;
 					case TileType::OBJECT:
 						_Tile[x][y].object = _selectTile.SelectTileType;
 						_Tile[x][y].objectType = _selectTile.SelectObjectType;
 						_Tile[x][y].FrameX3 = _selectTile.FrameX;
 						_Tile[x][y].FrameY3 = _selectTile.FrameY;
+						_Tile[x][y].objectBurglar = _selectTile.burglar;
 						break;
 					}
 
@@ -760,18 +822,22 @@ void MapTool::drawTile()
 						_Tile[x][y].wallType = _selectTile.SelectWallType;
 						_Tile[x][y].FrameX2 = _selectTile.FrameX;
 						_Tile[x][y].FrameY2 = _selectTile.FrameY;
+						_Tile[x][y].wallBurglar = _selectTile.burglar;
+
 						break;
 					case TileType::BLOCK:
 						_Tile[x][y].block = _selectTile.SelectTileType;
 						_Tile[x][y].blockType = _selectTile.SelectBlockType;
 						_Tile[x][y].FrameX = _selectTile.FrameX;
 						_Tile[x][y].FrameY = _selectTile.FrameY;
+						_Tile[x][y].blockBurglar = _selectTile.burglar;
 						break;
 					case TileType::OBJECT:
 						_Tile[x][y].object = _selectTile.SelectTileType;
 						_Tile[x][y].objectType = _selectTile.SelectObjectType;
 						_Tile[x][y].FrameX3 = _selectTile.FrameX;
 						_Tile[x][y].FrameY3 = _selectTile.FrameY;
+						_Tile[x][y].objectBurglar = _selectTile.burglar;
 						break;
 					}
 

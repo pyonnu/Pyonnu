@@ -39,6 +39,7 @@ HRESULT gameNode::init(bool managerInit)
 		CAMERAMANAGER->init();
 		ITEMMANAGER->init();
 		INVENTORYMANAGER->init();
+		CRAFTINGMANAGER->init();
 	}
 
 	return S_OK;

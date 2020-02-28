@@ -7,7 +7,6 @@ HRESULT Inventory::init()
 	_inventoryImage = IMAGEMANAGER->findImage("Inventory_Back");
 	_selectInventoryImage = IMAGEMANAGER->findImage("Inventory_Back14");
 	_selectQuickSlot = _FilledInventory = 0;
-	_selectItemImage = NULL;
 	_invenSee = false;
 	_inventoryRect = RectMake(0, 0, 20 + 62 * 10, 20 + 62 * 5);
 	for (int i = 0; i < 10;i++)
@@ -27,6 +26,19 @@ void Inventory::release()
 void Inventory::update()
 {
 	InvenToryControl();
+	for (int i = 0;i < 10;i++)
+	{
+		for (int j = 0;j < 5;j++)
+		{
+			if(_vInven[i+j*10]!=NULL)
+			if (_vInven[i + j * 10]->getItemStack() <= 0)
+			{
+				_mItem.erase(_itemName[i+j*10]);
+				_FilledInventory--;
+				_vInven[i + j * 10] = NULL;
+			}
+		}
+	}
 }
 
 void Inventory::render(HDC dc)
@@ -78,7 +90,7 @@ void Inventory::render(HDC dc)
 			}
 		}
 	}
-	if (_selectItem)_selectItemImage->render(dc, _ptMouse.x, _ptMouse.y);
+	if (_selectItem)_item->getImage()->render(dc, _ptMouse.x, _ptMouse.y);
 	//Rectangle(dc, _inventoryRect);
 }
 
@@ -124,20 +136,77 @@ void Inventory::InvenToryControl()
 void Inventory::ItemAdd(string itemName, Item* item)
 {
 	miItem key = _mItem.find(itemName);
-
 	if (key != _mItem.end())
 	{
 		_mItem.find(itemName)->second->PlusItemStack();
+		cout << 28 << endl;
 	}
 	else
 	{
-		if (_FilledInventory >= 50) return;
+		for (int i = 0;i < InventorySize;i++)
+		{
+			if (_vInven[i] == NULL)
+			{
+				_vInven[i] = item;
+				_mItem.insert(make_pair(itemName, item));
+				break;
+			}
+		}
+		/*for (_viInven = _vInven.begin();_viInven != _vInven.end();++_viInven)
+		{
+			if ((*_viInven) = 0)
+			{
+				(*_viInven) = item;
+				break;
+			}
+		}*/
+		/*if (_FilledInventory >= 50) return;
 		_mItem.insert(make_pair(itemName, item));
 		_viInven = _vInven.begin() + _FilledInventory;
-		_viInven = _vInven.insert(_viInven, item);
-		_FilledInventory++;
+		_itemName[_FilledInventory] = itemName;
+		_vInven.insert(_viInven, item);
+		_FilledInventory++;*/
+		cout << 38 << endl;
 	}
 
+}
+
+void Inventory::ItemAdd(string itemName, Item* item, int stack)
+{
+	miItem key = _mItem.find(itemName);
+
+	if (key != _mItem.end())
+	{
+		_mItem.find(itemName)->second->AddItemStack(stack);
+		cout << 28 << endl;
+	}
+	else
+	{
+		for (int i = 0;i < InventorySize;i++)
+		{
+			if (_vInven[i] == NULL)
+			{
+				_vInven[i] = item;
+				_mItem.insert(make_pair(itemName, item));
+				break;
+			}
+		}
+		/*for (_viInven = _vInven.begin();_viInven != _vInven.end();++_viInven)
+		{
+			if ((*_viInven) = NULL)
+			{
+				(*_viInven) = item;
+				break;
+			}
+		}*/
+		/*if (_FilledInventory >= 50) return;
+		_mItem.insert(make_pair(itemName, item));
+		_viInven = _vInven.begin() + _FilledInventory;
+		_itemName[_FilledInventory] = itemName;
+		_vInven.insert(_viInven, item);
+		_FilledInventory++;*/
+		cout << 38 << endl;
+	}
 }
 
 void Inventory::ItemSelect(int i, int j)
@@ -145,7 +214,8 @@ void Inventory::ItemSelect(int i, int j)
 	if (!_selectItem)
 	{
 		if (_vInven[i + j * 10] == NULL)return;
-		_selectItemImage = _vInven[i + j * 10]->getImage();
+		_name = _itemName[i + j * 10];
+		_itemName[i + j * 10].clear();
 		_item = _vInven[i + j * 10];
 		_vInven[i + j * 10] = NULL;
 		_selectItem = true;
@@ -153,9 +223,22 @@ void Inventory::ItemSelect(int i, int j)
 	else if (_selectItem)
 	{
 		if (_vInven[i + j * 10] != NULL)return;
-		_selectItemImage = NULL;
 		_vInven[i + j * 10] = _item;
+		_itemName[i + j * 10] = _name;
+		_name.clear();
 		_item = NULL;
 		_selectItem = false;
 	}
+}
+
+Item* Inventory::findItem(string itemName)
+{
+	miItem key = _mItem.find(itemName);
+
+	if (key != _mItem.end())
+	{
+		return key->second;
+	}
+
+	return nullptr;
 }

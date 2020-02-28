@@ -26,17 +26,23 @@ void Map::update()
 			//타일 타입이 none이 아닐때만
 			if (_vTile[MaxTile_Y * x + y]->currentTileBlockType != TileType::NONE)
 			{
-				if (_vTile[MaxTile_Y * x + y]->block != _vTile[MaxTile_Y * x + y]->currentTileBlockType)
+				if (_vTile[MaxTile_Y * x + y]->blockBurglar<=0 )
 				{
 					BlockItemSpawn(x,y);
+					_vTile[MaxTile_Y * x + y]->block = TileType::NONE;
+					_vTile[MaxTile_Y * x + y]->blockType = BlockType::NONE;
 				}
-				if (_vTile[MaxTile_Y * x + y]->wall != _vTile[MaxTile_Y * x + y]->currentTileWallType)
+				if (_vTile[MaxTile_Y * x + y]->wallBurglar <= 0)
 				{
 					WallItemSpawn(x, y);
+					_vTile[MaxTile_Y * x + y]->wall = TileType::NONE;
+					_vTile[MaxTile_Y * x + y]->wallType = WallType::NONE;
 				}
-				if (_vTile[MaxTile_Y * x + y]->object != _vTile[MaxTile_Y * x + y]->currentTileObjectType)
+				if (_vTile[MaxTile_Y * x + y]->objectBurglar <= 0)
 				{
-						ObjectItemSpawn(x, y);
+					ObjectItemSpawn(x, y);
+					_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+					_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
 				}
 			}
 			_vTile[MaxTile_Y * x + y]->currentTileBlockType = _vTile[MaxTile_Y * x + y]->block;
@@ -535,25 +541,25 @@ void Map::BlockItemSpawn(int x, int y)
 	switch (_vTile[MaxTile_Y * x + y]->currentBlockType)
 	{
 	case BlockType::DIRT:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::DIRT_BLOCK,ItemType::BLOCK, IMAGEMANAGER->findImage("Item_1"),1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::DIRT_BLOCK,ItemType::BLOCK,ItemType::METERIAL, IMAGEMANAGER->findImage("Item_1"),1);
 		break;
 	case BlockType::WOOD:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::WOOD,ItemType::METERIAL,ItemType::BLOCK,IMAGEMANAGER->findImage("Item_3"),1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::WOOD, ItemType::BLOCK, ItemType::METERIAL,IMAGEMANAGER->findImage("Item_3"),1);
 		break;
 	case BlockType::STONE:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::STONE_BLOCK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_2"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE,type::STONE_BLOCK, ItemType::BLOCK,ItemType::METERIAL, IMAGEMANAGER->findImage("Item_2"), 1);
 		break;
 	case BlockType::COPPER:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::COPPER, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_4"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::COPPER, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_4"), 1);
 		break;
 	case BlockType::IRON:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::IRON, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_5"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::IRON, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_5"), 1);
 		break;
 	case BlockType::GOLD:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::GOLD, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_6"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::GOLD, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_6"), 1);
 		break;
 	case BlockType::PLATINUM:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::PLATINUM, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::PLATINUM, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 1);
 		break;
 	}
 }
@@ -563,13 +569,13 @@ void Map::WallItemSpawn(int x, int y)
 	switch (_vTile[MaxTile_Y * x + y]->currentWallType)
 	{
 	case WallType::DIRT:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DIRT_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DIRT_WALL, ItemType::WALL, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_68"), 1);
 		break;
 	case WallType::WOOD:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WOOD_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_60"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WOOD_WALL, ItemType::WALL, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_60"), 1);
 		break;
 	case WallType::STONE:
-		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::STONE_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_69"), 1);
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::STONE_WALL, ItemType::WALL, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_69"), 1);
 		break;
 	}
 }

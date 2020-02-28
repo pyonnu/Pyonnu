@@ -7,7 +7,7 @@
 #define MaxTile_Y 90	//최대 y크기
 enum class TileType
 {
-	PLAYER, ENEMY, WALL, BLOCK, OBJECT, NONE
+	PLAYER, ENEMY, WALL, BLOCK, OBJECT,NONE
 };
 enum class BlockType
 {
@@ -39,6 +39,9 @@ struct tagTile
 	int FrameX, FrameY;
 	int FrameX2, FrameY2;
 	int FrameX3, FrameY3;
+	float blockBurglar;		//블럭의 강도
+	float wallBurglar;		//벽의 강도
+	float objectBurglar;	//오브젝트의 강도
 	RECT rc;				//타일의 몸뚱아리
 	TileType block;
 	TileType wall;

@@ -37,12 +37,6 @@ HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, i
 	_itemInfo->itemImage->setRotationAngle(0);
 	switch (type2)
 	{
-	case ItemType::BLOCK:
-		break;
-	case ItemType::WALL:
-		break;
-	case ItemType::METERIAL:
-		break;
 	case ItemType::CONSUMBLE:
 		_itemInfo->PotionHealthPoint = point;
 		break;
@@ -61,39 +55,78 @@ HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, i
 	case ItemType::ARMOR:
 		_itemInfo->ArmorDefense = point;
 		break;
-	default:
-		break;
 	}
 	return S_OK;
 }
 
-HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, float point)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, float point, float criticalChance)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = IMAGEMANAGER->findImage(image);
+	_itemInfo->itemStack = 1;
 	_itemInfo->rc = RectMake(x + _itemInfo->itemImage->getWidth() / 2, y + _itemInfo->itemImage->getHeight() / 2, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	_itemInfo->itemImage->setRotationAngle(0);
 	switch (type2)
 	{
 	case ItemType::PICKAXE:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::AXE:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::HAMMER:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::SWORD:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::ARMOR:
 		_itemInfo->ArmorDefense = point;
 		break;
 	}
 	return S_OK;
+}
+
+HRESULT Item::init(float x, float y, type type1, ItemType type2, string image, float point, float criticalChance, float toolsPower)
+{
+	_itemInfo = new tagItemInfo;
+	_itemInfo->Type = type1;
+	_itemInfo->itemType = type2;
+	_itemInfo->itemImage = IMAGEMANAGER->findImage(image);
+	_itemInfo->itemStack = 1;
+	_itemInfo->rc = RectMake(x + _itemInfo->itemImage->getWidth() / 2, y + _itemInfo->itemImage->getHeight() / 2, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
+	_itemInfo->itemImage->setRotationAngle(0);
+	switch (type2)
+	{
+	case ItemType::PICKAXE:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::AXE:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::HAMMER:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::SWORD:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		break;
+	case ItemType::ARMOR:
+		_itemInfo->ArmorDefense = point;
+		break;
+	}
 	return S_OK;
 }
 
@@ -161,27 +194,69 @@ HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, i
 	return S_OK;
 }
 
-HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, float point)
+HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, float point,float criticalChance)
 {
 	_itemInfo = new tagItemInfo;
 	_itemInfo->Type = type1;
 	_itemInfo->itemType = type2;
 	_itemInfo->itemImage = image;
-	_itemInfo->rc = RectMake(x+_itemInfo->itemImage->getWidth()/2, y+_itemInfo->itemImage->getHeight()/2, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
+	_itemInfo->itemStack = 1;
+	_itemInfo->rc = RectMake(x + _itemInfo->itemImage->getWidth() / 2, y + _itemInfo->itemImage->getHeight() / 2, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
 	_itemInfo->itemImage->setRotationAngle(0);
 	switch (type2)
 	{
 	case ItemType::PICKAXE:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::AXE:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::HAMMER:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::SWORD:
 		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		break;
+	case ItemType::ARMOR:
+		_itemInfo->ArmorDefense = point;
+		break;
+	}
+	return S_OK;
+}
+
+HRESULT Item::init(float x, float y, type type1, ItemType type2, image* image, float point, float criticalChance, float toolsPower)
+{
+	_itemInfo = new tagItemInfo;
+	_itemInfo->Type = type1;
+	_itemInfo->itemType = type2;
+	_itemInfo->itemImage = image;
+	_itemInfo->itemStack = 1;
+	_itemInfo->rc = RectMake(x + _itemInfo->itemImage->getWidth() / 2, y + _itemInfo->itemImage->getHeight() / 2, _itemInfo->itemImage->getWidth(), _itemInfo->itemImage->getHeight());
+	_itemInfo->itemImage->setRotationAngle(0);
+	switch (type2)
+	{
+	case ItemType::PICKAXE:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::AXE:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::HAMMER:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
+		_itemInfo->ToolsPower = toolsPower;
+		break;
+	case ItemType::SWORD:
+		_itemInfo->weaponDamage = point;
+		_itemInfo->CriticalChance = criticalChance;
 		break;
 	case ItemType::ARMOR:
 		_itemInfo->ArmorDefense = point;

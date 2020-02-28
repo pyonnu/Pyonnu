@@ -32,6 +32,7 @@ struct PlayerInfo
 	float damage;
 	float Defense;
 	float Health;
+	float MaxHealth;
 	PlayerState HeadState;
 	PlayerState BodyState;
 	PlayerState LegsState;
@@ -70,8 +71,6 @@ private:
 	Jump* _jump;
 	Attack* _attack;
 
-
-
 	float _gravity;
 
 	vector<tagTile*> _vTile;
@@ -84,11 +83,12 @@ public:
 
 	void PlayerInfoUpdate();
 	void Action();
-	void Attack();
+	void Attack(int mouse);
 	void Frame();
 	void BlockCollision();
 	void ItemCollision();
 	void TileDestroyCreate(int mouse);
+	void TileDestroy(int mouse);
 	void InventoryItemAdd(vector<Item*>::iterator viItem);
 	void LeftBlockCollision();
 	void RightBlockCollision();
@@ -104,4 +104,7 @@ public:
 	int getEndX();
 	int getStartY();
 	int getEndY();
+
+	void Save();
+	void Load();
 };

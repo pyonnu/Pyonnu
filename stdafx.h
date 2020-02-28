@@ -35,6 +35,7 @@ using namespace std;
 #include "keyAniManager.h"
 #include "ItemManager.h"
 #include "InventoryManager.h"
+#include"CraftingManager.h"
 using namespace SEVENTEEN_UTIL;
 
 //=========================================
@@ -60,6 +61,7 @@ using namespace SEVENTEEN_UTIL;
 #define CAMERAMANAGER cameraManager::getSingleton()
 #define ITEMMANAGER ItemManager::getSingleton()
 #define INVENTORYMANAGER InventoryManager::getSingleton()
+#define CRAFTINGMANAGER CraftingManager::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
