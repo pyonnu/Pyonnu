@@ -38,7 +38,12 @@ void Crafting::update()
 	for (int i = 0;i < MaxItem;i++)
 	{
 		_craftRect4[i] = RectMake(20, 392 + (i + a) * 62, 52, 52);
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_craftRect4[i], _ptMouse))
+		{
+			
+		}
 	}
+	
 }
 
 void Crafting::render(HDC dc)
