@@ -21,3 +21,8 @@ void CraftingManager::render(HDC dc)
 {
 	_crafting->render(dc);
 }
+
+void CraftingManager::ButtonClick()
+{
+	_crafting->ButtonClick();
+}

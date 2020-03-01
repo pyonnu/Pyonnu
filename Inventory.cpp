@@ -30,15 +30,15 @@ void Inventory::update()
 	{
 		for (int j = 0;j < 5;j++)
 		{
-			if(_vInven[i+j*10]!=NULL)
-			if (_vInven[i + j * 10]->getItemStack() <= 0)
-			{
-				_mItem.erase(_itemName[i+j*10]);
-				_FilledInventory--;
-				_vInven[i + j * 10] = NULL;
-			}
+			if (_vInven[i + j * 10] != NULL)
+				if (_vInven[i + j * 10]->getItemStack() <= 0)
+				{
+					_mItem.erase(_itemName[i + j * 10]);
+					_vInven[i + j * 10] = NULL;
+				}
 		}
 	}
+	CRAFTINGMANAGER->InvenSee(_invenSee);
 }
 
 void Inventory::render(HDC dc)
@@ -86,7 +86,7 @@ void Inventory::render(HDC dc)
 					sprintf_s(str, "%d", _vInven[x + y * 10]->getItemStack());
 					TextOut(dc, 20 + x * 62, 20 + y * 62, str, strlen(str));
 				}
-				
+
 			}
 		}
 	}
@@ -114,10 +114,11 @@ void Inventory::InvenToryControl()
 	{
 		_invenSee = false;
 	}
-	if (_invenSee)
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		if (_invenSee)
 		{
+			CRAFTINGMANAGER->ButtonClick();
 			for (int i = 0;i < 10;i++)
 			{
 				for (int j = 0;j < 5;j++)
@@ -128,8 +129,10 @@ void Inventory::InvenToryControl()
 					}
 				}
 			}
+
 		}
 	}
+
 
 }
 
@@ -148,24 +151,11 @@ void Inventory::ItemAdd(string itemName, Item* item)
 			if (_vInven[i] == NULL)
 			{
 				_vInven[i] = item;
+				_itemName[i] = itemName;
 				_mItem.insert(make_pair(itemName, item));
 				break;
 			}
 		}
-		/*for (_viInven = _vInven.begin();_viInven != _vInven.end();++_viInven)
-		{
-			if ((*_viInven) = 0)
-			{
-				(*_viInven) = item;
-				break;
-			}
-		}*/
-		/*if (_FilledInventory >= 50) return;
-		_mItem.insert(make_pair(itemName, item));
-		_viInven = _vInven.begin() + _FilledInventory;
-		_itemName[_FilledInventory] = itemName;
-		_vInven.insert(_viInven, item);
-		_FilledInventory++;*/
 		cout << 38 << endl;
 	}
 
@@ -187,24 +177,11 @@ void Inventory::ItemAdd(string itemName, Item* item, int stack)
 			if (_vInven[i] == NULL)
 			{
 				_vInven[i] = item;
+				_itemName[i] = itemName;
 				_mItem.insert(make_pair(itemName, item));
 				break;
 			}
 		}
-		/*for (_viInven = _vInven.begin();_viInven != _vInven.end();++_viInven)
-		{
-			if ((*_viInven) = NULL)
-			{
-				(*_viInven) = item;
-				break;
-			}
-		}*/
-		/*if (_FilledInventory >= 50) return;
-		_mItem.insert(make_pair(itemName, item));
-		_viInven = _vInven.begin() + _FilledInventory;
-		_itemName[_FilledInventory] = itemName;
-		_vInven.insert(_viInven, item);
-		_FilledInventory++;*/
 		cout << 38 << endl;
 	}
 }

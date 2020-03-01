@@ -90,10 +90,10 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Inventory_Back14", "Resources/UI/Inventory_Back14.bmp", 62, 62, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Heart", "Resources/UI/Heart.bmp", 44, 44, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ButtonDelete", "Resources/UI/ButtonDelete.bmp", 44, 44, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Craft_Toggle_0", "Resources/UI/Craft_Toggle_0.bmp", 60, 60, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Craft_Toggle_1", "Resources/UI/Craft_Toggle_1.bmp", 60, 60, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Craft_Toggle_2", "Resources/UI/Craft_Toggle_2.bmp", 60, 60, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Craft_Toggle_3", "Resources/UI/Craft_Toggle_3.bmp", 60, 60, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Craft_Toggle_0", "Resources/UI/Craft_Toggle_0.bmp", 30,30, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Craft_Toggle_1", "Resources/UI/Craft_Toggle_1.bmp", 30,30, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Craft_Toggle_2", "Resources/UI/Craft_Toggle_2.bmp", 30,30, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Craft_Toggle_3", "Resources/UI/Craft_Toggle_3.bmp", 30,30, true, RGB(255, 0, 255));
 	//ItemÀÌ¹ÌÁö
 	IMAGEMANAGER->addImage("Item_0", "Resources/Item/Item_0.bmp", 52, 52, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Item_1", "Resources/Item/Item_1.bmp", 52, 52, true, RGB(255, 0, 255));

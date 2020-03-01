@@ -19,6 +19,9 @@
 #include <tchar.h>
 #include <iostream>
 #include <unordered_map>
+#include<string>
+#include<map>
+#include<vector>
 
 using namespace std;
 #include "cameraManager.h"
@@ -42,7 +45,7 @@ using namespace SEVENTEEN_UTIL;
 // ## 19.10.30 ## - 디파인문 -
 //=========================================
 
-#define WINNAME (LPCTSTR)(TEXT("SevenTeen Class"))
+#define WINNAME (LPCTSTR)(TEXT("경일 게임아카데미 17기 김대훈 테라리아"))
 #define WINSTARTX 0
 #define WINSTARTY 0
 #define WINSIZEX 1280

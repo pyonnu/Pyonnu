@@ -10,5 +10,8 @@ public:
 	void release();
 	void update();
 	void render(HDC dc);
+
+	void ButtonClick();
+	void InvenSee(bool TF) { _crafting->setInvensee(TF); }
 };
 

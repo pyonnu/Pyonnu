@@ -40,7 +40,7 @@ HRESULT Player::init()
 	_playerInfo.MaxHealth = 100;
 	_playerInfo.Health = 100;
 	_gravity = 0.05f;
-	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,50);
+	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,35);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"), 8.0f);
@@ -244,7 +244,7 @@ void Player::Attack(int mouse)
 		{
 		case PlayerDirection::LEFT:
 			_playerInfo.angle += _playerInfo.attackSpeed;
-			if (_playerInfo.angle > PI)
+			if (_playerInfo.angle > PI-0.01f)
 			{
 				_playerInfo.angle = 0;
 				_playerInfo.Attack = false;
@@ -256,7 +256,7 @@ void Player::Attack(int mouse)
 			break;
 		case PlayerDirection::RIGHT:
 			_playerInfo.angle -= _playerInfo.attackSpeed;
-			if (_playerInfo.angle < 0)
+			if (_playerInfo.angle < 0.01f)
 			{
 				_playerInfo.angle = PI;
 				_playerInfo.Attack = false;
@@ -621,7 +621,9 @@ void Player::TileDestroy(int mouse)
 				case ItemType::PICKAXE:
 					_vTile[mouse]->blockBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
 					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
-					cout << 1 << endl;
+					cout << _vTile[mouse]->blockBurglar << endl;
+					cout << INVENTORYMANAGER->getItem()->getToolsPower() << endl;
+					//cout << 1 << endl;
 					break;
 				case ItemType::AXE:
 					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
