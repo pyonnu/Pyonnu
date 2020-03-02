@@ -111,12 +111,24 @@ void MapTool::draw()
 		{
 			if (IntersectRect(&temp, &_Tile[x][y].rc, &CAMERAMANAGER->getCameraRect()))
 			{
-				if ((_Tile[x][y].wallType != WallType::NONE&& _Tile[x][y].blockType == BlockType::NONE)||(_Tile[x][y].wallType != WallType::NONE && _Tile[x][y].objectType != ObjectType::NONE))
-					IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX2, _Tile[x][y].FrameY2);
+				if ((_Tile[x][y].wallType != WallType::NONE&& _Tile[x][y].blockType == BlockType::NONE)
+					||(_Tile[x][y].wallType != WallType::NONE && _Tile[x][y].objectType != ObjectType::NONE))
+
+					IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), 
+						_Tile[x][y].rc.left, _Tile[x][y].rc.top, 
+						_Tile[x][y].FrameX2, _Tile[x][y].FrameY2);
+
 				if (_Tile[x][y].blockType != BlockType::NONE&& _Tile[x][y].objectType == ObjectType::NONE)
-					IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX, _Tile[x][y].FrameY);
+
+					IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), 
+						_Tile[x][y].rc.left, _Tile[x][y].rc.top, 
+						_Tile[x][y].FrameX, _Tile[x][y].FrameY);
+
 				if (_Tile[x][y].objectType != ObjectType::NONE)
-					IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), _Tile[x][y].rc.left, _Tile[x][y].rc.top, _Tile[x][y].FrameX3, _Tile[x][y].FrameY3);
+
+					IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), 
+						_Tile[x][y].rc.left, _Tile[x][y].rc.top,
+						_Tile[x][y].FrameX3, _Tile[x][y].FrameY3);
 			}
 		}
 	}

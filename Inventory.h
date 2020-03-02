@@ -33,7 +33,7 @@ public:
 	void update();
 	void render(HDC dc);
 
-	void InvenToryControl();
+	void InvenToryControl(HDC dc);
 	void setItem(Item* item) { _item = item; }
 	void ItemAdd(string itemName, Item* item);
 	void ItemAdd(string itemName, Item* item,int stack);

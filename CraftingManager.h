@@ -13,5 +13,6 @@ public:
 
 	void ButtonClick();
 	void InvenSee(bool TF) { _crafting->setInvensee(TF); }
+	void setXY(float x, float y);
 };
 

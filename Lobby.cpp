@@ -4,9 +4,9 @@
 HRESULT Lobby::init()
 {
 	addImage();
-	for (int i = 0;i < 4;i++)
+	for (int i = 0;i < 2;i++)
 	{
-		_button[i] = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 - 100 + i * 100, 200, 50);
+		_button[i] = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + i * 100, 200, 50);
 	}
 	return S_OK;
 }
@@ -31,16 +31,6 @@ void Lobby::update()
 				CAMERAMANAGER->setCameraType(cameraType::MAPTOOL);
 				SCENEMANAGER->changeScene("MapToolScene");
 			}
-			//환경설정 버튼
-			else if (PtInRect(&_button[2], _ptMouse))
-			{
-
-			}
-			//종료 버튼
-			else if (PtInRect(&_button[4], _ptMouse))
-			{
-
-			}
 	}
 	
 
@@ -51,8 +41,10 @@ void Lobby::render()
 	_lobbyImage->render(getMemDC());
 	for (int i = 0;i < 4;i++)
 	{
-		Rectangle(getMemDC(), _button[i]);
+		//Rectangle(getMemDC(), _button[i]);
 	}
+	TextOut(getMemDC(), _button[0].left+70, _button[0].top, "게임 시작", strlen("게임 시작"));
+	TextOut(getMemDC(), _button[1].left+80, _button[1].top, "맵 수정", strlen("맵 수정"));
 }
 
 void Lobby::addImage()

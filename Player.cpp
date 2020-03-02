@@ -24,7 +24,7 @@ HRESULT Player::init()
 	_playerInfo.LegsFrameY = 0;
 	
 	_playerInfo.x = MaxTile_X * TILESIZE / 2;
-	_playerInfo.y = MaxTile_Y * TILESIZE / 2/2;
+	_playerInfo.y = MaxTile_Y * TILESIZE / 2-100;
 	_playerInfo.rect = RectMake(_playerInfo.x, _playerInfo.y, 60, 96);
 
 	_playerInfo.Head = IMAGEMANAGER->findImage("Player_Head");
@@ -40,7 +40,11 @@ HRESULT Player::init()
 	_playerInfo.MaxHealth = 100;
 	_playerInfo.Health = 100;
 	_gravity = 0.05f;
-	ITEMMANAGER->CreateItem(_playerInfo.x+200,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,35);
+	ITEMMANAGER->CreateItem(_playerInfo.x,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,50);
+	ITEMMANAGER->CreateItem(_playerInfo.x-20, _playerInfo.y-20, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f, 35);
+	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::PLATINUM, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 15);
+	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::WOOD, ItemType::BLOCK,ItemType::METERIAL, IMAGEMANAGER->findImage("Item_3"), 3);
+
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"), 3.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f);
 	//ITEMMANAGER->CreateItem(_playerInfo.x+200, _playerInfo.y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"), 8.0f);
@@ -58,6 +62,7 @@ void Player::update()
 {
 	_vItem = ITEMMANAGER->getVItem();
 	_viItem = ITEMMANAGER->getViItem();
+	CRAFTINGMANAGER->setXY(_playerInfo.x, _playerInfo.y);
 	int mouse = MaxTile_Y * ((((_ptMouse.x + _playerInfo.rect.left) - WINSIZEX / 2) / TILESIZE) + 1) + ((((_ptMouse.y + _playerInfo.rect.top) - WINSIZEY / 2) / TILESIZE) + 1);
 	BlockCollision();
 	ItemCollision();
@@ -178,14 +183,6 @@ void Player::Action()
 		if (_playerInfo.LegsState == PlayerState::MOVE)_playerInfo.LegsState = PlayerState::IDLE;
 
 	}
-	if (KEYMANAGER->isStayKeyDown('W') && !_playerInfo.Up)
-	{
-		_playerInfo.y -= 5;
-	}
-	if (KEYMANAGER->isStayKeyDown('S') && !_playerInfo.Down)
-	{
-		_playerInfo.y += 5;
-	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		//_jump->jumping(&_playerInfo.x, &_playerInfo.y,20, 0.5f);
@@ -244,7 +241,7 @@ void Player::Attack(int mouse)
 		{
 		case PlayerDirection::LEFT:
 			_playerInfo.angle += _playerInfo.attackSpeed;
-			if (_playerInfo.angle > PI-0.01f)
+			if (_playerInfo.angle > PI+0.6f)
 			{
 				_playerInfo.angle = 0;
 				_playerInfo.Attack = false;
@@ -256,7 +253,7 @@ void Player::Attack(int mouse)
 			break;
 		case PlayerDirection::RIGHT:
 			_playerInfo.angle -= _playerInfo.attackSpeed;
-			if (_playerInfo.angle < 0.01f)
+			if (_playerInfo.angle < -0.6f)
 			{
 				_playerInfo.angle = PI;
 				_playerInfo.Attack = false;
@@ -528,35 +525,30 @@ void Player::TileDestroy(int mouse)
 						switch (INVENTORYMANAGER->getitem())
 						{
 						case type::DIRT_BLOCK:
-							cout << 1 << endl;
 							_vTile[mouse]->blockBurglar = 50.0f;
 							_vTile[mouse]->blockType = BlockType::DIRT;
 							_vTile[mouse]->block = TileType::BLOCK;
 							INVENTORYMANAGER->getItem()->removeItemStack(1);
 							break;
 						case type::STONE_BLOCK:
-							cout << 2 << endl;
 							_vTile[mouse]->blockBurglar = 100.0f;
 							_vTile[mouse]->blockType = BlockType::STONE;
 							_vTile[mouse]->block = TileType::BLOCK;
 							INVENTORYMANAGER->getItem()->removeItemStack(1);
 							break;
 						case type::WOOD:
-							cout << 3 << endl;
 							_vTile[mouse]->blockBurglar = 100.0f;
 							_vTile[mouse]->blockType = BlockType::WOOD;
 							_vTile[mouse]->block = TileType::BLOCK;
 							INVENTORYMANAGER->getItem()->removeItemStack(1);
 							break;
 						case type::COPPER:
-							cout << 4 << endl;
 							_vTile[mouse]->blockBurglar = 100.0f;
 							_vTile[mouse]->blockType = BlockType::COPPER;
 							_vTile[mouse]->block = TileType::BLOCK;
 							INVENTORYMANAGER->getItem()->removeItemStack(1);
 							break;
 						case type::IRON:
-							cout << 5 << endl;
 							_vTile[mouse]->blockBurglar = 100.0f;
 							_vTile[mouse]->blockType = BlockType::IRON;
 							_vTile[mouse]->block = TileType::BLOCK;
@@ -620,10 +612,6 @@ void Player::TileDestroy(int mouse)
 					break;
 				case ItemType::PICKAXE:
 					_vTile[mouse]->blockBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
-					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
-					cout << _vTile[mouse]->blockBurglar << endl;
-					cout << INVENTORYMANAGER->getItem()->getToolsPower() << endl;
-					//cout << 1 << endl;
 					break;
 				case ItemType::AXE:
 					_vTile[mouse]->objectBurglar -= INVENTORYMANAGER->getItem()->getToolsPower();
@@ -660,22 +648,22 @@ void Player::InventoryItemAdd(vector<Item*>::iterator viItem)
 		INVENTORYMANAGER->ItemAdd("item_4", (*viItem));
 		break;
 	case type::COPPER_BAR:
-		INVENTORYMANAGER->ItemAdd("item_5", (*viItem));
-		break;
-	case type::IRON:
-		INVENTORYMANAGER->ItemAdd("item_6", (*viItem));
-		break;
-	case type::IRON_BAR:
-		INVENTORYMANAGER->ItemAdd("item_7", (*viItem));
-		break;
-	case type::GOLD:
 		INVENTORYMANAGER->ItemAdd("item_8", (*viItem));
 		break;
-	case type::GOLD_BAR:
+	case type::IRON:
+		INVENTORYMANAGER->ItemAdd("item_5", (*viItem));
+		break;
+	case type::IRON_BAR:
 		INVENTORYMANAGER->ItemAdd("item_9", (*viItem));
 		break;
-	case type::PLATINUM:
+	case type::GOLD:
+		INVENTORYMANAGER->ItemAdd("item_6", (*viItem));
+		break;
+	case type::GOLD_BAR:
 		INVENTORYMANAGER->ItemAdd("item_10", (*viItem));
+		break;
+	case type::PLATINUM:
+		INVENTORYMANAGER->ItemAdd("item_7", (*viItem));
 		break;
 	case type::PLATINUM_BAR:
 		INVENTORYMANAGER->ItemAdd("item_11", (*viItem));
@@ -724,6 +712,7 @@ void Player::InventoryItemAdd(vector<Item*>::iterator viItem)
 		break;
 	case type::PLATINUM_PICKAXE:
 		INVENTORYMANAGER->ItemAdd("item_26", (*viItem));
+		cout << 11111111111 << endl;
 		break;
 	case type::PLATINUM_AXE:
 		INVENTORYMANAGER->ItemAdd("item_27", (*viItem));

@@ -25,7 +25,7 @@ void Inventory::release()
 
 void Inventory::update()
 {
-	InvenToryControl();
+	//InvenToryControl(dc);
 	for (int i = 0;i < 10;i++)
 	{
 		for (int j = 0;j < 5;j++)
@@ -92,9 +92,10 @@ void Inventory::render(HDC dc)
 	}
 	if (_selectItem)_item->getImage()->render(dc, _ptMouse.x, _ptMouse.y);
 	//Rectangle(dc, _inventoryRect);
+	InvenToryControl(dc);
 }
 
-void Inventory::InvenToryControl()
+void Inventory::InvenToryControl(HDC dc)
 {
 	if (KEYMANAGER->isOnceKeyDown('1'))_selectQuickSlot = 0;
 	if (KEYMANAGER->isOnceKeyDown('2'))_selectQuickSlot = 1;

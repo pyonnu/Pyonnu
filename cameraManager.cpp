@@ -49,7 +49,7 @@ void cameraManager::render()
 		BitBlt(IMAGEMANAGER->findImage("backBuffer")->getMemDC(), 0, 0, 1280, 720, _cameraDC, _pos.x, _pos.y, SRCCOPY);
 		break;
 	case cameraType::WORLD:
-		//BitBlt(IMAGEMANAGER->findImage("backBuffer")->getMemDC(), 0, 0, 1280, 720, _backDC, 0, 0, WHITENESS);
+		BitBlt(IMAGEMANAGER->findImage("backBuffer")->getMemDC(), 0, 0, 1280, 720, _backDC, 0, 0, WHITENESS);
 		BitBlt(IMAGEMANAGER->findImage("backBuffer")->getMemDC(), 0, 0, 1280, 720, _cameraDC, _pos.x, _pos.y, SRCCOPY);
 		break;
 	case cameraType::OPTION:

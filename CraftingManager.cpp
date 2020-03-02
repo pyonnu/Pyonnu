@@ -26,3 +26,8 @@ void CraftingManager::ButtonClick()
 {
 	_crafting->ButtonClick();
 }
+
+void CraftingManager::setXY(float x, float y)
+{
+	_crafting->setXY(x, y);
+}

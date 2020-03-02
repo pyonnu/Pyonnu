@@ -259,10 +259,11 @@ Item* ItemManager::itemAdd(string itemName, type type1, ItemType type2, image* i
 Item* ItemManager::findItem(string itemName)
 {
 	miItem key = _mItem.find(itemName);
-
+	cout << 7777777777 << endl;
 	if (key != _mItem.end())
 	{
 		return key->second;
+		cout << 999999 << endl;
 	}
 	
 	return nullptr;

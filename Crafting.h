@@ -11,12 +11,15 @@ private:
 	RECT _scrollRect[MaxItem];
 	RECT _showRecipe;
 	RECT _showCraft;
+	RECT _CraftUIPos[4];
 	RECT _UpDownButton[2];
 	image* _showCraftImage[MaxItem];
+	int _CraftShow;
 	int _craftNum;
 	int _craftPage;
 	bool _showRecipeList;
 	bool _invenSee;
+	float _x, _y;
 public:
 	HRESULT init();
 	void release();
@@ -24,7 +27,7 @@ public:
 	void render(HDC dc);
 	void draw(HDC dc);
 
-	
+	void setXY(float x, float y) { _x = x;_y = y; }
 	void CraftingControl();
 	void ButtonClick();
 	void CraftingList();
