@@ -185,15 +185,216 @@ void Crafting::ButtonClick()
 	}
 	if (PtInRect(&_CraftUIPos[3], _ptMouse))
 	{
+		if (_CraftShow == 1)
+		{
+			if (INVENTORYMANAGER->findItem("item_68") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_68")->getItemStack() >= 4)
+				{
+					INVENTORYMANAGER->findItem("item_68")->removeItemStack(4);
+					ITEMMANAGER->CreateItem(_x, _y, type::DIRT_BLOCK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_1"), 1, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 2)
+		{
+			if (INVENTORYMANAGER->findItem("item_69") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_69")->getItemStack() >= 4)
+				{
+					INVENTORYMANAGER->findItem("item_69")->removeItemStack(4);
+					ITEMMANAGER->CreateItem(_x, _y, type::STONE_BLOCK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_2"), 1, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 3)
+		{
+			if (INVENTORYMANAGER->findItem("item_60") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_60")->getItemStack() >= 4)
+				{
+					INVENTORYMANAGER->findItem("item_60")->removeItemStack(4);
+					ITEMMANAGER->CreateItem(_x, _y, type::WOOD, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_3"), 1, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 4)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_4"), 5, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 5)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_5"), 5, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 6)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::GOLD, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_6"), 5, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 7)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::PLATINUM, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_7"), 5, 0);
+				}
+			}
+		}
+
+		if (_CraftShow == 8)
+		{
+			if (INVENTORYMANAGER->findItem("item_4") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_4")->getItemStack() >= 5)
+				{
+					INVENTORYMANAGER->findItem("item_4")->removeItemStack(5);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_8"), 1, 0);
+				}
+			}
+		}
+
 		if (_CraftShow == 11)
 		{
 			if (INVENTORYMANAGER->findItem("item_7") != nullptr)
 			{
-				cout << 1 << endl;
 				if (INVENTORYMANAGER->findItem("item_7")->getItemStack() >= 3)
 				{
 					INVENTORYMANAGER->findItem("item_7")->removeItemStack(3);
 					ITEMMANAGER->CreateItem(_x, _y, type::PLATINUM_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_11"), 1, 0);
+				}
+			}
+		}
+		if (_CraftShow == 12)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::DEMONITE, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_12"), 5, 0);
+				}
+			}
+		}
+		if (_CraftShow == 13)
+		{
+			if (INVENTORYMANAGER->findItem("item_12") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_12")->getItemStack() >= 5)
+				{
+					INVENTORYMANAGER->findItem("item_12")->removeItemStack(5);
+					ITEMMANAGER->CreateItem(_x, _y, type::DEMONITE_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_13"), 1, 0);
+				}
+			}
+		}
+		if (_CraftShow == 14)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr && INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f, 10.0f,35);
+				}
+			}
+		}
+		if (_CraftShow == 15)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr && INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_15"),3, 10.0f, 35);
+				}
+			}
+		}
+		if (_CraftShow == 16)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr&&INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"),4, 10.0f, 35);
+				}
+			}
+		}
+		if (_CraftShow == 17)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_17"),8, 20.0f);
+				}
+			}
+		}
+		if (_CraftShow == 18)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr && INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_18"),5, 10.0f,50);
+				}
+			}
+		}
+		if (_CraftShow == 19)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_19"),5,10.0f, 50);
+				}
+			}
+		}
+		if (_CraftShow == 20)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr && INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_20"),7,10.0f,50);
 				}
 			}
 		}
@@ -209,6 +410,17 @@ void Crafting::ButtonClick()
 				}
 			}
 		}
+		if (_CraftShow == 68)
+		{
+			if (INVENTORYMANAGER->findItem("item_1") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_1")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_1")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::DIRT_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 4, 0);
+				}
+			}
+		}
 	}
 	CraftingList();
 
@@ -216,250 +428,11 @@ void Crafting::ButtonClick()
 
 void Crafting::CraftingList()
 {
-	if (PtInRect(&_scrollRect[1], _ptMouse))
+	for (int i = 0;i < MaxItem;i++)
 	{
-
+		if (PtInRect(&_scrollRect[i], _ptMouse))
+		{
+			_CraftShow = i;
+		}
 	}
-	if (PtInRect(&_scrollRect[2], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[3], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[4], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[5], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[6], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[7], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[8], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[9], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[10], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[11], _ptMouse))
-	{
-		_CraftShow = 11;
-	}
-	if (PtInRect(&_scrollRect[12], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[13], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[14], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[15], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[16], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[17], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[18], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[19], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[20], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[21], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[22], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[23], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[24], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[25], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[26], _ptMouse))
-	{
-		_CraftShow = 26;
-
-	}if (PtInRect(&_scrollRect[27], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[28], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[29], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[30], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[31], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[32], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[33], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[34], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[35], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[36], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[37], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[38], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[39], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[40], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[41], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[42], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[43], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[44], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[45], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[46], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[47], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[48], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[49], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[50], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[51], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[52], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[53], _ptMouse))
-	{
-
-	}if (PtInRect(&_scrollRect[54], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[55], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[56], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[57], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[58], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[59], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[60], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[61], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[62], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[63], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[64], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[65], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[66], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[67], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[68], _ptMouse))
-	{
-
-	}
-	if (PtInRect(&_scrollRect[69], _ptMouse))
-	{
-
-	}
-
 }

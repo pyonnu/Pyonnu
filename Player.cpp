@@ -40,7 +40,7 @@ HRESULT Player::init()
 	_playerInfo.MaxHealth = 100;
 	_playerInfo.Health = 100;
 	_gravity = 0.05f;
-	ITEMMANAGER->CreateItem(_playerInfo.x,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,50);
+	ITEMMANAGER->CreateItem(_playerInfo.x,_playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f,10,35);
 	ITEMMANAGER->CreateItem(_playerInfo.x-20, _playerInfo.y-20, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f, 35);
 	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::PLATINUM, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 15);
 	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::WOOD, ItemType::BLOCK,ItemType::METERIAL, IMAGEMANAGER->findImage("Item_3"), 3);
@@ -636,212 +636,212 @@ void Player::InventoryItemAdd(vector<Item*>::iterator viItem)
 	switch ((*viItem)->getItemType())
 	{
 	case type::DIRT_BLOCK:
-		INVENTORYMANAGER->ItemAdd("item_1", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_1", (*viItem),(*viItem)->getItemStack());
 		break;
 	case type::STONE_BLOCK:
-		INVENTORYMANAGER->ItemAdd("item_2", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_2", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::WOOD:
-		INVENTORYMANAGER->ItemAdd("item_3", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_3", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER:
-		INVENTORYMANAGER->ItemAdd("item_4", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_4", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_BAR:
-		INVENTORYMANAGER->ItemAdd("item_8", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_8", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON:
-		INVENTORYMANAGER->ItemAdd("item_5", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_5", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_BAR:
-		INVENTORYMANAGER->ItemAdd("item_9", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_9", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD:
-		INVENTORYMANAGER->ItemAdd("item_6", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_6", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_BAR:
-		INVENTORYMANAGER->ItemAdd("item_10", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_10", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM:
-		INVENTORYMANAGER->ItemAdd("item_7", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_7", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_BAR:
-		INVENTORYMANAGER->ItemAdd("item_11", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_11", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE:
-		INVENTORYMANAGER->ItemAdd("item_12", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_12", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_BAR:
-		INVENTORYMANAGER->ItemAdd("item_13", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_13", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_PICKAXE:
-		INVENTORYMANAGER->ItemAdd("item_14", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_14", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_AXE:
-		INVENTORYMANAGER->ItemAdd("item_15", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_15", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_HAMMER:
-		INVENTORYMANAGER->ItemAdd("item_16", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_16", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_SWORD:
-		INVENTORYMANAGER->ItemAdd("item_17", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_17", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_PICKAXE:
-		INVENTORYMANAGER->ItemAdd("item_18", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_18", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_AXE:
-		INVENTORYMANAGER->ItemAdd("item_19", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_19", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_HAMMER:
-		INVENTORYMANAGER->ItemAdd("item_20", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_20", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_SWORD:
-		INVENTORYMANAGER->ItemAdd("item_21", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_21", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_PICKAXE:
-		INVENTORYMANAGER->ItemAdd("item_22", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_22", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_AXE:
-		INVENTORYMANAGER->ItemAdd("item_23", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_23", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_HAMMER:
-		INVENTORYMANAGER->ItemAdd("item_24", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_24", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_SWORD:
-		INVENTORYMANAGER->ItemAdd("item_25", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_25", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_PICKAXE:
-		INVENTORYMANAGER->ItemAdd("item_26", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_26", (*viItem), (*viItem)->getItemStack());
 		cout << 11111111111 << endl;
 		break;
 	case type::PLATINUM_AXE:
-		INVENTORYMANAGER->ItemAdd("item_27", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_27", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_HAMMER:
-		INVENTORYMANAGER->ItemAdd("item_28", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_28", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_SWORD:
-		INVENTORYMANAGER->ItemAdd("item_29", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_29", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_PICKAXE:
-		INVENTORYMANAGER->ItemAdd("item_30", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_30", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_AXE:
-		INVENTORYMANAGER->ItemAdd("item_31", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_31", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_HAMMER:
-		INVENTORYMANAGER->ItemAdd("item_32", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_32", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_SWORD:
-		INVENTORYMANAGER->ItemAdd("item_33", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_33", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_HELMET:
-		INVENTORYMANAGER->ItemAdd("item_34", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_34", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_ARMOR:
-		INVENTORYMANAGER->ItemAdd("item_35", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_35", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_LEGGINGS:
-		INVENTORYMANAGER->ItemAdd("item_36", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_36", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_HELMET:
-		INVENTORYMANAGER->ItemAdd("item_37", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_37", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_ARMOR:
-		INVENTORYMANAGER->ItemAdd("item_38", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_38", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_LEGGINGS:
-		INVENTORYMANAGER->ItemAdd("item_39", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_39", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_HELMET:
-		INVENTORYMANAGER->ItemAdd("item_40", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_40", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_ARMOR:
-		INVENTORYMANAGER->ItemAdd("item_41", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_41", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_LEGGINGS:
-		INVENTORYMANAGER->ItemAdd("item_42", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_42", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_HELMET:
-		INVENTORYMANAGER->ItemAdd("item_43", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_43", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_ARMOR:
-		INVENTORYMANAGER->ItemAdd("item_44", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_44", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_LEGGINGS:
-		INVENTORYMANAGER->ItemAdd("item_45", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_45", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_HELMET:
-		INVENTORYMANAGER->ItemAdd("item_46", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_46", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_ARMOR:
-		INVENTORYMANAGER->ItemAdd("item_47", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_47", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONITE_LEGGINGS:
-		INVENTORYMANAGER->ItemAdd("item_48", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_48", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::COPPER_COIN:
-		INVENTORYMANAGER->ItemAdd("item_49", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_49", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::IRON_COIN:
-		INVENTORYMANAGER->ItemAdd("item_50", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_50", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GOLD_COIN:
-		INVENTORYMANAGER->ItemAdd("item_51", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_51", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::PLATINUM_COIN:
-		INVENTORYMANAGER->ItemAdd("item_52", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_52", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DESK:
-		INVENTORYMANAGER->ItemAdd("item_53", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_53", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::FURNACE:
-		INVENTORYMANAGER->ItemAdd("item_54", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_54", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::WORKBENCH:
-		INVENTORYMANAGER->ItemAdd("item_55", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_55", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::ANVIL:
-		INVENTORYMANAGER->ItemAdd("item_56", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_56", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::CHIR:
-		INVENTORYMANAGER->ItemAdd("item_57", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_57", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::BOX:
-		INVENTORYMANAGER->ItemAdd("item_58", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_58", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DOOR:
-		INVENTORYMANAGER->ItemAdd("item_59", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_59", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::WOOD_WALL:
-		INVENTORYMANAGER->ItemAdd("item_60", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_60", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::GEL:
-		INVENTORYMANAGER->ItemAdd("item_61", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_61", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::LENS:
-		INVENTORYMANAGER->ItemAdd("item_62", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_62", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DEMONEYE:
-		INVENTORYMANAGER->ItemAdd("item_63", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_63", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::POTION50:
-		INVENTORYMANAGER->ItemAdd("item_64", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_64", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::POTION100:
-		INVENTORYMANAGER->ItemAdd("item_65", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_65", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::ACORN:
-		INVENTORYMANAGER->ItemAdd("item_66", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_66", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::HEARTCRYSTAL:
-		INVENTORYMANAGER->ItemAdd("item_67", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_67", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::DIRT_WALL:
-		INVENTORYMANAGER->ItemAdd("item_68", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_68", (*viItem), (*viItem)->getItemStack());
 		break;
 	case type::STONE_WALL:
-		INVENTORYMANAGER->ItemAdd("item_69", (*viItem));
+		INVENTORYMANAGER->ItemAdd("item_69", (*viItem), (*viItem)->getItemStack());
 		break;
 	default:
 		break;
