@@ -21,6 +21,7 @@ public:
 	void TileUpdate(int x, int y);
 	void BlockItemSpawn(int x, int y);
 	void WallItemSpawn(int x, int y);
+	void ObjectTileUpdate(int x,int y);
 	void ObjectItemSpawn(int x, int y);
 	vector<tagTile*> getVTile() { return _vTile; }
 	vector<tagTile*>::iterator getViTile() { return _viTile; }

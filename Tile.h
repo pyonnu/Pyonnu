@@ -57,6 +57,10 @@ struct tagTile
 	WallType currentWallType;
 	ObjectType currentObjectType;
 
+	bool WORKBENCH;
+	bool ANVIL;
+	bool FURNACE;
+	bool DEMONALTER;
 	// 만약에 struct 나 class에서 비교 연산이 필요할때 선언해야한다.
 	//bool operator=( tagTile &other ) {
 	//	bool a;

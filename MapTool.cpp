@@ -31,6 +31,10 @@ HRESULT MapTool::init()
 			_Tile[x][y].FrameY2 = 0;
 			_Tile[x][y].FrameX3 = 6;
 			_Tile[x][y].FrameY3 = 6;
+			_Tile[x][y].WORKBENCH = false;
+			_Tile[x][y].ANVIL = false;
+			_Tile[x][y].FURNACE = false;
+			_Tile[x][y].DEMONALTER = false;
 			_Tile[x][y].rc = RectMake(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
 			//_Tile[x][y].blockType = BlockType::NONE;
 			//_Tile[x][y].wallType = WallType::NONE;
@@ -47,7 +51,6 @@ HRESULT MapTool::init()
 			_UITile[x][y].FrameY = y;
 		}
 	}
-
 
 	_start = { 0,0 };
 
@@ -132,27 +135,6 @@ void MapTool::draw()
 			}
 		}
 	}
-	//for (_viTile = _vTile.begin();_viTile != _vTile.end();++_viTile)
-	//{
-	//	if (IntersectRect(&temp, &(*_viTile)->rc, &CAMERAMANAGER->getCameraRect()))
-	//	{
-	//		//타입이 NONE이 아닐때만 출력
-	//		if ((*_viTile)->wallType != WallType::NONE)
-	//		{
-	//			IMAGEMANAGER->findImage("WallTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX2, (*_viTile)->FrameY2);
-	//		}
-	//		if ((*_viTile)->blockType != BlockType::NONE)
-	//		{
-	//			IMAGEMANAGER->findImage("BlockTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX, (*_viTile)->FrameY);
-	//		}
-	//		if ((*_viTile)->objectType != ObjectType::NONE)
-	//		{
-	//			IMAGEMANAGER->findImage("ObjectTiles")->frameRender(CAMERAMANAGER->getCameraDC(), (*_viTile)->rc.left, (*_viTile)->rc.top, (*_viTile)->FrameX3, (*_viTile)->FrameY3);
-	//		}
-	//	}
-	//}
-
-
 	//버튼 출력-------------------------------------------------------------------------------------------------------------------------------------------
 	for (int i = 0;i < 10;i++)
 	{

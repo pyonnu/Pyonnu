@@ -46,7 +46,7 @@ void playGround::render()
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 
 	SCENEMANAGER->render();
-	TIMEMANAGER->render(getMemDC());
+	//TIMEMANAGER->render(getMemDC());
 
 	_backBuffer->render(getHDC(), 0, 0);
 }
@@ -79,6 +79,12 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addImage("Background5", "Resources/BackGrounds/Background5.bmp", 1280, 720, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background6", "Resources/BackGrounds/Background6.bmp", 1280, 720, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Background7", "Resources/BackGrounds/Background7.bmp", 1600, 900, true, RGB(255, 0, 255));
+	//에너미 이미지
+	IMAGEMANAGER->addFrameImage("Slime", "Resources/Enemy/Slime.bmp", 64, 96, 1, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Zombie", "Resources/Enemy/Zombie.bmp", 136, 276, 2, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("DemonEye", "Resources/Enemy/DemonEye.bmp", 72,142, 1, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Demon", "Resources/Enemy/Demon.bmp", 328, 272, 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Boss", "Resources/Enemy/EyeOfCthulhu.bmp", 220, 1992, 1, 6, true, RGB(255, 0, 255));
 	//플레이어 이미지
 	IMAGEMANAGER->addFrameImage("Player_Head", "Resources/Player/Player_Head.bmp", 80 * 2, 2 * 1120, 2, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Player_Body", "Resources/Player/Player_Body.bmp", 80 * 2, 2 * 1120, 2, 20, true, RGB(255, 0, 255));

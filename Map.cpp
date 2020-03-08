@@ -32,18 +32,111 @@ void Map::update()
 					_vTile[MaxTile_Y * x + y]->block = TileType::NONE;
 					_vTile[MaxTile_Y * x + y]->blockType = BlockType::NONE;
 				}
+				
+			}
+			if (_vTile[MaxTile_Y * x + y]->currentTileWallType != TileType::NONE)
+			{
 				if (_vTile[MaxTile_Y * x + y]->wallBurglar <= 0)
 				{
 					WallItemSpawn(x, y);
 					_vTile[MaxTile_Y * x + y]->wall = TileType::NONE;
 					_vTile[MaxTile_Y * x + y]->wallType = WallType::NONE;
 				}
+			}
+			if (_vTile[MaxTile_Y * x + y]->currentTileObjectType != TileType::NONE)
+			{
 				if (_vTile[MaxTile_Y * x + y]->objectBurglar <= 0)
 				{
-					ObjectItemSpawn(x, y);
-					_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
-					_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+					ObjectTileUpdate(x, y);
 				}
+			}
+			if (_vTile[MaxTile_Y * x + y]->objectType == ObjectType::WORKBENCH2)
+			{
+				_vTile[MaxTile_Y * (x - 1) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 2) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 3) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 4) + y]->WORKBENCH = true;
+
+				_vTile[MaxTile_Y * (x + 1) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 2) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 3) + y]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 4) + y]->WORKBENCH = true;
+
+				_vTile[MaxTile_Y * (x - 1) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 2) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 3) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x - 4) + y-1]->WORKBENCH = true;
+
+				_vTile[MaxTile_Y * (x + 1) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 2) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 3) + y-1]->WORKBENCH = true;
+				_vTile[MaxTile_Y * (x + 4) + y-1]->WORKBENCH = true;
+			}
+			if (_vTile[MaxTile_Y * x + y]->objectType == ObjectType::ANVIL2)
+			{
+				_vTile[MaxTile_Y *( x - 1)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *( x - 2)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *( x - 3)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *( x - 4)+ y]->ANVIL = true;
+
+				_vTile[MaxTile_Y *(x + 1)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *(x + 2)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *(x + 3)+ y]->ANVIL = true;
+				_vTile[MaxTile_Y *(x + 4)+ y]->ANVIL = true;
+
+				_vTile[MaxTile_Y * (x - 1) + y - 1]->ANVIL= true;
+				_vTile[MaxTile_Y * (x - 2) + y - 1]->ANVIL= true;
+				_vTile[MaxTile_Y * (x - 3) + y - 1]->ANVIL= true;
+				_vTile[MaxTile_Y * (x - 4) + y - 1]->ANVIL= true;
+
+				_vTile[MaxTile_Y * (x + 1) + y - 1]->ANVIL = true;
+				_vTile[MaxTile_Y * (x + 2) + y - 1]->ANVIL = true;
+				_vTile[MaxTile_Y * (x + 3) + y - 1]->ANVIL = true;
+				_vTile[MaxTile_Y * (x + 4) + y - 1]->ANVIL = true;
+			}
+			if (_vTile[MaxTile_Y * x + y]->objectType == ObjectType::FURNACE4)
+			{
+				_vTile[MaxTile_Y * (x - 1) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x - 2) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x - 3) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x - 4) + y]->FURNACE = true;
+
+				_vTile[MaxTile_Y * (x + 1) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 2) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 3) + y]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 4) + y]->FURNACE = true;
+
+				_vTile[MaxTile_Y * (x - 1) + y - 1]->FURNACE= true;
+				_vTile[MaxTile_Y * (x - 2) + y - 1]->FURNACE= true;
+				_vTile[MaxTile_Y * (x - 3) + y - 1]->FURNACE= true;
+				_vTile[MaxTile_Y * (x - 4) + y - 1]->FURNACE= true;
+
+				_vTile[MaxTile_Y * (x + 1) + y - 1]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 2) + y - 1]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 3) + y - 1]->FURNACE = true;
+				_vTile[MaxTile_Y * (x + 4) + y - 1]->FURNACE = true;
+			}
+			if (_vTile[MaxTile_Y * x + y]->objectType == ObjectType::DEMONALTER4)
+			{
+				_vTile[MaxTile_Y * (x - 1) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 2) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 3) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 4) + y]->DEMONALTER = true;
+
+				_vTile[MaxTile_Y * (x + 1) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x + 2) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x + 3) + y]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x + 4) + y]->DEMONALTER = true;
+
+				_vTile[MaxTile_Y * (x - 1) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 2) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 3) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y * (x - 4) + y - 1]->DEMONALTER = true;
+
+				_vTile[MaxTile_Y * (x + 1) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y *(x + 2) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y *(x + 3) + y - 1]->DEMONALTER = true;
+				_vTile[MaxTile_Y *(x + 4) + y - 1]->DEMONALTER = true;
 			}
 			_vTile[MaxTile_Y * x + y]->currentTileBlockType = _vTile[MaxTile_Y * x + y]->block;
 			_vTile[MaxTile_Y * x + y]->currentTileWallType = _vTile[MaxTile_Y * x + y]->wall;
@@ -580,12 +673,809 @@ void Map::WallItemSpawn(int x, int y)
 	}
 }
 
+void Map::ObjectTileUpdate(int x, int y)
+{
+	if(_vTile[MaxTile_Y * x + y]->objectBurglar <= 0)
+	switch (_vTile[MaxTile_Y * x + y]->objectType)
+	{
+	case ObjectType::DESK1:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y *(x+2) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y *(x+2) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y+1]->objectBurglar = 0;
+		break;
+	case ObjectType::DESK2:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;;
+		_vTile[MaxTile_Y * (x) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x +1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x +1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y + 1]-> object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y+1]->objectBurglar = 0;
+		break;
+	case ObjectType::DESK3:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x -2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x- 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x- 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x -2) + y+1]->objectBurglar = 0;
+		break;
+	case ObjectType::DESK4:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+2)+y-1]->objectBurglar = 0;
+		break;
+	case ObjectType::DESK5:
+		_vTile[MaxTile_Y * x + y]->objectType= ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x -1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x -1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-1]->objectBurglar = 0;
+		break;
+	case ObjectType::DESK6:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL1:
+		_vTile[MaxTile_Y * (x) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL2:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL3:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::HEARTCRYSTAL4:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::LEFTCHIR1:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::LEFTCHIR2:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::RIGHTCHIR1:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::RIGHTCHIR2:
+		_vTile[MaxTile_Y * x + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * x + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * x + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+2)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+2)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+2)+y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+2)+y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE2:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE3:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE4:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE5:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::FURNACE6:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 2) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::BOX1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y+1]->objectBurglar = 0;
+		break;
+	case ObjectType::BOX2:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y + 1]->objectBurglar = 0;
+		break;
+	case ObjectType::BOX3:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::BOX4:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y - 1]->objectBurglar = 0;
+		break;
+	case ObjectType::WORKBENCH1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->objectBurglar = 0;
+		break;
+	case ObjectType::WORKBENCH2:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+		break;
+	case ObjectType::ANVIL1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+		break;
+	case ObjectType::ANVIL2:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x - 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x - 1) + y]->objectBurglar = 0;
+		break;
+	case ObjectType::RIGHT_OPENDOOR1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x ) + y + 2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x ) + y + 2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x ) + y + 2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->objectBurglar = 0;
+		break;
+	case ObjectType::LEFT_OPENDOOR1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y + 1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y + 1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y + 1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x ) + y + 2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x ) + y + 2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x ) + y + 2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 1) + y + 2]->objectBurglar = 0;
+		break;
+	case ObjectType::CLOSEDOOR1:
+		_vTile[MaxTile_Y * (x)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x ) + y+1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x ) + y+1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x ) + y+1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x ) + y+2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x ) + y+2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x ) + y+2]->objectBurglar = 0;
+		break;
+	case ObjectType::TREE41:
+		_vTile[MaxTile_Y * (x) + y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x) + y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x) + y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y-1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y-1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y-1]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-1]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-1]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y-2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y-2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y-2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-3]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-3]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-3]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y-3]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-3]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-3]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y-3]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-3]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-3]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y-3]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-3]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-3]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-4]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-4]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-4]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y-4]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-4]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-4]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y-4]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-4]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-4]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y-4]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-4]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-4]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-5]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-5]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-5]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y-5]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-5]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y-5]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y-5]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-5]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y-5]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y-5]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-5]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y-5]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y-6]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y-6]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y-6]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y - 6]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 6]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 6]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y - 6]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 6]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 6]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y - 6]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 6]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 6]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 7]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 7]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 7]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y - 7]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 7]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 7]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y - 7]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 7]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 7]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y - 7]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 7]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 7]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 8]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 8]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 8]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y - 8]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 8]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 8]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y - 8]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 8]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 8]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y - 8]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 8]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 8]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 9]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 9]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 9]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y - 9]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 9]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 9]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y - 9]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 9]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 9]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x+1)+y - 9]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 9]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x+1)+y - 9]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x)+y - 10]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 10]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x)+y - 10]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-1)+y - 10]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 10]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-1)+y - 10]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-2)+y - 10]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 10]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-2)+y - 10]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x-3)+y - 10]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x-3)+y - 10]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x-3)+y - 10]->objectBurglar = 0;
+
+
+		_vTile[MaxTile_Y * (x + 2) + y - 2]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 2]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 2]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 3]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 3]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 3]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 4]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 4]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 4]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 5]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 5]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 5]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 6]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 6]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 6]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 7]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 7]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 7]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 8]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 8]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 8]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 9]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 9]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 9]->objectBurglar = 0;
+
+		_vTile[MaxTile_Y * (x + 2) + y - 10]->objectType = ObjectType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 10]->object = TileType::NONE;
+		_vTile[MaxTile_Y * (x + 2) + y - 10]->objectBurglar = 0;
+
+		break;
+	default:
+		break;
+		
+	}
+	ObjectItemSpawn(x, y);
+}
+
 void Map::ObjectItemSpawn(int x, int y)
 {
-
 	switch (_vTile[MaxTile_Y * x + y]->currentObjectType)
 	{
 	case ObjectType::DESK1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DESK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_53"), 1);
 		break;
 	case ObjectType::DESK2:
 		break;
@@ -598,6 +1488,7 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::DESK6:
 		break;
 	case ObjectType::HEARTCRYSTAL1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::HEARTCRYSTAL, ItemType::CONSUMBLE, IMAGEMANAGER->findImage("Item_67"), 1);
 		break;
 	case ObjectType::HEARTCRYSTAL2:
 		break;
@@ -606,14 +1497,17 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::HEARTCRYSTAL4:
 		break;
 	case ObjectType::LEFTCHIR1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::CHIR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_57"), 1);
 		break;
 	case ObjectType::LEFTCHIR2:
 		break;
 	case ObjectType::RIGHTCHIR1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::CHIR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_57"), 1);
 		break;
 	case ObjectType::RIGHTCHIR2:
 		break;
 	case ObjectType::FURNACE1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::FURNACE, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_54"), 1);
 		break;
 	case ObjectType::FURNACE2:
 		break;
@@ -626,6 +1520,7 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::FURNACE6:
 		break;
 	case ObjectType::BOX1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::BOX, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_58"), 1);
 		break;
 	case ObjectType::BOX2:
 		break;
@@ -634,14 +1529,17 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::BOX4:
 		break;
 	case ObjectType::WORKBENCH1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WORKBENCH, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_55"), 1);
 		break;
 	case ObjectType::WORKBENCH2:
 		break;
 	case ObjectType::ANVIL1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::ANVIL, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_56"), 1);
 		break;
 	case ObjectType::ANVIL2:
 		break;
 	case ObjectType::RIGHT_OPENDOOR1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DOOR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_59"), 1);
 		break;
 	case ObjectType::RIGHT_OPENDOOR2:
 		break;
@@ -654,6 +1552,7 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::RIGHT_OPENDOOR6:
 		break;
 	case ObjectType::LEFT_OPENDOOR1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DOOR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_59"), 1);
 		break;
 	case ObjectType::LEFT_OPENDOOR2:
 		break;
@@ -666,6 +1565,7 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::LEFT_OPENDOOR6:
 		break;
 	case ObjectType::CLOSEDOOR1:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::DOOR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_59"), 1);
 		break;
 	case ObjectType::CLOSEDOOR2:
 		break;
@@ -764,8 +1664,10 @@ void Map::ObjectItemSpawn(int x, int y)
 	case ObjectType::TREE40:
 		break;
 	case ObjectType::TREE41:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WOOD, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_3"), 10);
 		break;
 	case ObjectType::TREE42:
+		ITEMMANAGER->CreateItem(x * TILESIZE, y * TILESIZE, type::WOOD, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_3"), 10);
 		break;
 	}
 }

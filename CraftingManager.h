@@ -13,6 +13,7 @@ public:
 
 	void ButtonClick();
 	void InvenSee(bool TF) { _crafting->setInvensee(TF); }
+	void setworkbench(bool workbench, bool anvil, bool furnace, bool demonalter) { _crafting->setworkbench(workbench, anvil, furnace, demonalter);}
 	void setXY(float x, float y);
 };
 

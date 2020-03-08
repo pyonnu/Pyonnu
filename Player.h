@@ -59,6 +59,14 @@ struct PlayerInfo
 	bool Attack;
 	bool AttackIng;
 	bool jump;
+	bool hit;
+	float delay;
+	float timer;
+
+	bool WORKBENCH;
+	bool ANVIL;
+	bool FURNACE;
+	bool DEMONALTER;
 };
 class Player :public gameNode
 {
@@ -98,8 +106,13 @@ public:
 
 	void setVTile(vector<tagTile*> vtile) { _vTile = vtile; }
 	void setViTile(vector<tagTile*>::iterator viTile) { _viTile = viTile; }
+	
+	void Hit(float damage,float x);
+	void delaytReset() { _playerInfo.delay = 0; }
 
 	PlayerInfo getPlayerInfo() { return _playerInfo; }
+	RECT getRect() { return _playerInfo.rect; }
+	RECT getAttackRect() { return _playerInfo.attackRect; }
 	int getStartX();
 	int getEndX();
 	int getStartY();
@@ -107,4 +120,9 @@ public:
 
 	void Save();
 	void Load();
+
+	bool getWorkbench() { return _playerInfo.WORKBENCH; }
+	bool getFurnace() { return _playerInfo.FURNACE; }
+	bool getAnvil() { return _playerInfo.ANVIL; }
+	bool getDemonAlter() { return _playerInfo.DEMONALTER; }
 };

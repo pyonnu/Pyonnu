@@ -17,6 +17,8 @@ HRESULT World::init()
 
 	_player->setVTile(_map->getVTile());
 	_player->setViTile(_map->getViTile());
+	_enemyManager->setVTile(_map->getVTile());
+	_enemyManager->setViTile(_map->getViTile());
 
 	
 
@@ -34,7 +36,10 @@ void World::update()
 	_player->update();
 	_enemyManager->update();
 	_ui->update();
+	_ui->setplayerInfo(_player->getPlayerInfo().MaxHealth, _player->getPlayerInfo().Health, _player->getPlayerInfo().Defense);
+	CRAFTINGMANAGER->setworkbench(_player->getWorkbench(), _player->getAnvil(), _player->getFurnace(), _player->getDemonAlter());
 	ITEMMANAGER->update();
+
 }
 
 void World::render()
@@ -45,5 +50,9 @@ void World::render()
 	_enemyManager->render();
 	_ui->render();
 	ITEMMANAGER->render(CAMERAMANAGER->getCameraDC());
+}
+
+void World::collision()
+{
 }
 

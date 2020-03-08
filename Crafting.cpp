@@ -107,22 +107,325 @@ void Crafting::draw(HDC dc)
 		//Rectangle(dc, _CraftUIPos[i]);
 	}
 	TextOut(dc, _CraftUIPos[0].left+20, _CraftUIPos[0].top,"재료",strlen("재료"));
+	CraftingDraw(dc);
+	TextOut(dc, _CraftUIPos[3].left + 20, _CraftUIPos[3].top,"제작",strlen("제작"));
+	IMAGEMANAGER->findImage("Craft_Toggle_0")->render(dc, _showRecipe.left, _showRecipe.top);
+}
+
+void Crafting::CraftingDraw(HDC dc)
+{
+	if (_CraftShow == 1)
+	{
+		IMAGEMANAGER->findImage("Item_68")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "4", strlen("4"));
+	}
+	if (_CraftShow == 2)
+	{
+		IMAGEMANAGER->findImage("Item_69")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "4", strlen("4"));
+	}
+	if (_CraftShow == 3)
+	{
+		IMAGEMANAGER->findImage("Item_60")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "4", strlen("4"));
+	}
+	if (_CraftShow ==8 )
+	{
+		IMAGEMANAGER->findImage("Item_4")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
+	if (_CraftShow == 9)
+	{
+		IMAGEMANAGER->findImage("Item_5")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
+	if (_CraftShow ==10 )
+	{
+		IMAGEMANAGER->findImage("Item_6")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
 	if (_CraftShow == 11)
 	{
 		IMAGEMANAGER->findImage("Item_7")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
-		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "3", strlen("3"));
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
 	}
-	if (_CraftShow == 26)
+	if (_CraftShow == 13)
 	{
-		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left+10, _CraftUIPos[1].top);
-		TextOut(dc, _CraftUIPos[1].left+10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_12")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
+	if (_CraftShow == 14)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
 		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
 		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
 	}
-	TextOut(dc, _CraftUIPos[3].left + 20, _CraftUIPos[3].top,"제작",strlen("제작"));
-	//IMAGEMANAGER->findImage("Craft_Toggle_0")->render(dc, _CraftUIPos[3].left + 10, _CraftUIPos[3].top);
-	//Rectangle(dc, _showRecipe);
-	IMAGEMANAGER->findImage("Craft_Toggle_0")->render(dc, _showRecipe.left, _showRecipe.top);
+	if (_CraftShow == 15)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 16)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 17)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 18)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 19)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 20)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 21)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 22)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 23)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 24)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 25)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 26)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 27)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 28)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 29)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 30)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 31)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 32)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 33)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].bottom, "3", strlen("3"));
+	}
+	if (_CraftShow == 34)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 35)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 36)
+	{
+		IMAGEMANAGER->findImage("Item_8")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 37)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 38)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 39)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 40)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 41)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 42)
+	{
+		IMAGEMANAGER->findImage("Item_10")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 43)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 44)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 45)
+	{
+		IMAGEMANAGER->findImage("Item_11")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 46)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 47)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 48)
+	{
+		IMAGEMANAGER->findImage("Item_13")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 53)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 54)
+	{
+		IMAGEMANAGER->findImage("Item_2")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "10", strlen("10"));
+	}
+	if (_CraftShow == 55)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "8", strlen("8"));
+	}
+	if (_CraftShow == 56)
+	{
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "8", strlen("8"));
+	}
+	if (_CraftShow == 57)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
+	if (_CraftShow == 58)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "8", strlen("8"));
+		IMAGEMANAGER->findImage("Item_9")->render(dc, _CraftUIPos[1].left + 72, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left +72, _CraftUIPos[1].bottom, "5", strlen("5"));
+	}
+	if (_CraftShow == 59)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "6", strlen("6"));
+	}
+	if (_CraftShow == 60)
+	{
+		IMAGEMANAGER->findImage("Item_3")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "1", strlen("1"));
+	}
+	if (_CraftShow == 63)
+	{
+		IMAGEMANAGER->findImage("Item_62")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "6", strlen("6"));
+	}
+	if (_CraftShow == 68)
+	{
+		IMAGEMANAGER->findImage("Item_1")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "1", strlen("1"));
+	}
+	if (_CraftShow == 69)
+	{
+		IMAGEMANAGER->findImage("Item_2")->render(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].top);
+		TextOut(dc, _CraftUIPos[1].left + 10, _CraftUIPos[1].bottom, "1", strlen("1"));
+	}
 }
 
 void Crafting::CraftingControl()
@@ -149,7 +452,6 @@ void Crafting::ButtonClick()
 	{
 		if (_showRecipeList)_showRecipeList = false;
 		else _showRecipeList = true;
-		cout << "push" << endl;
 	}
 	if (PtInRect(&_UpDownButton[0], _ptMouse))
 	{
@@ -271,12 +573,35 @@ void Crafting::ButtonClick()
 
 		if (_CraftShow == 8)
 		{
+
 			if (INVENTORYMANAGER->findItem("item_4") != nullptr)
 			{
-				if (INVENTORYMANAGER->findItem("item_4")->getItemStack() >= 5)
+				if (INVENTORYMANAGER->findItem("item_4")->getItemStack() >= 3)
 				{
-					INVENTORYMANAGER->findItem("item_4")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_4")->removeItemStack(3);
 					ITEMMANAGER->CreateItem(_x, _y, type::COPPER_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_8"), 1, 0);
+				}
+			}
+		}
+		if (_CraftShow == 9)
+		{
+			if (INVENTORYMANAGER->findItem("item_5") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_5")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_5")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_9"), 1, 0);
+				}
+			}
+		}
+		if (_CraftShow == 10)
+		{
+			if (INVENTORYMANAGER->findItem("item_6") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_6")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_6")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::GOLD_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_10"), 1, 0);
 				}
 			}
 		}
@@ -307,9 +632,9 @@ void Crafting::ButtonClick()
 		{
 			if (INVENTORYMANAGER->findItem("item_12") != nullptr)
 			{
-				if (INVENTORYMANAGER->findItem("item_12")->getItemStack() >= 5)
+				if (INVENTORYMANAGER->findItem("item_12")->getItemStack() >= 3)
 				{
-					INVENTORYMANAGER->findItem("item_12")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_12")->removeItemStack(3);
 					ITEMMANAGER->CreateItem(_x, _y, type::DEMONITE_BAR, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_13"), 1, 0);
 				}
 			}
@@ -398,6 +723,58 @@ void Crafting::ButtonClick()
 				}
 			}
 		}
+
+		if (_CraftShow == 21)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr && INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::IRON_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_"),10,20.0f);
+				}
+			}
+		}
+		
+		if (_CraftShow == 22)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr &&INVENTORYMANAGER->findItem("item_3")!=nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=3)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::GOLD_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_22"),6,10.0f,55);
+				}
+			}
+		}
+
+		if (_CraftShow == 23)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::GOLD_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_23"), 7, 10.0f, 55);
+				}
+			}
+		}
+		if (_CraftShow == 24)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x, _y, type::GOLD_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_24"), 9, 10.0f, 55);
+				}
+			}
+		}
+
 		if (_CraftShow == 26)
 		{
 			if (INVENTORYMANAGER->findItem("item_11") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
@@ -406,10 +783,360 @@ void Crafting::ButtonClick()
 				{
 					INVENTORYMANAGER->findItem("item_11")->removeItemStack(5);
 					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
-					ITEMMANAGER->CreateItem(_x-20, _y-20, type::PLATINUM_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_26"), 8, 20, 100);
+					ITEMMANAGER->CreateItem(_x-20, _y-20, type::PLATINUM_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_26"), 8, 20,100);
 				}
 			}
 		}
+		if (_CraftShow == 27)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_27"), 8, 20, 100);
+				}
+			}
+		}
+		if (_CraftShow == 28)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_28"), 10, 20, 100);
+				}
+			}
+		}
+		if (_CraftShow == 29)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_29"), 15, 20, 100);
+				}
+			}
+		}
+		if (_CraftShow == 30)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_30"), 9, 20, 150);
+				}
+			}
+		}
+		if (_CraftShow == 31)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_AXE, ItemType::AXE, IMAGEMANAGER->findImage("Item_31"),20, 20, 150);
+				}
+			}
+		}
+		if (_CraftShow == 32)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_32"), 24, 20, 150);
+				}
+			}
+		}
+		if (_CraftShow == 33)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 3)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(3);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_SWORD, ItemType::SWORD, IMAGEMANAGER->findImage("Item_33"), 17, 20, 150);
+				}
+			}
+		}
+		if (_CraftShow == 34)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::COPPER_HELMET, ItemType::HELMET, IMAGEMANAGER->findImage("Item_34"),1.0f);
+				}
+			}
+		}
+		if (_CraftShow == 35)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::COPPER_ARMOR, ItemType::ARMOR, IMAGEMANAGER->findImage("Item_35"),2.0f);
+				}
+			}
+		}
+		if (_CraftShow == 36)
+		{
+			if (INVENTORYMANAGER->findItem("item_8") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_8")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_8")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::COPPER_LEGGINGS, ItemType::LEGGINGS, IMAGEMANAGER->findImage("Item_36"), 1.0f);
+				}
+			}
+		}
+		if (_CraftShow == 37)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::IRON_HELMET, ItemType::HELMET, IMAGEMANAGER->findImage("Item_37"), 2.0f);
+				}
+			}
+		}
+		if (_CraftShow == 38)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::IRON_ARMOR, ItemType::ARMOR, IMAGEMANAGER->findImage("Item_38"), 3.0f);
+				}
+			}
+		}
+		if (_CraftShow == 39)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::IRON_LEGGINGS, ItemType::LEGGINGS, IMAGEMANAGER->findImage("Item_39"), 2.0f);
+				}
+			}
+		}
+		if (_CraftShow == 40)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::GOLD_HELMET, ItemType::HELMET, IMAGEMANAGER->findImage("Item_40"),4.0f);
+				}
+			}
+		}
+		if (_CraftShow == 41)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::GOLD_ARMOR, ItemType::ARMOR, IMAGEMANAGER->findImage("Item_41"), 5.0f);
+				}
+			}
+		}
+		if (_CraftShow == 42)
+		{
+			if (INVENTORYMANAGER->findItem("item_10") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_10")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_10")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::GOLD_LEGGINGS, ItemType::LEGGINGS, IMAGEMANAGER->findImage("Item_42"), 4.0f);
+				}
+			}
+		}
+		if (_CraftShow == 43)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_HELMET, ItemType::HELMET, IMAGEMANAGER->findImage("Item_43"), 5.0f);
+				}
+			}
+		}
+		if (_CraftShow == 44)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_ARMOR, ItemType::ARMOR, IMAGEMANAGER->findImage("Item_44"), 6.0f);
+				}
+			}
+		}
+		if (_CraftShow == 45)
+		{
+			if (INVENTORYMANAGER->findItem("item_11") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_11")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_11")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::PLATINUM_LEGGINGS, ItemType::LEGGINGS, IMAGEMANAGER->findImage("Item_45"),5.0f);
+				}
+			}
+		}
+		if (_CraftShow == 46)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_HELMET, ItemType::HELMET, IMAGEMANAGER->findImage("Item_46"), 6.0f);
+				}
+			}
+		}
+		if (_CraftShow == 47)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_ARMOR, ItemType::ARMOR, IMAGEMANAGER->findImage("Item_47"), 7.0f);
+				}
+			}
+		}
+		if (_CraftShow == 48)
+		{
+			if (INVENTORYMANAGER->findItem("item_13") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_13")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_13")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONITE_LEGGINGS, ItemType::LEGGINGS, IMAGEMANAGER->findImage("Item_48"), 6.0f);
+				}
+			}
+		}
+		if (_CraftShow == 53)
+		{
+			if (INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DESK, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_53"),1);
+				}
+			}
+		}
+		if (_CraftShow == 54)
+		{
+			if (INVENTORYMANAGER->findItem("item_2") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_2")->getItemStack() >= 10)
+				{
+					INVENTORYMANAGER->findItem("item_2")->removeItemStack(10);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::FURNACE, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_54"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 55)
+		{
+			if (INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 8)
+				{
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(8);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::WORKBENCH, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_55"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 56)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 8)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(8);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::ANVIL, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_56"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 57)
+		{
+			if (INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 5)
+				{
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(5);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::CHIR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_57"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 58)
+		{
+			if (INVENTORYMANAGER->findItem("item_9") != nullptr && INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_9")->getItemStack() >= 5 && INVENTORYMANAGER->findItem("item_3")->getItemStack()>=8)
+				{
+					INVENTORYMANAGER->findItem("item_9")->removeItemStack(5);
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(8);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::BOX, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_58"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 59)
+		{
+			if (INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 6)
+				{
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(6);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DOOR, ItemType::BLOCK, IMAGEMANAGER->findImage("Item_59"), 1);
+				}
+			}
+		}
+		if (_CraftShow == 60)
+		{
+			if (INVENTORYMANAGER->findItem("item_3") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_3")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_3")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::WOOD_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_60"), 4);
+				}
+			}
+		}
+		if (_CraftShow == 63)
+		{
+			if (INVENTORYMANAGER->findItem("item_62") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_62")->getItemStack() >= 6)
+				{
+					INVENTORYMANAGER->findItem("item_62")->removeItemStack(6);
+					ITEMMANAGER->CreateItem(_x - 20, _y - 20, type::DEMONEYE, ItemType::CONSUMBLE, IMAGEMANAGER->findImage("Item_59"), 1);
+				}
+			}
+		}
+
 		if (_CraftShow == 68)
 		{
 			if (INVENTORYMANAGER->findItem("item_1") != nullptr)
@@ -417,7 +1144,18 @@ void Crafting::ButtonClick()
 				if (INVENTORYMANAGER->findItem("item_1")->getItemStack() >= 1)
 				{
 					INVENTORYMANAGER->findItem("item_1")->removeItemStack(1);
-					ITEMMANAGER->CreateItem(_x, _y, type::DIRT_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 4, 0);
+					ITEMMANAGER->CreateItem(_x, _y, type::DIRT_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 4);
+				}
+			}
+		}
+		if (_CraftShow == 69)
+		{
+			if (INVENTORYMANAGER->findItem("item_2") != nullptr)
+			{
+				if (INVENTORYMANAGER->findItem("item_2")->getItemStack() >= 1)
+				{
+					INVENTORYMANAGER->findItem("item_2")->removeItemStack(1);
+					ITEMMANAGER->CreateItem(_x, _y, type::STONE_WALL, ItemType::WALL, IMAGEMANAGER->findImage("Item_68"), 4);
 				}
 			}
 		}
