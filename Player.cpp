@@ -42,6 +42,7 @@ HRESULT Player::init()
 	_playerInfo.Defense = 0;
 	_playerInfo.timer = 0;
 	_gravity = 0.05f;
+	_playerInfo.crash = false;
 	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::COPPER_PICKAXE, ItemType::PICKAXE, IMAGEMANAGER->findImage("Item_14"), 4.0f, 10, 35);
 	ITEMMANAGER->CreateItem(_playerInfo.x - 20, _playerInfo.y - 20, type::COPPER_HAMMER, ItemType::HAMMER, IMAGEMANAGER->findImage("Item_16"), 4.0f, 35,35);
 	ITEMMANAGER->CreateItem(_playerInfo.x, _playerInfo.y, type::PLATINUM, ItemType::BLOCK, ItemType::METERIAL, IMAGEMANAGER->findImage("Item_7"), 15);
@@ -89,7 +90,15 @@ void Player::update()
 		_playerInfo.attackRect.bottom = NULL;
 	}
 	Frame();
-	_playerInfo.delay += TIMEMANAGER->getElapsedTime();
+	if (_playerInfo.crash)
+	{
+		_playerInfo.delay += TIMEMANAGER->getElapsedTime();
+		if (_playerInfo.delay >= 1)
+		{
+			_playerInfo.delay = 0;
+			_playerInfo.crash = false;
+		}
+	}
 
 	//TileDestroyCreate(mouse);
 
@@ -1096,7 +1105,7 @@ void Player::DownBlockCollision()
 
 }
 
-void Player::Hit(float damage, float x)
+void Player::Hit(float damage)
 {
 	if (_playerInfo.delay == 0)
 	{
@@ -1104,11 +1113,7 @@ void Player::Hit(float damage, float x)
 		else _playerInfo.Health -= damage;
 	}
 
-
-	if (_playerInfo.delay >= 1)
-	{
-		_playerInfo.delay = 0;
-	}
+	_playerInfo.crash = true;
 }
 
 int Player::getStartX()

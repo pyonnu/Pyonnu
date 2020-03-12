@@ -4,6 +4,8 @@
 HRESULT EnemyManager::init()
 {
 	_spawnTimer = 0;
+	_playerHit = false;
+	_playerHitDelay = 0;
 	return S_OK;
 }
 
@@ -162,11 +164,14 @@ void EnemyManager::collision()
 		RightCollision(_viEnemy);
 		BottomCollision(_viEnemy);
 
-
+		//여기서 딜레이 줘버리자 ^^ㅣ8
 		if (IntersectRect(&temp, &(*_viEnemy)->getEnemyInfo()->rc, &_player->getRect()))
 		{
-			_player->Hit((*_viEnemy)->getEnemyInfo()->damage,(*_viEnemy)->getEnemyInfo()->x);
-			//cout << (*_viEnemy)->getEnemyInfo()->damage << endl;
+			if (_player->getDelay() == 0)
+			{
+				_player->Hit((*_viEnemy)->getEnemyInfo()->damage);
+			}
+			cout << "충돌" << endl;
 		}
 		else
 		{

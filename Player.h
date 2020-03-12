@@ -67,6 +67,8 @@ struct PlayerInfo
 	bool ANVIL;
 	bool FURNACE;
 	bool DEMONALTER;
+
+	bool crash;
 };
 class Player :public gameNode
 {
@@ -107,7 +109,7 @@ public:
 	void setVTile(vector<tagTile*> vtile) { _vTile = vtile; }
 	void setViTile(vector<tagTile*>::iterator viTile) { _viTile = viTile; }
 	
-	void Hit(float damage,float x);
+	void Hit(float damage);
 	void delaytReset() { _playerInfo.delay = 0; }
 
 	PlayerInfo getPlayerInfo() { return _playerInfo; }
@@ -125,4 +127,6 @@ public:
 	bool getFurnace() { return _playerInfo.FURNACE; }
 	bool getAnvil() { return _playerInfo.ANVIL; }
 	bool getDemonAlter() { return _playerInfo.DEMONALTER; }
+
+	float getDelay() { return _playerInfo.delay; }
 };

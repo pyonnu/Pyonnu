@@ -24,6 +24,9 @@ private:
 
 	Tile _Tile;
 	iTile _iTile;
+
+	float _playerHitDelay;
+	bool _playerHit;
 public:
 	HRESULT init();
 	void release();

@@ -90,6 +90,23 @@ void playGround::imageAdd()
 	IMAGEMANAGER->addFrameImage("Player_Body", "Resources/Player/Player_Body.bmp", 80 * 2, 2 * 1120, 2, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Player_Legs", "Resources/Player/Player_Legs.bmp", 80 * 2, 2 * 1120, 2, 20, true, RGB(255, 0, 255));
 	//°©¿Ê ÀÌ¹ÌÁö
+	IMAGEMANAGER->addFrameImage("Armor_Head_1", "Resources/Armor/Head/Armor_Head_1.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Head_2", "Resources/Armor/Head/Armor_Head_2.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Head_3", "Resources/Armor/Head/Armor_Head_3.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Head_4", "Resources/Armor/Head/Armor_Head_4.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Head_5", "Resources/Armor/Head/Armor_Head_5.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("Armor_Body_1", "Resources/Armor/Body/Armor_Body_1.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Body_2", "Resources/Armor/Body/Armor_Body_2.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Body_3", "Resources/Armor/Body/Armor_Body_3.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Body_4", "Resources/Armor/Body/Armor_Body_4.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Body_5", "Resources/Armor/Body/Armor_Body_5.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("Armor_Legs_1", "Resources/Armor/Legs/Armor_Legs_1.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Legs_2", "Resources/Armor/Legs/Armor_Legs_2.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Legs_3", "Resources/Armor/Legs/Armor_Legs_3.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Legs_4", "Resources/Armor/Legs/Armor_Legs_4.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Armor_Legs_5", "Resources/Armor/Legs/Armor_Legs_5.bmp", 160, 2240, 2, 20, true, RGB(255, 0, 255));
 
 	//UIÀÌ¹ÌÁö
 	IMAGEMANAGER->addImage("Inventory_Back", "Resources/UI/Inventory_Back.bmp", 52, 52, true, RGB(255, 0, 255));
